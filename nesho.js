@@ -1,5 +1,8 @@
 let canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
+let canvasUI = document.getElementById("canvasUI");
+const ctxUI = canvasUI.getContext("2d");
+const contextUI = canvasUI.getContext("2d");
 
 let bullets = [], enemyClasses = [], enemies = [];
 
@@ -9,6 +12,8 @@ for (let i = 0; i < 256; isKeyPressed[i++] = 0);
 function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+    canvasUI.width = window.innerWidth;
+    canvasUI.height = window.innerHeight;
 }
 resizeCanvas();
 
@@ -86,7 +91,7 @@ enemyClasses.push(class smallEnemy {
                 Math.sin(namiraneNaNeshtosiUgul(this.x, this.y, player.x, player.y)),
                 "bigBrainBullet",
                 30,
-                5,
+                2,
                 1,
             ));
         }
@@ -194,7 +199,7 @@ class Bullet {
                 this.frame = 0;
             }
         }
-        this.angle = namiraneNaNeshtosiUgul(this.x, this.y, player.x, player.y) + (planet.angle + Math.PI / 2);
+        this.angle = namiraneNaNeshtosiUgul(this.x, this.y, player.x, player.y);
     }
 
     draw() {
@@ -208,7 +213,7 @@ class Bullet {
             ctx.rotate(this.angle);
             ctx.translate(-this.x, -this.y);
             ctx.drawImage(rocketImages[this.frame], this.x - this.r, this.y - this.r, this.r, this.r);
-            ctx.rotate(this.angle);
+            ctx.rotate(-this.angle);
             ctx.restore();
         } else {
             ctx.fillStyle = this.color;
@@ -224,6 +229,7 @@ class Bullet {
 class Player {
     constructor(width, height) {
         this.x, this.y;
+        this.hp = 20;
         this.width = width;
         this.height = height;
 
@@ -239,6 +245,21 @@ class Player {
     }
 
     draw() {
+        for (let i = 0; i < this.hp; i++) {
+            if (i % 2 == 0) {
+                ctxUI.drawImage(heart1, i * 20, 0, 20, 30);
+            } else {
+                ctxUI.drawImage(heart2, i * 20, 0, 20, 30);
+            }
+        }
+        for (let i = this.hp; i < 20; i++) {
+            if (i % 2 == 0) {
+                ctxUI.drawImage(ded1, i * 20, 0, 20, 30);
+            } else {
+                ctxUI.drawImage(ded2, i * 20, 0, 20, 30);
+            }
+        }
+
         this.x = Math.cos(this.angle) * this.h + canvas.width / 2 - this.width / 2;
         this.y = Math.sin(this.angle) * this.h + canvas.height / 2 - this.height / 2;
 

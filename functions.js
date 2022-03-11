@@ -38,10 +38,16 @@ function randomEnemyIndex() {
         randomEnemyIndexNumber = 2;
     }
 
-    //return randomEnemyIndexNumber;
-    return 1;
+    return randomEnemyIndexNumber;
+    //return 1;
 }
 
 let rocketImages = [document.getElementById("rocket1"),
                     document.getElementById("rocket2"),
-                    document.getElementById("rocket3")];
+    document.getElementById("rocket3")];
+
+
+let heart1Image = document.getElementById("heart1");
+let heart2Image = document.getElementById("heart2");
+let ded1Image = document.getElementById("ded1");
+let ded2Image = document.getElementById("ded2");
