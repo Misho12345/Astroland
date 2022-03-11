@@ -41,7 +41,7 @@ function Update() {
 
     updates++;
     if (updates % 1000 == 0) {
-        enemies.push(new enemyClasses[randomEnemyIndex()](randomInteger(canvas.width), randomInteger(canvas.height)));
+        enemies.push(new (enemyClasses[randomEnemyIndex()])(randomInteger(canvas.width), randomInteger(canvas.height)));
     }
 
     enemies.forEach(enemy => enemy.update());
