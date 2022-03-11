@@ -294,7 +294,6 @@ class Player {
                 planet.angle -= speed;
                 player.angle -= speed;
             }
-            else this.angle = this.defA;
         }
 
         ctx.drawImage(document.getElementById("player" + (this.state > 0 ? this.dir : 0) + "_" + this.state), this.x, this.y, this.width, this.height);
