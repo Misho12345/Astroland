@@ -54,13 +54,12 @@ function Update() {
         player.gravitySpeed = -15;
         player.up = true;
         player.h++;
-        console.log("amogus");
     }
 
 }
 
 function Draw() {
-    ctx.drawImage(document.getElementById("fon"), 0, 0, canvas.width, canvas.height);
+    ctx.drawImage(document.getElementById("background"), 0, 0, canvas.width, canvas.height);
 
     if (!isKeyPressed[77]) ctx.translate(0, planet.diameter - canvas.width + 250);
     else {

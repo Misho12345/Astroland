@@ -50,11 +50,11 @@ enemyClasses.push(
         this.sizeY = 100;
 
     }
-    pucane() {
+    shooting() {
         bullets.push(new Bullet(this.x,
             this.y,
-            Math.cos(namiraneNaNeshtosiUgul(this.x, this.y, player.x, player.y)),
-            Math.sin(namiraneNaNeshtosiUgul(this.x, this.y, player.x, player.y)),
+            Math.cos(angleCalc(this.x, this.y, player.x, player.y)),
+            Math.sin(angleCalc(this.x, this.y, player.x, player.y)),
             "enemyBullet",
             15,
             5,
@@ -64,7 +64,7 @@ enemyClasses.push(
     update() {
         this.updates++;
         if (this.updates % 500 == 0) {
-            this.pucane();
+            this.shooting();
         }
         if (this.updates % 50 == 0) {
             this.frame++;
@@ -74,7 +74,7 @@ enemyClasses.push(
         }
     }
     draw() {
-        ctx.drawImage(zelensopolImages[this.frame], this.x - this.sizeX / 2, this.y - this.sizeY / 2, this.sizeX, this.sizeY)
+        ctx.drawImage(green_blobImages[this.frame], this.x - this.sizeX / 2, this.y - this.sizeY / 2, this.sizeX, this.sizeY)
     }
     
 },
@@ -89,11 +89,11 @@ enemyClasses.push(
             this.sizeY = 200;
 
         }
-        pucane() {
+        shooting() {
             bullets.push(new Bullet(this.x,
                 this.y,
-                Math.cos(namiraneNaNeshtosiUgul(this.x, this.y, player.x, player.y)),
-                Math.sin(namiraneNaNeshtosiUgul(this.x, this.y, player.x, player.y)),
+                Math.cos(angleCalc(this.x, this.y, player.x, player.y)),
+                Math.sin(angleCalc(this.x, this.y, player.x, player.y)),
                 "bigBrainBullet",
                 30,
                 2,
@@ -103,7 +103,7 @@ enemyClasses.push(
         update() {
             this.updates++;
             if (this.updates % 500 == 0) {
-                this.pucane();
+                this.shooting();
             }
             if (this.updates % 50 == 0) {
                 this.frame++;
@@ -117,22 +117,22 @@ enemyClasses.push(
         }
 
     },
-    class THICCenemy {
+    class bigEnemy {
         constructor(x, y) {
             this.x = x;
             this.y = y;
-            this.type = "THICCenemy";
+            this.type = "bigEnemy";
             this.updates = 0;
             this.frame = 0;
             this.sizeX = 200;
             this.sizeY = 200;
 
         }
-        pucane() {
+        shooting() {
             bullets.push(new Bullet(this.x,
                 this.y,
-                Math.cos(namiraneNaNeshtosiUgul(this.x, this.y, player.x, player.y) + Math.PI / 10),
-                Math.sin(namiraneNaNeshtosiUgul(this.x, this.y, player.x, player.y) + Math.PI / 10),
+                Math.cos(angleCalc(this.x, this.y, player.x, player.y) + Math.PI / 10),
+                Math.sin(angleCalc(this.x, this.y, player.x, player.y) + Math.PI / 10),
                 "enemyBullet",
                 20,
                 5,
@@ -140,8 +140,8 @@ enemyClasses.push(
             ));
             bullets.push(new Bullet(this.x,
                 this.y,
-                Math.cos(namiraneNaNeshtosiUgul(this.x, this.y, player.x, player.y)),
-                Math.sin(namiraneNaNeshtosiUgul(this.x, this.y, player.x, player.y)),
+                Math.cos(angleCalc(this.x, this.y, player.x, player.y)),
+                Math.sin(angleCalc(this.x, this.y, player.x, player.y)),
                 "enemyBullet",
                 20,
                 7.5,
@@ -149,8 +149,8 @@ enemyClasses.push(
             ));
             bullets.push(new Bullet(this.x,
                 this.y,
-                Math.cos(namiraneNaNeshtosiUgul(this.x, this.y, player.x, player.y) - Math.PI / 10),
-                Math.sin(namiraneNaNeshtosiUgul(this.x, this.y, player.x, player.y) - Math.PI / 10),
+                Math.cos(angleCalc(this.x, this.y, player.x, player.y) - Math.PI / 10),
+                Math.sin(angleCalc(this.x, this.y, player.x, player.y) - Math.PI / 10),
                 "enemyBullet",
                 20,
                 5,
@@ -160,7 +160,7 @@ enemyClasses.push(
         update() {
             this.updates++;
             if (this.updates % 500 == 0) {
-                this.pucane();
+                this.shooting();
             }
             if (this.updates % 7.5 == 0) {
                 this.frame++;
@@ -170,7 +170,7 @@ enemyClasses.push(
             }
         }
         draw() {
-            ctx.drawImage(THICCenemyImages[this.frame], this.x - this.sizeX / 2, this.y - this.sizeY / 2, this.sizeX, this.sizeY)
+            ctx.drawImage(bigEnemyImages[this.frame], this.x - this.sizeX / 2, this.y - this.sizeY / 2, this.sizeX, this.sizeY)
         }
 
     },)
@@ -192,8 +192,8 @@ class Bullet {
 
     update() {
         if (this.color == "bigBrainBullet") {
-            this.dX = namiraneNaNeshtosiUgul(this.x, this.y, player.x, player.y);
-            this.dY = namiraneNaNeshtosiUgul(this.x, this.y, player.x, player.y);
+            this.dX = angleCalc(this.x, this.y, player.x, player.y);
+            this.dY = angleCalc(this.x, this.y, player.x, player.y);
         }
         this.x += Math.cos(this.dX) * this.speed;
         this.y += Math.sin(this.dY) * this.speed;
@@ -204,7 +204,7 @@ class Bullet {
                 this.frame = 0;
             }
         }
-        this.angle = namiraneNaNeshtosiUgul(this.x, this.y, player.x, player.y);
+        this.angle = angleCalc(this.x, this.y, player.x, player.y);
     }
 
     draw() {

@@ -1,19 +1,16 @@
-function namiraneNaNeshtosiUgul(cX, cY, x, y) {
-    let ugul = Math.atan2(y - cY, x - cX);
-    if (y >= cY) {
-        return ugul;
-    } else {
-        return Math.PI * 2 + ugul;
-    }
+function angleCalc(cX, cY, x, y) {
+    let angle = Math.atan2(y - cY, x - cX);
+    if (y >= cY) return angle;
+    else return Math.PI * 2 + angle;
 }
 function randomInteger(upTo) {
     return Math.floor(Math.random() * upTo);
 }
 
-let zelensopolImages = [document.getElementById("zelensopol1"),
-                        document.getElementById("zelensopol2"),
-                        document.getElementById("zelensopol3"),
-                        document.getElementById("zelensopol4")];
+let green_blobImages = [document.getElementById("green_blob1"),
+                        document.getElementById("green_blob2"),
+                        document.getElementById("green_blob3"),
+                        document.getElementById("green_blob4")];
 
 let bigBrainEnemyImages = [document.getElementById("bigBrainEnemy1"),
                            document.getElementById("bigBrainEnemy2"),
@@ -23,10 +20,9 @@ let bigBrainEnemyImages = [document.getElementById("bigBrainEnemy1"),
 let enemyBullet = document.getElementById("enemyBullet");
 
 
-let THICCenemyImages = [document.getElementById("THICCenemy1"),
-                        document.getElementById("THICCenemy2"),
-                        document.getElementById("THICCenemy3")];
-
+let bigEnemyImages = [document.getElementById("bigEnemy1"),
+                      document.getElementById("bigEnemy2"),
+                      document.getElementById("bigEnemy3")];
 
 function randomEnemyIndex() {
     let randomEnemyIndexNumber = randomInteger(100);
