@@ -10,10 +10,9 @@ function Update() {
 }
 
 function Draw() {
-    let a = 3;
-    //ctx.translate(canvas.width/a, 0);
-    if (!isKeyPressed[77]) { ctx.translate(0,planet.diameter-150);  };
+    ctx.drawImage(document.getElementById("fon"), 0, 0, canvas.width, canvas.height);
+    if (!isKeyPressed[77]) { ctx.translate(0, planet.diameter - 1650); } else { ctx.scale(0.2, 0.2); ctx.translate(canvas.width + planet.diameter / 2, 0 + planet.diameter/2); };
     planet.draw();
     player.draw();
-
+    
 }
