@@ -1,7 +1,8 @@
 let canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
+const context = canvas.getContext("2d");
 
-let bullets = [], enemyClasses=[];
+let bullets = [], enemyClasses = [], enemies = [];
 
 let isKeyPressed = [];
 for (let i = 0; i < 256; isKeyPressed[i++] = 0);
@@ -27,30 +28,33 @@ function init() {
 }
 
 enemyClasses.push(class smallEnemy {
-    constructor(x, y, type) {
+    constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.type = type;
+        this.type = "smallEnemy";
         this.updates = 0;
-    }
-    update() {
-        this.updates++;
-
-    }
-    draw() {
-
     }
     pucane() {
         bullets.push(new Bullet(this.x,
             this.y,
             Math.cos(namiraneNaNeshtosiUgul(this.x, this.y, player.x, player.y)),
-                Math.sin(namiraneNaNeshtosiUgul(this.x, this.y, player.x, player.y)),
-                    "green",
-                    5,
-                    5,
-                    1,
-                ));
+            Math.sin(namiraneNaNeshtosiUgul(this.x, this.y, player.x, player.y)),
+            "lime",
+            100,
+            5,
+            1,
+        ));
     }
+    update() {
+        this.updates++;
+        if (this.updates % 500 == 0) {
+            this.pucane();
+        }
+    }
+    draw() {
+
+    }
+    
 })
 
 class Bullet {
@@ -72,6 +76,7 @@ class Bullet {
     draw() {
         context.beginPath();
         context.fillStyle = this.color;
+        context.lineWidth = this.r/4;
         context.arc(this.x, this.y, this.r, 0, Math.PI * 2);
         context.stroke();
         context.fill();
