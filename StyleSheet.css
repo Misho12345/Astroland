@@ -1,0 +1,11 @@
+﻿body, canvas {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+canvas {
+    border: 10px groove brown;
+    background-color: darkblue;
+    cursor: url(./images/aim.png), default;
+}
