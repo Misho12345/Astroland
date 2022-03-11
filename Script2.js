@@ -69,6 +69,7 @@ function Draw() {
     for (let i = 0; i < bullets.length; i++) {
         bullets[i].draw();
     }
-    player.draw();
 
+    player.draw();
+    player.showCoins();
 }

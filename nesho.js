@@ -1,6 +1,8 @@
 let canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
 let canvasUI = document.getElementById("canvasUI");
+
+const ctx = canvas.getContext("2d");
+const context = canvas.getContext("2d");
 const ctxUI = canvasUI.getContext("2d");
 const contextUI = canvasUI.getContext("2d");
 
@@ -12,6 +14,7 @@ for (let i = 0; i < 256; isKeyPressed[i++] = 0);
 function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+
     canvasUI.width = window.innerWidth;
     canvasUI.height = window.innerHeight;
 }
@@ -34,7 +37,8 @@ function init() {
     setTimeout(init, 10);
 }
 
-enemyClasses.push(class smallEnemy {
+enemyClasses.push(
+    class smallEnemy {
     constructor(x, y) {
         this.x = x;
         this.y = y;
@@ -235,13 +239,14 @@ class Player {
 
         this.angle = Math.PI / -2;
         this.h = planet.diameter / 2 + this.height / 4;
-
         this.defA = this.angle;
 
         this.cooldown = 15;
         this.dir = 0;
         this.order = 0;
         this.state = 0;
+
+        this.coins = 0;
     }
 
     draw() {
@@ -290,13 +295,23 @@ class Player {
                 player.angle -= speed;
             }
             else this.angle = this.defA;
-
-            console.log(this.angle - this.defA)
         }
 
         ctx.drawImage(document.getElementById("player" + (this.state > 0 ? this.dir : 0) + "_" + this.state), this.x, this.y, this.width, this.height);
         
         ctx.restore();
+    }
+
+    showCoins() {
+        ctxUI.drawImage(document.getElementById("coin0"), canvasUI.width - 250, 50);
+        
+        ctxUI.fillStyle = "yellow";
+        ctxUI.strokeStyle = "red";
+
+        ctxUI.font = "100px Arial";
+
+        ctxUI.fillText("2", canvasUI.width - 100, 120);
+        ctxUI.strokeText("2", canvasUI.width - 100, 120)
     }
 }
 
