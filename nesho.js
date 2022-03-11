@@ -246,7 +246,9 @@ class Player {
         this.order = 0;
         this.state = 0;
 
-        this.coins = 0;
+        this.coins = 100;
+        this.coinsState = 0;
+        this.cooldownC = 10;
     }
 
     draw() {
@@ -288,15 +290,22 @@ class Player {
     }
 
     showCoins() {
-        ctxUI.drawImage(document.getElementById("coin0"), canvasUI.width - 250, 50);
-        
+        ctxUI.drawImage(document.getElementById("coin" + this.coinsState % 12), canvasUI.width - 280, 50);
+
+        if (this.cooldownC < 1) {
+            this.cooldownC = 10;
+            this.coinsState++;
+        } else this.cooldownC--;
+
         ctxUI.fillStyle = "yellow";
-        ctxUI.strokeStyle = "red";
+        ctxUI.strokeStyle = "orange";
 
-        ctxUI.font = "100px Arial";
+        ctxUI.lineWidth = 3;
 
-        ctxUI.fillText("2", canvasUI.width - 100, 120);
-        ctxUI.strokeText("2", canvasUI.width - 100, 120)
+        ctxUI.font = "90px Comic Sans MS";
+
+        ctxUI.fillText(this.coins, canvasUI.width - 200, 125);
+        ctxUI.strokeText(this.coins, canvasUI.width - 200, 125)
     }
 }
 
