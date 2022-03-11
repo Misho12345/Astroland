@@ -6,3 +6,6 @@ function namiraneNaNeshtosiUgul(cX, cY, x, y) {
         return Math.PI * 2 + ugul;
     }
 }
+function randomInteger(upTo) {
+    return Math.floor(Math.random() * upTo);
+}
