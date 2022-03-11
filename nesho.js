@@ -33,14 +33,18 @@ enemyClasses.push(class smallEnemy {
         this.y = y;
         this.type = "smallEnemy";
         this.updates = 0;
+        this.frame = 0;
+        this.sizeX = 100;
+        this.sizeY = 100;
+
     }
     pucane() {
         bullets.push(new Bullet(this.x,
             this.y,
             Math.cos(namiraneNaNeshtosiUgul(this.x, this.y, player.x, player.y)),
             Math.sin(namiraneNaNeshtosiUgul(this.x, this.y, player.x, player.y)),
-            "lime",
-            100,
+            "enemyBullet",
+            15,
             5,
             1,
         ));
@@ -50,12 +54,114 @@ enemyClasses.push(class smallEnemy {
         if (this.updates % 500 == 0) {
             this.pucane();
         }
+        if (this.updates % 50 == 0) {
+            this.frame++;
+            if (this.frame > 3) {
+                this.frame = 0;
+            }
+        }
     }
     draw() {
-
+        ctx.drawImage(zelensopolImages[this.frame], this.x - this.sizeX / 2, this.y - this.sizeY / 2, this.sizeX, this.sizeY)
     }
     
-})
+},
+    class bigBrainEnemy {
+        constructor(x, y) {
+            this.x = x;
+            this.y = y;
+            this.type = "bigBrainEnemy";
+            this.updates = 0;
+            this.frame = 0;
+            this.sizeX = 100;
+            this.sizeY = 200;
+
+        }
+        pucane() {
+            bullets.push(new Bullet(this.x,
+                this.y,
+                Math.cos(namiraneNaNeshtosiUgul(this.x, this.y, player.x, player.y)),
+                Math.sin(namiraneNaNeshtosiUgul(this.x, this.y, player.x, player.y)),
+                "bigBrainBullet",
+                30,
+                5,
+                1,
+            ));
+        }
+        update() {
+            this.updates++;
+            if (this.updates % 500 == 0) {
+                this.pucane();
+            }
+            if (this.updates % 50 == 0) {
+                this.frame++;
+                if (this.frame > 3) {
+                    this.frame = 0;
+                }
+            }
+        }
+        draw() {
+            ctx.drawImage(bigBrainEnemyImages[this.frame], this.x - this.sizeX / 2, this.y - this.sizeY / 2, this.sizeX, this.sizeY)
+        }
+
+    },
+    class THICCenemy {
+        constructor(x, y) {
+            this.x = x;
+            this.y = y;
+            this.type = "THICCenemy";
+            this.updates = 0;
+            this.frame = 0;
+            this.sizeX = 200;
+            this.sizeY = 200;
+
+        }
+        pucane() {
+            bullets.push(new Bullet(this.x,
+                this.y,
+                Math.cos(namiraneNaNeshtosiUgul(this.x, this.y, player.x, player.y) + Math.PI / 10),
+                Math.sin(namiraneNaNeshtosiUgul(this.x, this.y, player.x, player.y) + Math.PI / 10),
+                "enemyBullet",
+                20,
+                5,
+                1,
+            ));
+            bullets.push(new Bullet(this.x,
+                this.y,
+                Math.cos(namiraneNaNeshtosiUgul(this.x, this.y, player.x, player.y)),
+                Math.sin(namiraneNaNeshtosiUgul(this.x, this.y, player.x, player.y)),
+                "enemyBullet",
+                20,
+                7.5,
+                1,
+            ));
+            bullets.push(new Bullet(this.x,
+                this.y,
+                Math.cos(namiraneNaNeshtosiUgul(this.x, this.y, player.x, player.y) - Math.PI / 10),
+                Math.sin(namiraneNaNeshtosiUgul(this.x, this.y, player.x, player.y) - Math.PI / 10),
+                "enemyBullet",
+                20,
+                5,
+                1,
+            ));
+        }
+        update() {
+            this.updates++;
+            if (this.updates % 500 == 0) {
+                this.pucane();
+            }
+            if (this.updates % 7.5 == 0) {
+                this.frame++;
+                if (this.frame > 2) {
+                    this.frame = 0;
+                }
+            }
+        }
+        draw() {
+            ctx.drawImage(THICCenemyImages[this.frame], this.x - this.sizeX / 2, this.y - this.sizeY / 2, this.sizeX, this.sizeY)
+        }
+
+    },)
 
 class Bullet {
     constructor(x_, y_, dX_, dY_, color_, r_, speed_, demage_) {
@@ -67,19 +173,47 @@ class Bullet {
         this.r = r_;
         this.speed = speed_;
         this.demage = demage_;
+        this.frame = 0;
+        this.updates = 0;
+        this.angle = 0;
     }
     update() {
+        if (this.color == "bigBrainBullet") {
+            this.dX = namiraneNaNeshtosiUgul(this.x, this.y, player.x, player.y);
+            this.dY = namiraneNaNeshtosiUgul(this.x, this.y, player.x, player.y);
+        }
         this.x += Math.cos(this.dX) * this.speed;
         this.y += Math.sin(this.dY) * this.speed;
-
+        this.updates++;
+        if (this.updates % 5 == 0) {
+            this.frame++;
+            if (this.frame > 2) {
+                this.frame = 0;
+            }
+        }
+        this.angle = namiraneNaNeshtosiUgul(this.x, this.y, player.x, player.y) + (planet.angle + Math.PI / 2);
     }
     draw() {
         context.beginPath();
-        context.fillStyle = this.color;
-        context.lineWidth = this.r/4;
-        context.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-        context.stroke();
-        context.fill();
+        if (this.color == "enemyBullet") {
+            context.drawImage(enemyBullet, this.x - this.r, this.y - this.r, this.r, this.r);
+        } else if (this.color == "bigBrainBullet") {
+            
+            context.save();
+            context.translate(this.x, this.y);
+            context.rotate(this.angle);
+            context.translate(-this.x, -this.y);
+            context.drawImage(rocketImages[this.frame], this.x - this.r, this.y - this.r, this.r, this.r);
+            context.rotate(this.angle);
+            context.restore();
+        } else {
+            context.fillStyle = this.color;
+            context.lineWidth = this.r / 4;
+            context.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+            context.stroke();
+            context.fill();
+        }
+        
     }
 }
 
@@ -107,6 +241,8 @@ class Player {
 
         ctx.drawImage(document.getElementById("player"), this.x, this.y, this.width, this.height);
 
+
+        ctx.rotate(-(this.angle + Math.PI / 2));
         ctx.restore();
     }
 }
@@ -124,7 +260,7 @@ class Planet {
         this.y = canvas.height / 2 - this.diameter / 2;
 
         ctx.translate(this.x + this.diameter / 2, this.y + this.diameter / 2);
-        ctx.rotate(this.angle + Math.PI / 2);
+        ctx.rotate((this.angle + Math.PI / 2));
         ctx.translate(-this.x - this.diameter / 2, -this.y - this.diameter / 2);
 
         ctx.drawImage(document.getElementById("planet"), this.x, this.y, this.diameter, this.diameter);

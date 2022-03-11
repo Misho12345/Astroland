@@ -26,7 +26,7 @@ function Update() {
     canvas.height = window.innerHeight - 20;
     updates++;
     if (updates % 1000 == 0) {
-        enemies.push(new enemyClasses[randomInteger(enemyClasses.length)](randomInteger(canvas.width), randomInteger(canvas.height)));
+        enemies.push(new enemyClasses[randomEnemyIndex()](randomInteger(canvas.width), randomInteger(canvas.height)));
     }
     for (let i = 0; i < enemies.length; i++) {
         enemies[i].update();
@@ -46,7 +46,7 @@ function Draw() {
     }
 
     planet.draw();
-    player.draw();
+    
 
     for (let i = 0; i < enemies.length; i++) {
         enemies[i].draw();
@@ -54,4 +54,6 @@ function Draw() {
     for (let i = 0; i < bullets.length; i++) {
         bullets[i].draw();
     }
+    player.draw();
+
 }
