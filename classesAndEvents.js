@@ -262,8 +262,8 @@ class Player {
             else ctxUI.drawImage(heart2, i * 20, 0, 20, 30);
         }
         for (let i = this.hp; i < 20; i++) {
-            if (i % 2 == 0) ctxUI.drawImage(ded1, i * 20, 0, 20, 30);
-            else ctxUI.drawImage(ded2, i * 20, 0, 20, 30);
+            if (i % 2 == 0) ctxUI.drawImage(dead1, i * 20, 0, 20, 30);
+            else ctxUI.drawImage(dead2, i * 20, 0, 20, 30);
         }
 
         this.x = Math.cos(this.angle) * this.h + canvas.width / 2 - this.width / 2;
