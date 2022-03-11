@@ -3,6 +3,7 @@ let canvasUI = document.getElementById("canvasUI");
 
 const ctx = canvas.getContext("2d");
 const context = canvas.getContext("2d");
+
 const ctxUI = canvasUI.getContext("2d");
 const contextUI = canvasUI.getContext("2d");
 
@@ -249,9 +250,23 @@ class Player {
         this.coins = 100;
         this.coinsState = 0;
         this.cooldownC = 10;
+
+        this.up = false;
+        this.gravitySpeed = 0;
+        this.gravity = 0.5;
     }
 
     draw() {
+        if (this.h > planet.diameter / 2 + this.height / 4 && this.up) {
+            
+            this.gravitySpeed += this.gravity;
+            this.h -= this.gravitySpeed;
+        } else {
+            this.up = false;
+            this.gravitySpeed = 0;
+            this.h = planet.diameter / 2 + this.height / 4;
+        }
+
         for (let i = 0; i < this.hp; i++) {
             if (i % 2 == 0) {
                 ctxUI.drawImage(heart1, i * 20, 0, 20, 30);

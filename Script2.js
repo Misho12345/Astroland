@@ -49,6 +49,14 @@ function Update() {
     for (let i = 0; i < bullets.length; i++) {
         bullets[i].update();
     }
+
+    if ((isKeyPressed[38] || isKeyPressed[87]) && !player.up) {
+        player.gravitySpeed = -15;
+        player.up = true;
+        player.h++;
+        console.log("amogus");
+    }
+
 }
 
 function Draw() {
