@@ -26,16 +26,9 @@ let bigEnemyImages = [document.getElementById("bigEnemy1"),
 
 function randomEnemyIndex() {
     let randomEnemyIndexNumber = randomInteger(100);
-    if (randomEnemyIndexNumber < 70) {
-        randomEnemyIndexNumber = 0;
-    } else if (randomEnemyIndexNumber > 70 && randomEnemyIndexNumber < 90) {
-        randomEnemyIndexNumber = 1;
-    } else if (randomEnemyIndexNumber > 90) {
-        randomEnemyIndexNumber = 2;
-    }
-
-    return randomEnemyIndexNumber;
-    //return 1;
+    if (randomEnemyIndexNumber < 70) return 0;
+    if (randomEnemyIndexNumber < 90) return 1;
+    return 2;
 }
 
 let rocketImages = [document.getElementById("rocket1"),
