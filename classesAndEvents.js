@@ -40,44 +40,42 @@ function init() {
 
 enemyClasses.push(
     class smallEnemy {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-        this.type = "smallEnemy";
-        this.updates = 0;
-        this.frame = 0;
-        this.sizeX = 100;
-        this.sizeY = 100;
+        constructor(x, y) {
+            this.x = x;
+            this.y = y;
+            this.type = "smallEnemy";
+            this.updates = 0;
+            this.frame = 0;
+            this.sizeX = 100;
+            this.sizeY = 100;
 
-    }
-    shooting() {
-        bullets.push(new Bullet(this.x,
-            this.y,
-            Math.cos(angleCalc(this.x, this.y, player.x, player.y)),
-            Math.sin(angleCalc(this.x, this.y, player.x, player.y)),
-            "enemyBullet",
-            15,
-            5,
-            1,
-        ));
-    }
-    update() {
-        this.updates++;
-        if (this.updates % 500 == 0) {
-            this.shooting();
         }
-        if (this.updates % 50 == 0) {
-            this.frame++;
-            if (this.frame > 3) {
-                this.frame = 0;
+        shooting() {
+            bullets.push(new Bullet(this.x,
+                this.y,
+                Math.cos(angleCalc(this.x, this.y, player.x, player.y)),
+                Math.sin(angleCalc(this.x, this.y, player.x, player.y)),
+                "enemyBullet",
+                15,
+                5,
+                1,
+            ));
+        }
+        update() {
+            this.updates++;
+            if (this.updates % 500 == 0) this.shooting();
+            
+            if (this.updates % 50 == 0) {
+                this.frame++;
+
+                if (this.frame > 3) this.frame = 0;
             }
         }
-    }
-    draw() {
-        ctx.drawImage(green_blobImages[this.frame], this.x - this.sizeX / 2, this.y - this.sizeY / 2, this.sizeX, this.sizeY)
-    }
-    
-},
+        draw() {
+            ctx.drawImage(green_blobImages[this.frame], this.x - this.sizeX / 2, this.y - this.sizeY / 2, this.sizeX, this.sizeY)
+        }
+
+    },
     class bigBrainEnemy {
         constructor(x, y) {
             this.x = x;
@@ -102,14 +100,11 @@ enemyClasses.push(
         }
         update() {
             this.updates++;
-            if (this.updates % 500 == 0) {
-                this.shooting();
-            }
+            if (this.updates % 500 == 0) this.shooting();
             if (this.updates % 50 == 0) {
                 this.frame++;
-                if (this.frame > 3) {
-                    this.frame = 0;
-                }
+
+                if (this.frame > 3) this.frame = 0;
             }
         }
         draw() {
@@ -159,21 +154,19 @@ enemyClasses.push(
         }
         update() {
             this.updates++;
-            if (this.updates % 500 == 0) {
-                this.shooting();
-            }
+            if (this.updates % 500 == 0) this.shooting();
+            
             if (this.updates % 7.5 == 0) {
                 this.frame++;
-                if (this.frame > 2) {
-                    this.frame = 0;
-                }
+
+                if (this.frame > 2) this.frame = 0;
             }
         }
         draw() {
             ctx.drawImage(bigEnemyImages[this.frame], this.x - this.sizeX / 2, this.y - this.sizeY / 2, this.sizeX, this.sizeY)
         }
 
-    },)
+    });
 
 class Bullet {
     constructor(x_, y_, dX_, dY_, color_, r_, speed_, damage_) {
@@ -200,9 +193,7 @@ class Bullet {
         this.updates++;
         if (this.updates % 5 == 0) {
             this.frame++;
-            if (this.frame > 2) {
-                this.frame = 0;
-            }
+            if (this.frame > 2) this.frame = 0;
         }
         this.angle = angleCalc(this.x, this.y, player.x, player.y);
     }
@@ -258,7 +249,6 @@ class Player {
 
     draw() {
         if (this.h > planet.diameter / 2 + this.height / 4 && this.up) {
-            
             this.gravitySpeed += this.gravity;
             this.h -= this.gravitySpeed;
         } else {
@@ -268,18 +258,12 @@ class Player {
         }
 
         for (let i = 0; i < this.hp; i++) {
-            if (i % 2 == 0) {
-                ctxUI.drawImage(heart1, i * 20, 0, 20, 30);
-            } else {
-                ctxUI.drawImage(heart2, i * 20, 0, 20, 30);
-            }
+            if (i % 2 == 0) ctxUI.drawImage(heart1, i * 20, 0, 20, 30);
+            else ctxUI.drawImage(heart2, i * 20, 0, 20, 30);
         }
         for (let i = this.hp; i < 20; i++) {
-            if (i % 2 == 0) {
-                ctxUI.drawImage(ded1, i * 20, 0, 20, 30);
-            } else {
-                ctxUI.drawImage(ded2, i * 20, 0, 20, 30);
-            }
+            if (i % 2 == 0) ctxUI.drawImage(ded1, i * 20, 0, 20, 30);
+            else ctxUI.drawImage(ded2, i * 20, 0, 20, 30);
         }
 
         this.x = Math.cos(this.angle) * this.h + canvas.width / 2 - this.width / 2;
@@ -301,8 +285,7 @@ class Player {
 
                 this.cooldown = 15;
             } else this.cooldown--;
-        }
-        else {
+        } else {
             if (this.dir == 0 && this.angle < this.defA) {
                 planet.angle += speed;
                 player.angle += speed;

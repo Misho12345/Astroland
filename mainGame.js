@@ -43,12 +43,9 @@ function Update() {
     if (updates % 1000 == 0) {
         enemies.push(new enemyClasses[randomEnemyIndex()](randomInteger(canvas.width), randomInteger(canvas.height)));
     }
-    for (let i = 0; i < enemies.length; i++) {
-        enemies[i].update();
-    }
-    for (let i = 0; i < bullets.length; i++) {
-        bullets[i].update();
-    }
+
+    enemies.forEach(enemy => enemy.update());
+    bullets.forEach(bullet => bullet.update());
 
     if ((isKeyPressed[38] || isKeyPressed[87]) && !player.up) {
         player.gravitySpeed = -15;
