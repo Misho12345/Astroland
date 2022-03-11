@@ -1,7 +1,7 @@
-var canvas = document.getElementById("canvas");
+let canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
-var isKeyPressed = [];
+let isKeyPressed = [];
 for (let i = 0; i < 256; isKeyPressed[i++] = 0);
 
 canvas.width = window.innerWidth - 20;
@@ -42,6 +42,8 @@ class Player {
 
         ctx.drawImage(document.getElementById("player"), this.x, this.y, this.width, this.height);
 
+        ctx.rotate(-(Math.PI / 2 * ((this.x + this.width / 2) / planet.diameter - 0.25)));
+
         ctx.restore();
     }
 }
@@ -54,7 +56,8 @@ class Planet {
     }
 
     draw() {
-        ctx.drawImage(document.getElementById("planet"), this.x, player.defY + player.width, this.diameter, this.diameter);
+       ctx.drawImage(document.getElementById("planet"), canvas.width / 2 - this.diameter / 2, canvas.height / 2 - this.diameter / 2, this.diameter, this.diameter);
+
     }
 }
 
