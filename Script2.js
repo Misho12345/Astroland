@@ -1,5 +1,5 @@
 let planet = new Planet(canvas.width * 2);
-let player = new Player(100, 100);
+let player = new Player(100, 200);
 
 let updates = 0;
 
@@ -7,23 +7,38 @@ let cap = Math.PI / 20;
 let speed = Math.PI / 720;
 
 function Update() {
-    if (isKeyPressed[39] || isKeyPressed[68]) {
-        if (player.angle > player.defA + cap) {
-            planet.angle -= speed;
-            player.defA = player.angle - cap;
+    window.onresize = resizeCanvas();
+
+    if ((isKeyPressed[39] || isKeyPressed[68]) && (isKeyPressed[37] || isKeyPressed[65])) player.state = 0;
+    else {
+        if (isKeyPressed[39] || isKeyPressed[68]) {
+            if (player.angle >= player.defA + cap) {
+                planet.angle -= speed;
+                player.defA = player.angle - cap;
+            }
+            else player.angle += speed;
+
+            if (player.state == 0) {
+                player.dir = 1;
+                player.state = 1;
+            }
         }
-        player.angle += speed;
-    }
-    if (isKeyPressed[37] || isKeyPressed[65]) {
-        if (player.angle < player.defA - cap) {
-            planet.angle += speed;
-            player.defA = player.angle + cap;
+
+        if (isKeyPressed[37] || isKeyPressed[65]) {
+            if (player.angle <= player.defA - cap) {
+                planet.angle += speed;
+                player.defA = player.angle + cap;
+            }
+            else player.angle -= speed;
+
+            if (player.state == 0) {
+                player.dir = 0;
+                player.state = 1;
+            }
         }
-        player.angle -= speed;
+        else if (!isKeyPressed[39] && !isKeyPressed[68]) player.state = 0;
     }
 
-    canvas.width = window.innerWidth - 20;
-    canvas.height = window.innerHeight - 20;
     updates++;
     if (updates % 1000 == 0) {
         enemies.push(new enemyClasses[randomInteger(enemyClasses.length)](randomInteger(canvas.width), randomInteger(canvas.height)));
@@ -48,10 +63,5 @@ function Draw() {
     planet.draw();
     player.draw();
 
-    for (let i = 0; i < enemies.length; i++) {
-        enemies[i].draw();
-    }
-    for (let i = 0; i < bullets.length; i++) {
-        bullets[i].draw();
-    }
+    showCoins();
 }

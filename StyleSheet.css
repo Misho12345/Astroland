@@ -5,6 +5,5 @@
 }
 
 canvas {
-    border: 10px groove brown;
     cursor: url(./images/aim.png), default;
 }

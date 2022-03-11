@@ -1,14 +1,16 @@
 let canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
-const context = canvas.getContext("2d");
 
 let bullets = [], enemyClasses = [], enemies = [];
 
 let isKeyPressed = [];
 for (let i = 0; i < 256; isKeyPressed[i++] = 0);
 
-canvas.width = window.innerWidth - 20;
-canvas.height = window.innerHeight - 20;
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+resizeCanvas();
 
 let elem = document.documentElement;
 
@@ -58,7 +60,7 @@ enemyClasses.push(class smallEnemy {
 })
 
 class Bullet {
-    constructor(x_, y_, dX_, dY_, color_, r_, speed_, demage_) {
+    constructor(x_, y_, dX_, dY_, color_, r_, speed_, damage_) {
         this.x = x_;
         this.y = y_;
         this.dX = dX_;
@@ -66,20 +68,21 @@ class Bullet {
         this.color = color_;
         this.r = r_;
         this.speed = speed_;
-        this.demage = demage_;
+        this.damage = damage_;
     }
+
     update() {
         this.x += Math.cos(this.dX) * this.speed;
         this.y += Math.sin(this.dY) * this.speed;
-
     }
+
     draw() {
-        context.beginPath();
-        context.fillStyle = this.color;
-        context.lineWidth = this.r/4;
-        context.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-        context.stroke();
-        context.fill();
+        ctx.beginPath();
+        ctx.fillStyle = this.color;
+        ctx.lineWidth = this.r/4;
+        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.fill();
     }
 }
 
@@ -93,6 +96,11 @@ class Player {
         this.h = planet.diameter / 2 + this.height / 4;
 
         this.defA = this.angle;
+
+        this.cooldown = 15;
+        this.dir = 0;
+        this.order = 0;
+        this.state = 0;
     }
 
     draw() {
@@ -105,8 +113,33 @@ class Player {
         ctx.rotate(this.angle + Math.PI / 2);
         ctx.translate(-this.x - this.width / 2, -this.y - this.height / 2);
 
-        ctx.drawImage(document.getElementById("player"), this.x, this.y, this.width, this.height);
+        if (this.state > 0) {
+            if (this.cooldown < 1) {
+                if (this.state == 1) {
+                    this.state = (this.order == 0) ? 2 : 3;
+                    this.order = 1 - this.order;
+                }
+                else this.state = 1;
 
+                this.cooldown = 15;
+            } else this.cooldown--;
+        }
+        else {
+            if (this.dir == 0 && this.angle < this.defA) {
+                planet.angle += speed;
+                player.angle += speed;
+            }
+            else if (this.dir == 1 && this.angle > this.defA) {
+                planet.angle -= speed;
+                player.angle -= speed;
+            }
+            else this.angle = this.defA;
+
+            console.log(this.angle - this.defA)
+        }
+
+        ctx.drawImage(document.getElementById("player" + (this.state > 0 ? this.dir : 0) + "_" + this.state), this.x, this.y, this.width, this.height);
+        
         ctx.restore();
     }
 }
@@ -128,6 +161,10 @@ class Planet {
         ctx.translate(-this.x - this.diameter / 2, -this.y - this.diameter / 2);
 
         ctx.drawImage(document.getElementById("planet"), this.x, this.y, this.diameter, this.diameter);
+
+        ctx.translate(this.x + this.diameter / 2, this.y + this.diameter / 2);
+        ctx.rotate(-this.angle -Math.PI / 2);
+        ctx.translate(-this.x - this.diameter / 2, -this.y - this.diameter / 2);
     }
 }
 
