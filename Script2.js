@@ -11,7 +11,7 @@ function Update() {
 
 function Draw() {
     ctx.drawImage(document.getElementById("fon"), 0, 0, canvas.width, canvas.height);
-    if (!isKeyPressed[77]) { ctx.translate(0, planet.diameter - 1650); } else { ctx.scale(0.2, 0.2); ctx.translate(canvas.width + planet.diameter / 2, 0 + planet.diameter/2); };
+    if (!isKeyPressed[77]) { ctx.translate(0, planet.diameter - canvas.width+250); } else { ctx.scale(0.2, 0.2); ctx.translate(canvas.width + planet.diameter / 2, 0 + planet.diameter / 2); };
     planet.draw();
     player.draw();
     
