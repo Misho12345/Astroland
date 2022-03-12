@@ -12,12 +12,23 @@ const contextUI = canvasUI.getContext("2d");
 let bullets = [], enemyClasses = [], enemies = [];
 let buildings = [];
 
+let guns = [
+    "pistol",
+    "shotgun",
+    "uzi",
+    "rifle"
+];
+
 let paused = false, pausing = false;
 
 let isKeyPressed = [];
 for (let i = 0; i < 256; isKeyPressed[i++] = 0);
 
 let pauseMenu = document.getElementById("pause-menu");
+
+function endScreen() {
+
+}
 
 function resizePage() {
     canvas.width = window.innerWidth;
@@ -595,6 +606,10 @@ class Building {
         this.h = planet.diameter / 2 + this.height / 4;
 
         if (this.type == "house") this.level = 0;
+        else if (this.type == "rocket") {
+            endScreen();
+        }
+
         this.type;
     }
 
@@ -631,14 +646,21 @@ class Drill extends Building {
     }
 }
 
+class Rocket extends Building {
+    constructor(angle, width, height) {
+        super(angle, width, height);
+        this.type = "rocket";
+    }
+}
+
 function mousedownFunction() {
     console.log(event.clientX, event.clientY);
 }
 
 window.addEventListener("keydown", e => {
     isKeyPressed[e.keyCode] = 1;
-
-    if (e.keyCode == 27 || e.keyCode == 83) {
+    console.log(e.keyCode);
+    if (e.keyCode == 27) {
         if (!pausing) paused = !paused;
         pausing = true;
     }
@@ -650,10 +672,8 @@ window.addEventListener("keyup", e => {
 });
 
 canvasUI.addEventListener("mousemove", e => {
-    //if (!isKeyPressed[77]) {
-        mouseX = event.clientX;
-        mouseY = event.clientY - planet.diameter / 2 - 250;
-    //}
+    mouseX = event.clientX;
+    mouseY = event.clientY - planet.diameter / 2 - 250;
 });
 
 if (typeof mousemove != "undefined") {
