@@ -17,6 +17,8 @@ let paused = false, pausing = false;
 let isKeyPressed = [];
 for (let i = 0; i < 256; isKeyPressed[i++] = 0);
 
+let pauseMenu = document.getElementById("pause-menu");
+
 function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -35,17 +37,21 @@ function openFullscreen() {
 }
 
 function init() {
-    context.globalAlpha = 1;
-    contextUI.globalAlpha = 1;
+    if (!paused) {
+        if (pauseMenu.style.display != "none") {
+            pauseMenu.style.display = "none";
+        }
 
-    if (!paused) Update();
+        Update();
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctxUI.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.globalAlpha = 1;
+        ctxUI.globalAlpha = 1;
 
-    Draw();
+       ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctxUI.clearRect(0, 0, canvas.width, canvas.height);
 
-    if (paused) DrawPauseMenu();
+        Draw();
+    } else pauseMenu.style.display = "block";
 
     setTimeout(init, 10);
 }
@@ -490,6 +496,9 @@ class Building {
         this.width = width;
         this.height = height;
 
+        this.level = 2;
+        this.frame = 0;
+
         this.x, this.y, this.h;
         this.type;
     }
@@ -505,7 +514,9 @@ class Building {
         ctx.rotate(this.angle + Math.PI / 2);
         ctx.translate(-this.x - this.width / 2, -this.y - this.height / 2);
 
-        ctx.drawImage(document.getElementById(this.type), this.x, this.y, this.width, this.height)
+        if (this.type != "house") this.frame += 0.1;
+
+        ctx.drawImage(document.getElementById(this.type + this.level.toString() + Math.floor(this.frame) % 3), this.x, this.y, this.width, this.height)
 
         ctx.restore();
     }
@@ -522,7 +533,7 @@ class House extends Building {
 class Drill extends Building {
     constructor(angle, width, height) {
         super(angle, width, height);
-        this.h = planet.diameter / 2;
+        this.h = planet.diameter / 2 + this.height / 4;
         this.type = "drill";
     }
 }

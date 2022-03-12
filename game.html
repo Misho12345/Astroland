@@ -6,9 +6,16 @@
     <link rel="stylesheet" href="./StyleSheet.css" />
 </head>
 <body onload="init()">
-    <div>
+    <div style="position: relative">
         <canvas id="canvas" style="position: absolute"></canvas>
-        <canvas id="canvasUI" style="position: relative"></canvas>
+        <canvas id="canvasUI" style="position: absolute"></canvas>
+
+        <div id="pause-menu" style="display: none; position: absolute; color: white">
+            <h1>PAUSED</h1>
+            <button onclick="paused = !paused">resume</button>
+            <img src="">
+            <button onclick="">upgrade</button>
+        </div>
     </div>
 
     <div style="display: none">
@@ -73,8 +80,16 @@
         <img src="./images/rifle/rifle2.png" id="rifle2" />
         <img src="./images/rifle/rifle2L.png" id="rifle2L" />
 
-        <img src="./images/buildings/house.png" id="house" />
-        <img src="./images/buildings/drill.png" id="drill" />
+        <img src="./images/buildings/house/house.png" id="house00" />
+        <img src="./images/buildings/drill/drill00.png" id="drill00" />
+        <img src="./images/buildings/drill/drill01.png" id="drill01" />
+        <img src="./images/buildings/drill/drill02.png" id="drill02" />
+        <img src="./images/buildings/drill/drill10.png" id="drill10" />
+        <img src="./images/buildings/drill/drill11.png" id="drill11" />
+        <img src="./images/buildings/drill/drill12.png" id="drill12" />
+        <img src="./images/buildings/drill/drill20.png" id="drill20" />
+        <img src="./images/buildings/drill/drill21.png" id="drill21" />
+        <img src="./images/buildings/drill/drill22.png" id="drill22" />
     </div>
 
     <script src="./functions.js"></script>

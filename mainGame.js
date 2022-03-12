@@ -61,6 +61,10 @@ function Update() {
     if (buildingCooldown == 0) {
         if (isKeyPressed[66]) {
             buildingCooldown = 50;
+            buildings.push(new Drill(-planet.angle + Math.PI + player.angle - player.defA, 256, 256));
+        }
+        else if (isKeyPressed[67]) {
+            buildingCooldown = 50;
             buildings.push(new House(-planet.angle + Math.PI + player.angle - player.defA, 512, 256));
         }
     } else buildingCooldown--;
@@ -83,10 +87,4 @@ function Draw() {
 
     player.draw();
     player.showCoins();
-}
-
-function DrawPauseMenu() {
-    //contextUI.globalAlpha = 0.2;
-    //contextUI.fillStyle = "black";
-    //contextUI.fillRect(0, 0, canvasUI.width, canvasUI.height);
 }
