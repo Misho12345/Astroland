@@ -41,7 +41,8 @@ function Update() {
 
     updates++;
     if (updates % 1000 == 0) {
-        enemies.push(new (enemyClasses[randomEnemyIndex()])(randomInteger(300) + planet.diameter / 2, randomInteger(Math.Pi * 2 * 100) / 100));
+        enemies.push(new (enemyClasses[randomEnemyIndex()])(randomInteger(900) + planet.diameter / 2 + 300  , randomInteger(Math.PI * 2 * 100) / 100));
+       // updates=999;
     }
 
     enemies.forEach(enemy => enemy.update());
@@ -51,7 +52,20 @@ function Update() {
             bullets.pop();
         }
         else bullet.update();
+        if (bullet.x < -10000 || bullet.y < -10000 || bullet.x > 10000 || bullet.y > 10000 ) {
+            bullet = bullets[bullets.length - 1];
+            bullets.pop();
+        }
+        
     });
+    for (let i = 0; i < bullets.length;i++) {
+        if (bullets[i].color == "bigBrainBullet" && bullets[i].fiel < 0) {
+            console.log("banana");
+            bullets[i] = bullets[bullets.length - 1];
+            bullets.pop();
+            i--;
+        }
+    }
 
     if ((isKeyPressed[38] || isKeyPressed[87]) && !player.up) {
         player.gravitySpeed = -15;
@@ -65,7 +79,7 @@ function Draw() {
 
     if (!isKeyPressed[77]) ctx.translate(0, planet.diameter - canvas.width + 250);
     else {
-        ctx.scale(0.2, 0.2);
+        context.scale(0.2, 0.2);
         ctx.translate(canvas.width + planet.diameter / 2, 0 + planet.diameter / 2);
     }
 

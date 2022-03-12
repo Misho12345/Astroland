@@ -21,6 +21,8 @@ let bigBrainEnemyImages = [
 
 let enemyBullet = document.getElementById("enemyBullet");
 
+let uziBullet = document.getElementById("uziBullet");
+
 
 let bigEnemyImages = [
     document.getElementById("bigEnemy1"),
@@ -29,10 +31,10 @@ let bigEnemyImages = [
 
 function randomEnemyIndex() {
     let randomEnemyIndexNumber = randomInteger(100);
-    return 0;
-    if (randomEnemyIndexNumber < 70) return 0;
-    if (randomEnemyIndexNumber < 90) return 1;
-    return 2;
+    return 1;
+    //if (randomEnemyIndexNumber < 70) return 0;
+    //if (randomEnemyIndexNumber < 90) return 1;
+    //return 2;
 }
 
 let rocketImages = [
@@ -55,6 +57,16 @@ let rifle1Image = document.getElementById("rifle1");
 let rifle1LImage = document.getElementById("rifle1L");
 let rifle2Image = document.getElementById("rifle2");
 let rifle2LImage = document.getElementById("rifle2L");
+
+let shotgun1Image = document.getElementById("shotgun1");
+let shotgun1LImage = document.getElementById("shotgun1L");
+let shotgun2Image = document.getElementById("shotgun2");
+let shotgun2LImage = document.getElementById("shotgun2L");
+
+let uzi1Image = document.getElementById("uzi1");
+let uzi1LImage = document.getElementById("uzi1L");
+let uzi2Image = document.getElementById("uzi2");
+let uzi2LImage = document.getElementById("uzi2L");
 
 function distance(x1, y1, x2, y2) {
     return Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
