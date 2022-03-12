@@ -650,7 +650,7 @@ window.addEventListener("keydown", e => {
         if (!pausing) paused = !paused;
         pausing = true;
     }
-});*/
+}); 
 
 window.addEventListener("keyup", e => {
     isKeyPressed[e.keyCode] = 0;
