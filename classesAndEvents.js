@@ -19,14 +19,17 @@ for (let i = 0; i < 256; isKeyPressed[i++] = 0);
 
 let pauseMenu = document.getElementById("pause-menu");
 
-function resizeCanvas() {
+function resizePage() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
     canvasUI.width = window.innerWidth;
     canvasUI.height = window.innerHeight;
+
+    pauseMenu.style.width = window.innerWidth;
+    pauseMenu.style.height = window.innerHieght;
 }
-resizeCanvas();
+resizePage();
 
 function openFullscreen() {
     let elem = document.documentElement;

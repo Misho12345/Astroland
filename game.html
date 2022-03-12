@@ -5,17 +5,29 @@
     <title>Astroland</title>
     <link rel="stylesheet" href="./StyleSheet.css" />
 </head>
+
 <body onload="init()">
     <div style="position: relative">
         <canvas id="canvas" style="position: absolute"></canvas>
         <canvas id="canvasUI" style="position: absolute"></canvas>
+        
+       <section class="outter-container" id="pause-menu" style="display: none">
+            <h1 id="paused">Paused</h1>
+            <h1 id="next-gun">Next Gun</h1>
+            <h1 id="buildings">Buildings</h1>
+            <h1 id="coins">999</h1> 
+            <section class="guns" style="background-image: url(pause-icons/pistol1.png);"></section>
+            <section class="buildings">
+                <div class="name">station</div>
+                <div class="name">drill</div>
+                <div class="name">rocket</div>
 
-        <div id="pause-menu" style="display: none; position: absolute; color: white">
-            <h1>PAUSED</h1>
-            <button onclick="paused = !paused">resume</button>
-            <img src="">
-            <button onclick="">upgrade</button>
-        </div>
+                <div id="station-price">999</div>
+                <div id="drill-price">999</div>
+                <div id="rocket-price">999</div>
+            </section>
+        </section>
+        
     </div>
 
     <div style="display: none">

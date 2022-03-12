@@ -8,7 +8,7 @@ let cap = Math.PI / 20;
 let speed = Math.PI / 720;
 
 function Update() {
-    window.onresize = resizeCanvas();
+    window.onresize = resizePage();
     player.update();
 
     if ((isKeyPressed[39] || isKeyPressed[68]) && (isKeyPressed[37] || isKeyPressed[65])) player.state = 0;
