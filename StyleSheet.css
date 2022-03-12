@@ -1,9 +1,93 @@
-﻿body, canvas {
+﻿@import url('http://fonts.cdnfonts.com/css/common-pixel');
+
+* {
     margin: 0;
     padding: 0;
+    color: white;
+    text-shadow: -2px 2px 0 black, 2px 2px 0 black, 2px -2px 0 black, -2px -2px 0 black;
+    font-family: 'Common Pixel', sans-serif;
+}
+
+#pause-menu {
+    position: absolute;
+}
+
+canvas, body {
     overflow: hidden;
 }
 
-canvas {
-    cursor: url(./images/aim.png), default;
+.guns {
+    background-color: rgba(128, 128, 128, 0.3);
+    border: 2px solid white;
+    position: fixed;
+    width: 160px;
+    height: 160px;
+    right: 30%;
+    top: 42%;
+}
+
+.guns:hover, .name:hover {
+    background-color: rgba(128, 128, 128, 0.5);
+}
+
+.buildings {
+    position: fixed;
+    width: 300px;
+    height: 189px;
+    border-style: solid;
+    left: 30%;
+    top: 40%;
+}
+
+#next-gun {
+    font-size: 30px;
+    position: fixed;
+    right: 30%;
+    top: 35%;
+}
+
+#paused {
+    position: fixed;
+    font-size: 70px;
+    top: 20%;
+    left: 38%;
+}
+
+#buildings {
+    font-size: 30px;
+    position: fixed;
+    left: 35%;
+    top: 35%;
+}
+
+#coins {
+    position: fixed;
+    right: 33%;
+    top: 56%;
+    color: gold;
+    font-size: xx-large;
+}
+
+.name {
+    color: gold;
+    font-size: xx-large;
+    width: 200px;
+    height: 40px;
+    margin: auto;
+    margin-bottom: 20px;
+    margin-left: 0px;
+    text-align: center;
+    border: 5px solid white;
+    background-color: rgba(128, 128, 128, 0.3);
+}
+
+#station-price, #drill-price, #rocket-price {
+    position: relative;
+    color: gold;
+    font-size: xx-large;
+    left: 35%;
+    bottom: 200px;
+    margin: auto;
+    margin-bottom: 35px;
+    width: 60px;
 }

@@ -2,12 +2,13 @@ let planet = new Planet(canvas.width * 2);
 let player = new Player(100, 200);
 
 let updates = 0;
+let buildingCooldown = 0;
 
 let cap = Math.PI / 20;
 let speed = Math.PI / 720;
 
 function Update() {
-    window.onresize = resizeCanvas();
+    window.onresize = resizePage();
     player.update();
 
     if ((isKeyPressed[39] || isKeyPressed[68]) && (isKeyPressed[37] || isKeyPressed[65])) player.state = 0;
@@ -19,10 +20,9 @@ function Update() {
             }
             else player.angle += speed;
 
-            if (player.state == 0) {
-                player.dir = 1;
-                player.state = 1;
-            }
+            player.dir = 1;
+
+            if (player.state == 0) player.state = 1;
         }
         else if (isKeyPressed[37] || isKeyPressed[65]) {
             if (player.angle <= player.defA - cap) {
@@ -31,10 +31,9 @@ function Update() {
             }
             else player.angle -= speed;
 
-            if (player.state == 0) {
-                player.dir = 0;
-                player.state = 1;
-            }
+            player.dir = 0;
+
+            if (player.state == 0) player.state = 1;
         }
         else if (!isKeyPressed[39] && !isKeyPressed[68]) player.state = 0;
     }
@@ -72,6 +71,16 @@ function Update() {
         player.up = true;
         player.h++;
     }
+
+    if (buildingCooldown == 0) {
+        if (isKeyPressed[66]) {
+            buildingCooldown = 50;
+            buildings.push(new House(-planet.angle + Math.PI + player.angle - player.defA, 512, 256));
+        } if (isKeyPressed[67]) {
+            buildingCooldown = 50;
+            buildings.push(new Drill(-planet.angle + Math.PI + player.angle - player.defA, 256, 256));
+        }
+    } else buildingCooldown--;
 }
 
 function Draw() {
@@ -84,6 +93,8 @@ function Draw() {
     }
 
     planet.draw();
+
+    buildings.forEach(build => build.draw());
 
     enemies.forEach(enemy => enemy.draw());
     bullets.forEach(bullet => bullet.draw());

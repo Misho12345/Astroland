@@ -5,10 +5,29 @@
     <title>Astroland</title>
     <link rel="stylesheet" href="./StyleSheet.css" />
 </head>
+
 <body onload="init()">
-    <div>
+    <div style="position: relative">
         <canvas id="canvas" style="position: absolute"></canvas>
-        <canvas id="canvasUI" style="position: relative"></canvas>
+        <canvas id="canvasUI" style="position: absolute"></canvas>
+        
+       <section class="outter-container" id="pause-menu" style="display: none">
+            <h1 id="paused">Paused</h1>
+            <h1 id="next-gun">Next Gun</h1>
+            <h1 id="buildings">Buildings</h1>
+            <h1 id="coins">999</h1> 
+            <section class="guns" style="background-image: url(pause-icons/pistol1.png);"></section>
+            <section class="buildings">
+                <div class="name">station</div>
+                <div class="name">drill</div>
+                <div class="name">rocket</div>
+
+                <div id="station-price">999</div>
+                <div id="drill-price">999</div>
+                <div id="rocket-price">999</div>
+            </section>
+        </section>
+        
     </div>
 
     <div style="display: none">
@@ -75,6 +94,16 @@
         <img src="./images/rifle/rifle2.png" id="rifle2" />
         <img src="./images/rifle/rifle2L.png" id="rifle2L" />
 
+        <img src="./images/buildings/house/house.png" id="house00" />
+        <img src="./images/buildings/drill/drill00.png" id="drill00" />
+        <img src="./images/buildings/drill/drill01.png" id="drill01" />
+        <img src="./images/buildings/drill/drill02.png" id="drill02" />
+        <img src="./images/buildings/drill/drill10.png" id="drill10" />
+        <img src="./images/buildings/drill/drill11.png" id="drill11" />
+        <img src="./images/buildings/drill/drill12.png" id="drill12" />
+        <img src="./images/buildings/drill/drill20.png" id="drill20" />
+        <img src="./images/buildings/drill/drill21.png" id="drill21" />
+        <img src="./images/buildings/drill/drill22.png" id="drill22" />
         <img src="./images/shotgun/shotgun1.png" id="shotgun1" />
         <img src="./images/shotgun/shotgun1L.png" id="shotgun1L" />
         <img src="./images/shotgun/shotgun2.png" id="shotgun2" />

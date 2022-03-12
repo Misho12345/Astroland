@@ -10,18 +10,26 @@ const ctxUI = canvasUI.getContext("2d");
 const contextUI = canvasUI.getContext("2d");
 
 let bullets = [], enemyClasses = [], enemies = [];
+let buildings = [];
+
+let paused = false, pausing = false;
 
 let isKeyPressed = [];
 for (let i = 0; i < 256; isKeyPressed[i++] = 0);
 
-function resizeCanvas() {
+let pauseMenu = document.getElementById("pause-menu");
+
+function resizePage() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
     canvasUI.width = window.innerWidth;
     canvasUI.height = window.innerHeight;
+
+    pauseMenu.style.width = window.innerWidth;
+    pauseMenu.style.height = window.innerHieght;
 }
-resizeCanvas();
+resizePage();
 
 function openFullscreen() {
     let elem = document.documentElement;
@@ -32,10 +40,21 @@ function openFullscreen() {
 }
 
 function init() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (!paused) {
+        if (pauseMenu.style.display != "none") {
+            pauseMenu.style.display = "none";
+        }
 
-    Update();
-    Draw();
+        Update();
+
+        ctx.globalAlpha = 1;
+        ctxUI.globalAlpha = 1;
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctxUI.clearRect(0, 0, canvas.width, canvas.height);
+
+        Draw();
+    } else pauseMenu.style.display = "block";
 
     setTimeout(init, 10);
 }
@@ -81,23 +100,10 @@ enemyClasses.push(
                 if (this.frame > 3) this.frame = 0;
             }
 
-
-            if (player.state <= 0) {
-                if (player.dir == 0 && player.angle < player.defA) {
-                    this.angle += speed;
-                }
-                else if (player.dir == 1 && player.angle > player.defA) {
-                    this.angle -= speed;
-                }
-            }
-            if ((isKeyPressed[39] || isKeyPressed[68]) && player.angle >= player.defA + cap) {
-                this.angle -= speed;
-            } else if ((isKeyPressed[37] || isKeyPressed[65]) && player.angle <= player.defA - cap) {
-                this.angle += speed;
-            }
-            this.x = planet.x + planet.diameter / 2 + Math.cos(this.angle) * this.h;
-            this.y = planet.y + planet.diameter / 2 + Math.sin(this.angle) * this.h;
-
+            this.x = this.defX + Math.cos(planet.angle) * 1000;
+            this.y = this.defY + Math.sin(planet.angle) * 1000;
+            //this.x += Math.cos(planet.angle)
+            //this.y += Math.sin(planet.angle)
         }
         draw() {
             ctx.drawImage(green_blobImages[this.frame], this.x - this.sizeX / 2, this.y - this.sizeY / 2, this.sizeX, this.sizeY)
@@ -464,7 +470,7 @@ class Player {
 
         let gunAngle = angleCalc(this.x + this.width / 2, this.y + this.height / 2, mouseX , mouseY );
         //console.log(gunAngle);
-        context.save();
+        ctx.save();
 
         context.translate(this.x + this.width / 2, this.y + this.height / 2);
         context.rotate(gunAngle);
@@ -531,8 +537,8 @@ class Player {
                 }
             }
         }
-        //context.rotate(-gunAngle);
-        context.restore();
+        //ctx.rotate(-gunAngle);
+        ctx.restore();
 
         //ctxUI.fillRect(mouseX, mouseY, 50, 50);
     }
@@ -582,21 +588,74 @@ class Planet {
     }
 }
 
+class Building {
+    constructor(angle, width, height) {
+        this.defA = angle;
+        this.angle;
+
+        this.width = width;
+        this.height = height;
+
+        this.level = 0;
+        this.frame = 0;
+
+        this.x, this.y;
+        this.h = planet.diameter / 2 + this.height / 4;
+
+        if (this.type == "house") this.level = 0;
+        this.type;
+    }
+
+    draw() {
+        this.angle = this.defA + planet.angle - 1.5 * Math.PI;
+        this.x = Math.cos(this.angle) * this.h + canvas.width / 2 - this.width / 2;
+        this.y = Math.sin(this.angle) * this.h + canvas.height / 2 - this.height / 2;
+
+        ctx.save();
+
+        ctx.translate(this.x + this.width / 2, this.y + this.height / 2);
+        ctx.rotate(this.angle + Math.PI / 2);
+        ctx.translate(-this.x - this.width / 2, -this.y - this.height / 2);
+            
+        if (this.type != "house") this.frame += 0.1;
+
+        ctx.drawImage(document.getElementById(this.type + this.level.toString() + Math.floor(this.frame) % 3), this.x, this.y, this.width, this.height)
+
+        ctx.restore();
+    }
+}
+
+class House extends Building {
+    constructor(angle, width, height) {
+        super(angle, width, height);
+        this.type = "house";
+    }
+}
+
+class Drill extends Building {
+    constructor(angle, width, height) {
+        super(angle, width, height);
+        this.type = "drill";
+    }
+}
+
 function mousedownFunction() {
     console.log(event.clientX, event.clientY);
 }
 
-window.addEventListener("keydown", e => isKeyPressed[e.keyCode] = 1);
-window.addEventListener("keyup", e => isKeyPressed[e.keyCode] = 0);
+window.addEventListener("keydown", e => {
+    isKeyPressed[e.keyCode] = 1;
 
-
-/*
-window.addEventListener("mousemove", e => {
-    if (isKeyPressed[77]) {
-        mouseX = event.clientX;
-        mouseY = event.clientY - planet.diameter / 2 - 250;
+    if (e.keyCode == 27 || e.keyCode == 83) {
+        if (!pausing) paused = !paused;
+        pausing = true;
     }
 });*/
+
+window.addEventListener("keyup", e => {
+    isKeyPressed[e.keyCode] = 0;
+    pausing = false;
+});
 
 canvasUI.addEventListener("mousemove", e => {
     //if (!isKeyPressed[77]) {
@@ -605,9 +664,9 @@ canvasUI.addEventListener("mousemove", e => {
     //}
 });
 
-//if (typeof mousemove != "undefined") {
-//    window.addEventListener("mousemove", mousemove);
-//}
+if (typeof mousemove != "undefined") {
+    window.addEventListener("mousemove", mousemove);
+}
 
 window.addEventListener("mousedown", e => {
     isMousePressed = 1;
@@ -615,4 +674,3 @@ window.addEventListener("mousedown", e => {
 });
 
 window.addEventListener("mouseup", e => isMousePressed = 0);
-
