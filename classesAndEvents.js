@@ -10,6 +10,9 @@ const ctxUI = canvasUI.getContext("2d");
 const contextUI = canvasUI.getContext("2d");
 
 let bullets = [], enemyClasses = [], enemies = [];
+let buildings = [];
+
+let paused = false, pausing = false;
 
 let isKeyPressed = [];
 for (let i = 0; i < 256; isKeyPressed[i++] = 0);
@@ -32,10 +35,17 @@ function openFullscreen() {
 }
 
 function init() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    context.globalAlpha = 1;
+    contextUI.globalAlpha = 1;
 
-    Update();
+    if (!paused) Update();
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctxUI.clearRect(0, 0, canvas.width, canvas.height);
+
     Draw();
+
+    if (paused) DrawPauseMenu();
 
     setTimeout(init, 10);
 }
@@ -262,7 +272,7 @@ class Player {
         this.order = 0;
         this.state = 0;
 
-        this.weapon = 'rifle';
+        this.weapon = "pistol";
         this.gunTime = 0;
         this.gunShot = false
 
@@ -276,7 +286,7 @@ class Player {
     }
 
     update() {
-        if (this.weapon == 'pistol') {
+        if (this.weapon == "pistol") {
             if (isMousePressed && this.gunTime >= 75) {
                 let anglejhdsak = angleCalc(this.x, this.y, mouseX, mouseY);
 
@@ -297,7 +307,7 @@ class Player {
             }
             this.gunTime++;
         }
-        if (this.weapon == 'rifle') {
+        if (this.weapon == "rifle") {
             if (isMousePressed && this.gunTime >= 20) {
                 let anglejhdsak = angleCalc(this.x, this.y, mouseX, mouseY);
 
@@ -377,20 +387,20 @@ class Player {
 
         let gunAngle = angleCalc(this.x + this.width / 2, this.y + this.height / 2, mouseX, mouseY);
         //console.log(gunAngle);
-        context.save();
+        ctx.save();
 
-        context.translate(this.x, this.y + this.height / 2);
-        context.rotate(gunAngle);
-        context.translate(-this.x, -this.y - this.height / 2);
+        ctx.translate(this.x, this.y + this.height / 2);
+        ctx.rotate(gunAngle);
+        ctx.translate(-this.x, -this.y - this.height / 2);
 
-        if (this.weapon == 'UZI') {
+        if (this.weapon == "UZI") {
             if (gunAngle >= 0.5 * Math.PI && gunAngle <= 1.5 * Math.PI) {
                 ctx.drawImage(UZILImage, this.x, this.y - 15, 100, 50);
             } else {
                 ctx.drawImage(UZIImage, this.x, this.y - 15, 100, 50);
             }
         }
-        else if (this.weapon == 'pistol') {
+        else if (this.weapon == "pistol") {
             if (!this.gunShot) {
                 if (gunAngle >= 0.5 * Math.PI && gunAngle <= 1.5 * Math.PI) {
                     ctx.drawImage(pistol1LImage, this.x, this.y + this.height / 2, 50, 50);
@@ -406,7 +416,7 @@ class Player {
             }
 
         }
-        else if (this.weapon == 'rifle') {
+        else if (this.weapon == "rifle") {
             if (!this.gunShot) {
                 if (gunAngle >= 0.5 * Math.PI && gunAngle <= 1.5 * Math.PI) {
                     ctx.drawImage(rifle1LImage, this.x, this.y + this.height / 2, 100, 50);
@@ -421,10 +431,10 @@ class Player {
                 }
             }
         }
-        //context.rotate(-gunAngle);
-        context.restore();
+        //ctx.rotate(-gunAngle);
+        ctx.restore();
 
-        context.fillRect(mouseX, mouseY, 50, 50);
+        ctx.fillRect(mouseX, mouseY, 50, 50);
     }
 
     showCoins() {
@@ -465,10 +475,55 @@ class Planet {
         ctx.translate(-this.x - this.diameter / 2, -this.y - this.diameter / 2);
 
         ctx.drawImage(document.getElementById("planet"), this.x, this.y, this.diameter, this.diameter);
-
+        
         ctx.translate(this.x + this.diameter / 2, this.y + this.diameter / 2);
         ctx.rotate(-this.angle -Math.PI / 2);
         ctx.translate(-this.x - this.diameter / 2, -this.y - this.diameter / 2);
+    }
+}
+
+class Building {
+    constructor(angle, width, height) {
+        this.defA = angle;
+        this.angle;
+
+        this.width = width;
+        this.height = height;
+
+        this.x, this.y, this.h;
+        this.type;
+    }
+
+    draw() {
+        this.angle = this.defA + planet.angle - 1.5 * Math.PI;
+        this.x = Math.cos(this.angle) * this.h + canvas.width / 2 - this.width / 2;
+        this.y = Math.sin(this.angle) * this.h + canvas.height / 2 - this.height / 2;
+
+        ctx.save();
+
+        ctx.translate(this.x + this.width / 2, this.y + this.height / 2);
+        ctx.rotate(this.angle + Math.PI / 2);
+        ctx.translate(-this.x - this.width / 2, -this.y - this.height / 2);
+
+        ctx.drawImage(document.getElementById(this.type), this.x, this.y, this.width, this.height)
+
+        ctx.restore();
+    }
+}
+
+class House extends Building {
+    constructor(angle, width, height) {
+        super(angle, width, height);
+        this.h = planet.diameter / 2 + this.height / 4;
+        this.type = "house";
+    }
+}
+
+class Drill extends Building {
+    constructor(angle, width, height) {
+        super(angle, width, height);
+        this.h = planet.diameter / 2;
+        this.type = "drill";
     }
 }
 
@@ -476,8 +531,19 @@ function mousedownFunction() {
     console.log(event.clientX, event.clientY);
 }
 
-window.addEventListener("keydown", e => isKeyPressed[e.keyCode] = 1);
-window.addEventListener("keyup", e => isKeyPressed[e.keyCode] = 0);
+window.addEventListener("keydown", e => {
+    isKeyPressed[e.keyCode] = 1;
+
+    if (e.keyCode == 27 || e.keyCode == 83) {
+        if (!pausing) paused = !paused;
+        pausing = true;
+    }
+});
+
+window.addEventListener("keyup", e => {
+    isKeyPressed[e.keyCode] = 0;
+    pausing = false;
+});
 
 canvasUI.addEventListener("mousemove", e => {
     mouseX = e.x;
@@ -494,4 +560,3 @@ window.addEventListener("mousedown", e => {
 });
 
 window.addEventListener("mouseup", e => isMousePressed = 0);
-
