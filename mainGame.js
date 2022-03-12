@@ -2,7 +2,6 @@ let planet = new Planet(canvas.width * 2);
 let player = new Player(100, 200);
 
 let updates = 0;
-let buildingCooldown = 0;
 
 let cap = Math.PI / 20;
 let speed = Math.PI / 720;
@@ -20,9 +19,10 @@ function Update() {
             }
             else player.angle += speed;
 
-            player.dir = 1;
-
-            if (player.state == 0) player.state = 1;
+            if (player.state == 0) {
+                player.dir = 1;
+                player.state = 1;
+            }
         }
         else if (isKeyPressed[37] || isKeyPressed[65]) {
             if (player.angle <= player.defA - cap) {
@@ -31,16 +31,17 @@ function Update() {
             }
             else player.angle -= speed;
 
-            player.dir = 0;
-
-            if (player.state == 0) player.state = 1;
+            if (player.state == 0) {
+                player.dir = 0;
+                player.state = 1;
+            }
         }
         else if (!isKeyPressed[39] && !isKeyPressed[68]) player.state = 0;
     }
 
     updates++;
     if (updates % 1000 == 0) {
-        enemies.push(new (enemyClasses[randomEnemyIndex()])(randomInteger(canvas.width), randomInteger(canvas.height)));
+        enemies.push(new (enemyClasses[randomEnemyIndex()])(randomInteger(300) + planet.diameter / 2, randomInteger(Math.Pi * 2 * 100) / 100));
     }
 
     enemies.forEach(enemy => enemy.update());
@@ -57,13 +58,6 @@ function Update() {
         player.up = true;
         player.h++;
     }
-
-    if (buildingCooldown == 0) {
-        if (isKeyPressed[66]) {
-            buildingCooldown = 50;
-            buildings.push(new House(-planet.angle + Math.PI + player.angle - player.defA, 512, 256));
-        }
-    } else buildingCooldown--;
 }
 
 function Draw() {
@@ -76,17 +70,10 @@ function Draw() {
     }
 
     planet.draw();
-    buildings.forEach(build => build.draw());
 
     enemies.forEach(enemy => enemy.draw());
-    bullets.forEach(bullet => bullet.draw());    
+    bullets.forEach(bullet => bullet.draw());
 
     player.draw();
     player.showCoins();
-}
-
-function DrawPauseMenu() {
-    //contextUI.globalAlpha = 0.2;
-    //contextUI.fillStyle = "black";
-    //contextUI.fillRect(0, 0, canvasUI.width, canvasUI.height);
 }
