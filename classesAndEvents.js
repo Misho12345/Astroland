@@ -1,6 +1,8 @@
 let canvas = document.getElementById("canvas");
 let canvasUI = document.getElementById("canvasUI");
 
+let mouseX = 0, mouseY = 0, isMousePressed = 0;
+
 const ctx = canvas.getContext("2d");
 const context = canvas.getContext("2d");
 
@@ -21,9 +23,9 @@ function resizeCanvas() {
 }
 resizeCanvas();
 
-let elem = document.documentElement;
-
 function openFullscreen() {
+    let elem = document.documentElement;
+
     if (elem.requestFullscreen) elem.requestFullscreen();
     else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
     else if (elem.msRequestFullscreen) elem.msRequestFullscreen();
@@ -41,8 +43,11 @@ function init() {
 enemyClasses.push(
     class smallEnemy {
         constructor(x, y) {
+            this.defX = x;
+            this.defY = y;
             this.x = x;
             this.y = y;
+
             this.type = "smallEnemy";
             this.updates = 0;
             this.frame = 0;
@@ -50,6 +55,7 @@ enemyClasses.push(
             this.sizeY = 100;
 
         }
+
         shooting() {
             bullets.push(new Bullet(this.x,
                 this.y,
@@ -59,8 +65,10 @@ enemyClasses.push(
                 15,
                 5,
                 1,
+                bullets.length
             ));
         }
+
         update() {
             this.updates++;
             if (this.updates % 500 == 0) this.shooting();
@@ -70,6 +78,11 @@ enemyClasses.push(
 
                 if (this.frame > 3) this.frame = 0;
             }
+
+            this.x = this.defX + Math.cos(planet.angle) * 1000;
+            this.y = this.defY + Math.sin(planet.angle) * 1000;
+            //this.x += Math.cos(planet.angle)
+            //this.y += Math.sin(planet.angle)
         }
         draw() {
             ctx.drawImage(green_blobImages[this.frame], this.x - this.sizeX / 2, this.y - this.sizeY / 2, this.sizeX, this.sizeY)
@@ -87,6 +100,7 @@ enemyClasses.push(
             this.sizeY = 200;
 
         }
+
         shooting() {
             bullets.push(new Bullet(this.x,
                 this.y,
@@ -96,8 +110,10 @@ enemyClasses.push(
                 30,
                 2,
                 1,
+                bullets.length
             ));
         }
+
         update() {
             this.updates++;
             if (this.updates % 500 == 0) this.shooting();
@@ -132,7 +148,9 @@ enemyClasses.push(
                 20,
                 5,
                 1,
+                bullets.length
             ));
+
             bullets.push(new Bullet(this.x,
                 this.y,
                 Math.cos(angleCalc(this.x, this.y, player.x, player.y)),
@@ -141,6 +159,7 @@ enemyClasses.push(
                 20,
                 7.5,
                 1,
+                bullets.length
             ));
             bullets.push(new Bullet(this.x,
                 this.y,
@@ -150,8 +169,10 @@ enemyClasses.push(
                 20,
                 5,
                 1,
+                bullets.length
             ));
         }
+
         update() {
             this.updates++;
             if (this.updates % 500 == 0) this.shooting();
@@ -162,14 +183,14 @@ enemyClasses.push(
                 if (this.frame > 2) this.frame = 0;
             }
         }
+
         draw() {
             ctx.drawImage(bigEnemyImages[this.frame], this.x - this.sizeX / 2, this.y - this.sizeY / 2, this.sizeX, this.sizeY)
         }
-
     });
 
 class Bullet {
-    constructor(x_, y_, dX_, dY_, color_, r_, speed_, damage_) {
+    constructor(x_, y_, dX_, dY_, color_, r_, speed_, damage_, index_) {
         this.x = x_;
         this.y = y_;
         this.dX = dX_;
@@ -181,15 +202,18 @@ class Bullet {
         this.updates = 0;
         this.angle = 0;
         this.damage = damage_;
+        this.index = index_;
     }
 
     update() {
         if (this.color == "bigBrainBullet") {
-            this.dX = angleCalc(this.x, this.y, player.x, player.y);
-            this.dY = angleCalc(this.x, this.y, player.x, player.y);
+            this.dX = angleCalc(this.x, this.y, player.x + player.width / 2, player.y + player.height / 2);
+            this.dY = angleCalc(this.x, this.y, player.x + player.width / 2, player.y + player.height / 2);
         }
+
         this.x += Math.cos(this.dX) * this.speed;
         this.y += Math.sin(this.dY) * this.speed;
+
         this.updates++;
         if (this.updates % 5 == 0) {
             this.frame++;
@@ -202,12 +226,12 @@ class Bullet {
         ctx.beginPath();
         if (this.color == "enemyBullet") {
             ctx.drawImage(enemyBullet, this.x - this.r, this.y - this.r, this.r, this.r);
-        } else if (this.color == "bigBrainBullet") {
-            
+        }
+        else if (this.color == "bigBrainBullet") {
             ctx.save();
-            ctx.translate(this.x, this.y);
+            ctx.translate(this.x - this.r, this.y - this.r);
             ctx.rotate(this.angle);
-            ctx.translate(-this.x, -this.y);
+            ctx.translate(-this.x + this.r, -this.y + this.r);
             ctx.drawImage(rocketImages[this.frame], this.x - this.r, this.y - this.r, this.r, this.r);
             ctx.rotate(-this.angle);
             ctx.restore();
@@ -238,6 +262,10 @@ class Player {
         this.order = 0;
         this.state = 0;
 
+        this.weapon = 'rifle';
+        this.gunTime = 0;
+        this.gunShot = false
+
         this.coins = 0;
         this.coinsState = 0;
         this.cooldownC = 10;
@@ -245,6 +273,53 @@ class Player {
         this.up = false;
         this.gravitySpeed = 0;
         this.gravity = 0.5;
+    }
+
+    update() {
+        if (this.weapon == 'pistol') {
+            if (isMousePressed && this.gunTime >= 75) {
+                let anglejhdsak = angleCalc(this.x, this.y, mouseX, mouseY);
+
+                bullets.push(new Bullet(this.x,
+                    this.y,
+                    (anglejhdsak + (randomInteger(3) / 100 - 1.5 / 100) * Math.PI),
+                    (anglejhdsak + (randomInteger(3) / 100 - 1.5 / 100) * Math.PI),
+                    "blue",
+                    5,
+                    10,
+                    5,
+                    bullets.length
+                ));
+
+                console.log(bullets);
+                this.gunTime = 0;
+                this.gunShot = true;
+            }
+            this.gunTime++;
+        }
+        if (this.weapon == 'rifle') {
+            if (isMousePressed && this.gunTime >= 20) {
+                let anglejhdsak = angleCalc(this.x, this.y, mouseX, mouseY);
+
+                bullets.push(new Bullet(this.x,
+                    this.y,
+                    (anglejhdsak + (randomInteger(5) / 100 - 2.5 / 100) * Math.PI),
+                    (anglejhdsak + (randomInteger(5) / 100 - 2.5 / 100) * Math.PI),
+                    "blue",
+                    5,
+                    10,
+                    5,
+                    bullets.length
+                ));
+
+                console.log(bullets);
+                this.gunTime = 0;
+                this.gunShot = true;
+            }
+            this.gunTime++;
+        }
+
+        if (this.gunTime > 10) this.gunShot = false;
     }
 
     draw() {
@@ -299,6 +374,57 @@ class Player {
         ctx.drawImage(document.getElementById("player" + (this.state > 0 ? this.dir : 0) + "_" + this.state), this.x, this.y, this.width, this.height);
         
         ctx.restore();
+
+        let gunAngle = angleCalc(this.x + this.width / 2, this.y + this.height / 2, mouseX, mouseY);
+        //console.log(gunAngle);
+        context.save();
+
+        context.translate(this.x, this.y + this.height / 2);
+        context.rotate(gunAngle);
+        context.translate(-this.x, -this.y - this.height / 2);
+
+        if (this.weapon == 'UZI') {
+            if (gunAngle >= 0.5 * Math.PI && gunAngle <= 1.5 * Math.PI) {
+                ctx.drawImage(UZILImage, this.x, this.y - 15, 100, 50);
+            } else {
+                ctx.drawImage(UZIImage, this.x, this.y - 15, 100, 50);
+            }
+        }
+        else if (this.weapon == 'pistol') {
+            if (!this.gunShot) {
+                if (gunAngle >= 0.5 * Math.PI && gunAngle <= 1.5 * Math.PI) {
+                    ctx.drawImage(pistol1LImage, this.x, this.y + this.height / 2, 50, 50);
+                } else {
+                    ctx.drawImage(pistol1Image, this.x + this.width / 2, this.y + this.height / 2, 50, 50);
+                }
+            } else {
+                if (gunAngle >= 0.5 * Math.PI && gunAngle <= 1.5 * Math.PI) {
+                    ctx.drawImage(pistol2Image, this.x, this.y + this.height / 2, 50, 50);
+                } else {
+                    ctx.drawImage(pistol2LImage, this.x + this.width / 2, this.y + this.height / 2, 50, 50);
+                }
+            }
+
+        }
+        else if (this.weapon == 'rifle') {
+            if (!this.gunShot) {
+                if (gunAngle >= 0.5 * Math.PI && gunAngle <= 1.5 * Math.PI) {
+                    ctx.drawImage(rifle1LImage, this.x, this.y + this.height / 2, 100, 50);
+                } else {
+                    ctx.drawImage(rifle1Image, this.x + this.width / 2, this.y + this.height / 2, 100, 50);
+                }
+            } else {
+                if (gunAngle >= 0.5 * Math.PI && gunAngle <= 1.5 * Math.PI) {
+                    ctx.drawImage(rifle2Image, this.x, this.y + this.height / 2, 100, 50);
+                } else {
+                    ctx.drawImage(rifle2LImage, this.x + this.width / 2, this.y + this.height / 2, 100, 50);
+                }
+            }
+        }
+        //context.rotate(-gunAngle);
+        context.restore();
+
+        context.fillRect(mouseX, mouseY, 50, 50);
     }
 
     showCoins() {
@@ -346,5 +472,26 @@ class Planet {
     }
 }
 
+function mousedownFunction() {
+    console.log(event.clientX, event.clientY);
+}
+
 window.addEventListener("keydown", e => isKeyPressed[e.keyCode] = 1);
 window.addEventListener("keyup", e => isKeyPressed[e.keyCode] = 0);
+
+canvasUI.addEventListener("mousemove", e => {
+    mouseX = e.x;
+    mouseY = e.y;
+});
+
+if (typeof mousemove != "undefined") {
+    window.addEventListener("mousemove", mousemove);
+}
+
+window.addEventListener("mousedown", e => {
+    isMousePressed = 1;
+    mousedownFunction();
+});
+
+window.addEventListener("mouseup", e => isMousePressed = 0);
+

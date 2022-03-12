@@ -8,6 +8,7 @@ let speed = Math.PI / 720;
 
 function Update() {
     window.onresize = resizeCanvas();
+    player.update();
 
     if ((isKeyPressed[39] || isKeyPressed[68]) && (isKeyPressed[37] || isKeyPressed[65])) player.state = 0;
     else {
@@ -23,8 +24,7 @@ function Update() {
                 player.state = 1;
             }
         }
-
-        if (isKeyPressed[37] || isKeyPressed[65]) {
+        else if (isKeyPressed[37] || isKeyPressed[65]) {
             if (player.angle <= player.defA - cap) {
                 planet.angle += speed;
                 player.defA = player.angle + cap;
@@ -45,14 +45,19 @@ function Update() {
     }
 
     enemies.forEach(enemy => enemy.update());
-    bullets.forEach(bullet => bullet.update());
+    bullets.forEach(bullet => {
+        if (bullet == undefined) {
+            bullet = bullets[bullets.length - 1];
+            bullets.pop();
+        }
+        else bullet.update();
+    });
 
     if ((isKeyPressed[38] || isKeyPressed[87]) && !player.up) {
         player.gravitySpeed = -15;
         player.up = true;
         player.h++;
     }
-
 }
 
 function Draw() {
@@ -66,13 +71,8 @@ function Draw() {
 
     planet.draw();
     
-
-    for (let i = 0; i < enemies.length; i++) {
-        enemies[i].draw();
-    }
-    for (let i = 0; i < bullets.length; i++) {
-        bullets[i].draw();
-    }
+    enemies.forEach(enemy => enemy.draw());
+    bullets.forEach(bullet => bullet.draw());
 
     player.draw();
     player.showCoins();

@@ -44,3 +44,17 @@ let heart1Image = document.getElementById("heart1");
 let heart2Image = document.getElementById("heart2");
 let dead1Image = document.getElementById("dead1");
 let dead2Image = document.getElementById("dead2");
+
+let pistol1Image = document.getElementById("pistol1");
+let pistol1LImage = document.getElementById("pistol1L");
+let pistol2Image = document.getElementById("pistol2");
+let pistol2LImage = document.getElementById("pistol2L");
+
+let rifle1Image = document.getElementById("rifle1");
+let rifle1LImage = document.getElementById("rifle1L");
+let rifle2Image = document.getElementById("rifle2");
+let rifle2LImage = document.getElementById("rifle2L");
+
+function distance(x1, y1, x2, y2) {
+    return Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+}
