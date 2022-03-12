@@ -238,7 +238,7 @@ class Player {
         this.order = 0;
         this.state = 0;
 
-        this.coins = 100;
+        this.coins = 0;
         this.coinsState = 0;
         this.cooldownC = 10;
 
@@ -302,7 +302,9 @@ class Player {
     }
 
     showCoins() {
-        ctxUI.drawImage(document.getElementById("coin" + this.coinsState % 12), canvasUI.width - 280, 50);
+        let pos = canvas.width - this.coins.toString().length * 42.5 - 60;
+
+        ctxUI.drawImage(document.getElementById("coin" + this.coinsState % 12), pos - 90, 50);
 
         if (this.cooldownC < 1) {
             this.cooldownC = 10;
@@ -313,11 +315,10 @@ class Player {
         ctxUI.strokeStyle = "orange";
 
         ctxUI.lineWidth = 3;
-
         ctxUI.font = "90px Comic Sans MS";
 
-        ctxUI.fillText(this.coins, canvasUI.width - 200, 125);
-        ctxUI.strokeText(this.coins, canvasUI.width - 200, 125)
+        ctxUI.fillText(this.coins, pos, 122.5);
+        ctxUI.strokeText(this.coins, pos, 122.5)
     }
 }
 
@@ -345,10 +346,5 @@ class Planet {
     }
 }
 
-window.addEventListener("keydown", e => {
-    isKeyPressed[e.keyCode] = 1;
-});
-
-window.addEventListener("keyup", e => {
-    isKeyPressed[e.keyCode] = 0;
-});
+window.addEventListener("keydown", e => isKeyPressed[e.keyCode] = 1);
+window.addEventListener("keyup", e => isKeyPressed[e.keyCode] = 0);
