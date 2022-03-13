@@ -7,6 +7,18 @@ function randomInteger(upTo) {
     return Math.floor(Math.random() * upTo);
 }
 
+function areColliding(Ax, Ay, Awidth, Aheight, Bx, By, Bwidth, Bheight) {
+    return (Bx <= Ax + Awidth &&
+            Ax <= Bx + Bwidth &&
+            By <= Ay + Aheight &&
+            Ay <= By + Bheight)
+};
+let sopoldeath = [
+    document.getElementById("sopoldeath1"),
+    document.getElementById("sopoldeath2"),
+    document.getElementById("sopoldeath3"),
+    document.getElementById("sopoldeath4")];
+
 let green_blobImages = [
     document.getElementById("green_blob1"),
     document.getElementById("green_blob2"),
@@ -31,7 +43,7 @@ let bigEnemyImages = [
 
 function randomEnemyIndex() {
     let randomEnemyIndexNumber = randomInteger(100);
-    return 1;
+    return 2;
     //if (randomEnemyIndexNumber < 70) return 0;
     //if (randomEnemyIndexNumber < 90) return 1;
     //return 2;

@@ -11,20 +11,22 @@
         <canvas id="canvas" style="position: absolute"></canvas>
         <canvas id="canvasUI" style="position: absolute"></canvas>
         
-       <section class="outter-container" id="pause-menu" style="display: none">
+        <section class="outter-container" id="pause-menu" style="display: none">
             <h1 id="paused">Paused</h1>
             <h1 id="next-gun">Next Gun</h1>
             <h1 id="buildings">Buildings</h1>
-            <h1 id="coins">999</h1> 
-            <section class="guns" style="background-image: url(game/pause-icons/pistol1.png);"></section>
-            <section class="buildings">
-                <div class="name">station</div>
-                <div class="name">drill</div>
-                <div class="name">rocket</div>
 
-                <div id="station-price"></div>
-                <div id="drill-price"></div>
-                <div id="rocket-price"></div>
+            <section id="guns" style="background-image: url('./pics/shotgun1.png')" onclick="requestWeaponUpdrade()"></section>
+            <h1 id="coins">50</h1>
+
+            <section class="buildings">
+                <div class="name" onclick="requestBuildingAndPurchasing('house')">station</div>
+                <div class="name" onclick="requestBuildingAndPurchasing('drill')">drill</div>
+                <div class="name" onclick="requestBuildingAndPurchasing('rocket')">rocket</div>
+
+                <div id="station-price">50</div>
+                <div id="drill-price">150</div>
+                <div id="rocket-price">500</div>
             </section>
         </section>
         
@@ -94,21 +96,15 @@
         <img src="./game/images/rifle/rifle2.png" id="rifle2" />
         <img src="./game/images/rifle/rifle2L.png" id="rifle2L" />
 
-        <img src="./game/images/buildings/house/house.png" id="house00" />
+        <img src="./game/images/buildings/house/house.png" id="house0" />
 
-        <img src="./game/images/buildings/drill/drill00.png" id="drill00" />
-        <img src="./game/images/buildings/drill/drill01.png" id="drill01" />
-        <img src="./game/images/buildings/drill/drill02.png" id="drill02" />
-        <img src="./game/images/buildings/drill/drill10.png" id="drill10" />
-        <img src="./game/images/buildings/drill/drill11.png" id="drill11" />
-        <img src="./game/images/buildings/drill/drill12.png" id="drill12" />
-        <img src="./game/images/buildings/drill/drill20.png" id="drill20" />
-        <img src="./game/images/buildings/drill/drill21.png" id="drill21" />
-        <img src="./game/images/buildings/drill/drill22.png" id="drill22" />
+        <img src="./game/images/buildings/drill/drill0.png" id="drill0" />
+        <img src="./game/images/buildings/drill/drill1.png" id="drill1" />
+        <img src="./game/images/buildings/drill/drill2.png" id="drill2" />
 
-        <img src="./game/images/buildings/rocket/rocket0.png" id="rocket0" />
-        <img src="./game/images/buildings/rocket/rocket1.png" id="rocket1" />
-        <img src="./game/images/buildings/rocket/rocket2.png" id="rocket2" />
+        <img src="./game/images/buildings/rocket/rocket0.png" id="rocketship0" />
+        <img src="./game/images/buildings/rocket/rocket1.png" id="rocketship1" />
+        <img src="./game/images/buildings/rocket/rocket2.png" id="rocketship2" />
 
         <img src="./game/images/shotgun/shotgun1.png" id="shotgun1" />
         <img src="./game/images/shotgun/shotgun1L.png" id="shotgun1L" />
@@ -119,6 +115,11 @@
         <img src="./game/images/uzi/uzi1L.png" id="uzi1L" />
         <img src="./game/images/uzi/uzi2.png" id="uzi2" />
         <img src="./game/images/uzi/uzi2L.png" id="uzi2L" />
+
+        <img src="./game/images/sopol death/sopoldeath1.png" id="sopoldeath1" />
+        <img src="./game/images/sopol death/sopoldeath2.png" id="sopoldeath2" />
+        <img src="./game/images/sopol death/sopoldeath3.png" id="sopoldeath3" />
+        <img src="./game/images/sopol death/sopoldeath4.png" id="sopoldeath4" />
     </div>
 
     <script src="./game/functions.js"></script>

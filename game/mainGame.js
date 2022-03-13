@@ -2,7 +2,6 @@ let planet = new Planet(canvas.width * 2);
 let player = new Player(100, 200);
 
 let updates = 0;
-let buildingCooldown = 0;
 
 let cap = Math.PI / 20;
 let speed = Math.PI / 720;
@@ -40,7 +39,7 @@ function Update() {
 
     updates++;
     if (updates % 1000 == 0) {
-        enemies.push(new (enemyClasses[randomEnemyIndex()])(randomInteger(900) + planet.diameter / 2 + 300  , randomInteger(Math.PI * 2 * 100) / 100));
+        enemies.push(new (enemyClasses[randomEnemyIndex()])(randomInteger(300) + planet.diameter / 2 + 300  , randomInteger(Math.PI * 2 * 100) / 100));
        // updates=999;
     }
 
@@ -57,6 +56,31 @@ function Update() {
         }
         
     });
+
+    for (let i = 0; i < enemies.length; i++) {
+        console.log(enemies, i)
+        if (enemies[i].deathTimer <= 0 && enemies[i].deathTimer != -2) {
+            //player.coins += enemies[i].coinsPer;    
+            enemies[i] = enemies[bullets.length - 1];
+
+            enemies.pop();
+            i--;
+
+        }
+        if (enemies[i] == undefined) {
+            enemies[i] = enemies[bullets.length - 1];
+            enemies.pop();
+        }
+        if (i + 1 < enemies.lenght && enemies[i + 1] == undefined) {
+            enemies[i + 1] = enemies[bullets.length - 1];
+            enemies.pop();
+        }
+        if (i - 1 > 0 && enemies[i - 1] == undefined) {
+            enemies[i - 1] = enemies[bullets.length - 1];
+            enemies.pop();
+        }
+    }
+
     for (let i = 0; i < bullets.length;i++) {
         if (bullets[i].color == "bigBrainBullet" && bullets[i].fiel < 0) {
             console.log("banana");
@@ -71,16 +95,6 @@ function Update() {
         player.up = true;
         player.h++;
     }
-
-    if (buildingCooldown == 0) {
-        if (isKeyPressed[66]) {
-            buildingCooldown = 50;
-            buildings.push(new House(-planet.angle + Math.PI + player.angle - player.defA, 512, 256));
-        } if (isKeyPressed[67]) {
-            buildingCooldown = 50;
-            buildings.push(new Drill(-planet.angle + Math.PI + player.angle - player.defA, 256, 256));
-        }
-    } else buildingCooldown--;
 }
 
 function Draw() {

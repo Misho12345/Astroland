@@ -16,7 +16,7 @@ canvas, body {
     overflow: hidden;
 }
 
-.guns {
+#guns {
     background-color: rgba(128, 128, 128, 0.3);
     border: 2px solid white;
     position: fixed;
@@ -26,7 +26,7 @@ canvas, body {
     top: 42%;
 }
 
-.guns:hover, .name:hover {
+#guns:hover, .name:hover {
     background-color: rgba(128, 128, 128, 0.5);
 }
 
