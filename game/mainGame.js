@@ -6,7 +6,13 @@ let updates = 0;
 let cap = Math.PI / 20;
 let speed = Math.PI / 720;
 
+buildings.push(new House(-planet.angle + Math.PI + player.angle - player.defA, 512, 256));
+
 function Update() {
+    if (player.hp <= 0 || buildings.length == 0) {
+        dead = true;
+    }
+
     window.onresize = resizePage();
     player.update();
 
@@ -43,49 +49,41 @@ function Update() {
        // updates=999;
     }
 
-    enemies.forEach(enemy => enemy.update());
-    bullets.forEach(bullet => {
-        if (bullet == undefined) {
-            bullet = bullets[bullets.length - 1];
-            bullets.pop();
-        }
-        else bullet.update();
-        if (bullet.x < -10000 || bullet.y < -10000 || bullet.x > 10000 || bullet.y > 10000 ) {
-            bullet = bullets[bullets.length - 1];
-            bullets.pop();
-        }
-        
+    enemies.forEach(enemy => {
+        if (enemy) enemy.update();
     });
+
+    for (let i = 0; i < bullets.length; i++) {
+        if (!bullets[i] || (bullets[i].x < -10000 || bullets[i].y < -10000 || bullets[i].x > 10000 || bullets[i].y > 10000)) {
+            bullets.splice(i, 1);
+        }
+        else bullets[i].update();        
+    };
 
     for (let i = 0; i < enemies.length; i++) {
         console.log(enemies, i)
+        if (!enemies[i]) {
+            enemies.splice(i, 1);
+        }
+
         if (enemies[i].deathTimer <= 0 && enemies[i].deathTimer != -2) {
             //player.coins += enemies[i].coinsPer;    
-            enemies[i] = enemies[bullets.length - 1];
-
-            enemies.pop();
+            enemies.splice(i, 1);
             i--;
-
         }
-        if (enemies[i] == undefined) {
-            enemies[i] = enemies[bullets.length - 1];
-            enemies.pop();
+       
+        if (i + 1 < enemies.lenght && !enemies[i + 1]) {
+            enemies.splice(i + 1, 1);
         }
-        if (i + 1 < enemies.lenght && enemies[i + 1] == undefined) {
-            enemies[i + 1] = enemies[bullets.length - 1];
-            enemies.pop();
-        }
-        if (i - 1 > 0 && enemies[i - 1] == undefined) {
-            enemies[i - 1] = enemies[bullets.length - 1];
-            enemies.pop();
+        if (i - 1 > 0 && !enemies[i - 1]) {
+            enemies.splice(i - 1, 1);
         }
     }
 
     for (let i = 0; i < bullets.length;i++) {
-        if (bullets[i].color == "bigBrainBullet" && bullets[i].fiel < 0) {
+        if (bullets[i] && bullets[i].color == "bigBrainBullet" && bullets[i].fiel < 0) {
             console.log("banana");
-            bullets[i] = bullets[bullets.length - 1];
-            bullets.pop();
+            bullets.splice(i, 1);
             i--;
         }
     }
@@ -110,9 +108,13 @@ function Draw() {
 
     buildings.forEach(build => build.draw());
 
-    enemies.forEach(enemy => enemy.draw());
+    enemies.forEach(enemy => {
+        if (enemy) enemy.draw();
+    });
+
     bullets.forEach(bullet => bullet.draw());
 
     player.draw();
     player.showCoins();
+    dead = true;
 }

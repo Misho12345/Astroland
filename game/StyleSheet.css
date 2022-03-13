@@ -8,7 +8,7 @@
     font-family: 'Common Pixel', sans-serif;
 }
 
-#pause-menu {
+#pause-menu,#game-over-menu {
     position: absolute;
 }
 
@@ -26,7 +26,7 @@ canvas, body {
     top: 42%;
 }
 
-#guns:hover, .name:hover {
+#guns:hover, .name:hover, #return-main:hover{
     background-color: rgba(128, 128, 128, 0.5);
 }
 
@@ -46,11 +46,18 @@ canvas, body {
     top: 35%;
 }
 
-#paused {
+#paused, #game-over {
     position: fixed;
-    font-size: 70px;
-    top: 20%;
-    left: 38%;
+    font-size: 100px;
+    top: 15%;
+}
+
+#paused {
+    left: 35%;
+}
+
+#game-over {
+    left: 30%;
 }
 
 #buildings {
@@ -66,6 +73,23 @@ canvas, body {
     top: 56%;
     color: gold;
     font-size: xx-large;
+}
+
+#return-main {
+    position: fixed;
+    color: gold;
+    font-size: 60px;
+
+    line-clamp: 2;
+    width: 400px;
+    margin: auto;
+    text-align: center;
+
+    top: 35%;
+    left: 37.5%;
+
+    border: 5px solid white;
+    background-color: rgba(128, 128, 128, 0.3);
 }
 
 .name {

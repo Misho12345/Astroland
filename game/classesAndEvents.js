@@ -13,11 +13,13 @@ let bullets = [], enemyClasses = [], enemies = [];
 let buildings = [];
 
 let paused = false, pausing = false;
+let dead = false;
 
 let isKeyPressed = [];
 for (let i = 0; i < 256; isKeyPressed[i++] = 0);
 
 let pauseMenu = document.getElementById("pause-menu");
+let gameOverMenu = document.getElementById("game-over-menu");
 
 let weapons = [
     "pistol",
@@ -82,7 +84,7 @@ function requestWeaponUpdrade() {
 }
 
 function init() {
-    if (!paused) {
+    if (!paused && !dead) {
         if (pauseMenu.style.display != "none") {
             pauseMenu.style.display = "none";
         }
@@ -96,201 +98,147 @@ function init() {
         ctxUI.clearRect(0, 0, canvas.width, canvas.height);
 
         Draw();
-    } else pauseMenu.style.display = "block";
+    }
+    else if (dead) gameOverMenu.style.display = "block";
+    else if (paused) pauseMenu.style.display = "block";
 
     setTimeout(init, 10);
 }
 
+class Enemy {
+    constructor(h, angle_) {
+        this.h = h;
+        this.defA = angle_;
+        this.angle = angle_;
+        this.x = planet.x + Math.cos(this.angle) * this.h;
+        this.y = planet.y + Math.sin(this.angle) * this.h;
+
+        this.type;
+        this.bulletColor;
+
+        this.bulletR;
+        this.bulletSpeed;
+
+        this.updates = 0;
+        this.frame = 0;
+        this.width;
+        this.height;
+
+        this.dead = false;
+        this.deathTimer = -2;
+        this.coinsPer;
+    }
+
+    shooting() {
+        bullets.push(new Bullet(this.x,
+            this.y,
+            (angleCalc(this.x, this.y, player.x + player.width / 2, player.y + player.height / 2)),
+            (angleCalc(this.x, this.y, player.x + player.width / 2, player.y + player.height / 2)),
+            this.bulletColor,
+            this.bulletR,
+            this.bulletSpeed,
+            1,
+            bullets.length
+        ));
+    }
+
+    update() {
+        if (this.deathTimer != -2) {
+            this.deathTimer--;
+        }
+
+        this.updates++;
+        if (this.updates % 500 == 0) {
+            this.shooting();
+            if (this.type == "bigEnemy") {
+                this.bulletSpeed = 7.5;
+                this.shooting();
+                this.bulletSpeed = 5;
+                this.shooting();
+            }
+        }
+
+        if (this.updates % 50 == 0) {
+            this.frame++;
+            if (this.frame > 3) this.frame = 0;
+        }
+
+        this.angle = this.defA + planet.angle + Math.PI / 2;
+
+        this.x = planet.x + planet.diameter / 2 + Math.cos(this.angle) * this.h;
+        this.y = planet.y + planet.diameter / 2 + Math.sin(this.angle) * this.h;
+    }
+
+    draw() {
+        let arr;
+
+        switch (this.type) {
+            case "smallEnemy": arr = green_blobImages; break;
+            case "bigBrainEnemy": arr = bigBrainEnemyImages; break;
+            case "bigEnemy": arr = bigEnemyImages; break;
+            default: console.log("E R R O R");
+        }
+
+        ctx.save();
+
+        ctx.translate(this.x + this.width / 2, this.y + this.height / 2);
+        ctx.rotate(this.angle + Math.PI / 2);
+        ctx.translate(-this.x - this.width / 2, -this.y - this.height / 2);
+
+        if (this.deathTimer == -2) {
+            ctx.drawImage(arr[this.frame], this.x - this.width / 2, this.y - this.height / 2, this.width, this.height)
+        } else if (this.deathTimer >= 0) {
+            ctx.drawImage(sopoldeath[Math.floor(this.deathTimer / 10)], this.x - this.width / 2, this.y - this.width / 2, this.width, this.width);
+        }
+
+        ctx.restore();
+    }
+}
+
 enemyClasses.push(
-    class smallEnemy {
+    class smallEnemy extends Enemy {
         constructor(h, angle_) {
+            super(h, angle_);
 
-            this.h = h;
-            this.angle = angle_;
-            this.x = planet.x + Math.cos(this.angle) * this.h;
-            this.y = planet.y + Math.sin(this.angle) * this.h;
-
+            this.coinsPer = 2;
 
             this.type = "smallEnemy";
-            this.updates = 0;
-            this.frame = 0;
-            this.sizeX = 100;
-            this.sizeY = 100;
+            this.width = 100;
+            this.height = 100;
 
-            this.deathTimer = -2;
-            this.coinsPer = 2;
+            this.bulletColor = "enemyBullet";
+            this.bulletR = 15;
+            this.bulletSpeed = 5;
         }
-
-        shooting() {
-            bullets.push(new Bullet(this.x,
-                this.y,
-                (angleCalc(this.x, this.y, player.x + player.width/2, player.y + player.height/2)),
-                (angleCalc(this.x, this.y, player.x + player.width / 2, player.y + player.height / 2)),
-                "enemyBullet",
-                15,
-                5,
-                1,
-                bullets.length
-            ));
-        }
-
-        update() {
-            this.updates++;
-            if (this.updates % 500 == 0) this.shooting();
-
-            if (this.updates % 50 == 0) {
-                this.frame++;
-
-                if (this.frame > 3) this.frame = 0;
-            }
-
-            this.x = this.defX + Math.cos(planet.angle) * 1000;
-            this.y = this.defY + Math.sin(planet.angle) * 1000;
-            //this.x += Math.cos(planet.angle)
-            //this.y += Math.sin(planet.angle)
-        }
-        draw() {
-            ctx.drawImage(green_blobImages[this.frame], this.x - this.sizeX / 2, this.y - this.sizeY / 2, this.sizeX, this.sizeY)
-        }
-
     },
-    class bigBrainEnemy {
+    class bigBrainEnemy extends Enemy{
         constructor(h, angle_) {
-            this.h = h;
-            this.angle = angle_;
-            this.x = planet.x + Math.cos(this.angle) * this.h;
-            this.y = planet.y + Math.sin(this.angle) * this.h;
-            this.type = "bigBrainEnemy";
-            this.updates = 0;
-            this.frame = 0;
-            this.sizeX = 100;
-            this.sizeY = 200;
+            super(h, angle_);
 
-            this.deathTimer = -2;
             this.coinsPer = 3;
-        }
 
-        shooting() {
-            bullets.push(new Bullet(this.x,
-                this.y,
-                (angleCalc(this.x, this.y, player.x + player.width / 2, player.y + player.height / 2)),
-                (angleCalc(this.x, this.y, player.x + player.width / 2, player.y + player.height / 2)),
-                "bigBrainBullet",
-                30,
-                2,
-                1,
-                bullets.length
-            ));
-        }
+            this.width = 100;
+            this.height = 200;
 
-        update() {
-            if (this.deathTimer != -2) {
-                this.deathTimer--;
-            }
-
-            this.updates++;
-            if (this.updates % 500 == 0) this.shooting();
-            if (this.updates % 50 == 0) {
-                this.frame++;
-
-                if (this.frame > 3) this.frame = 0;
-            }
-            if ((isKeyPressed[39] || isKeyPressed[68]) && player.angle >= player.defA + cap) {
-                this.angle -= speed;
-            } else if ((isKeyPressed[37] || isKeyPressed[65]) && player.angle <= player.defA - cap) {
-                this.angle += speed;
-            }
-            this.x = planet.x + planet.diameter / 2 + Math.cos(this.angle) * this.h;
-            this.y = planet.y + planet.diameter / 2 + Math.sin(this.angle) * this.h;
-        }
-        draw() {
-            if (this.deathTimer == -2) {
-                ctx.drawImage(bigBrainEnemyImages[this.frame], this.x - this.sizeX / 2, this.y - this.sizeY / 2, this.sizeX, this.sizeY);
-            } else if (this.deathTimer >= 0) {
-                console.log(this.deathTimer);
-                ctx.drawImage(sopoldeath[Math.floor(this.deathTimer / 10)], this.x - this.sizeX / 2, this.y - this.sizeY / 2, this.sizeX, this.sizeY);
-            }
+            this.type = "bigBrainEnemy";
+            this.bulletColor = "bigBrainBullet";
+            this.bulletR = 30;
+            this.bulletSpeed = 2;
         }
     },
-    class bigEnemy {
+    class bigEnemy extends Enemy {
         constructor(h, angle_) {
-            this.h = h;
-            this.angle = angle_;
-            this.x = planet.x + Math.cos(this.angle) * this.h;
-            this.y = planet.y + Math.sin(this.angle) * this.h;
-            this.type = "bigEnemy";
-            this.updates = 0;
-            this.frame = 0;
-            this.sizeX = 200;
-            this.sizeY = 200;
+            super(h, angle_);
 
-            this.deathTimer = -2;
             this.coinsPer = 4;
 
-        }
-        shooting() {
-            bullets.push(new Bullet(this.x,
-                this.y,
-                (angleCalc(this.x, this.y, player.x + player.width / 2, player.y + player.height / 2) + Math.PI / 3),
-                (angleCalc(this.x, this.y, player.x + player.width / 2, player.y + player.height / 2) + Math.PI / 3),
-                "enemyBullet",
-                20,
-                5,
-                1,
-                bullets.length
-            ));
+            this.type = "bigEnemy";
+            this.width = 200;
+            this.height = 200;
 
-            bullets.push(new Bullet(this.x,
-                this.y,
-                (angleCalc(this.x, this.y, player.x + player.width / 2, player.y + player.height / 2)),
-                (angleCalc(this.x, this.y, player.x + player.width / 2, player.y + player.height / 2)),
-                "enemyBullet",
-                20,
-                7.5,
-                1,
-                bullets.length
-            ));
-            bullets.push(new Bullet(this.x,
-                this.y,
-                (angleCalc(this.x, this.y, player.x + player.width / 2, player.y + player.height / 2) - Math.PI / 3),
-                (angleCalc(this.x, this.y, player.x + player.width / 2, player.y + player.height / 2) - Math.PI / 3),
-                "enemyBullet",
-                20,
-                5,
-                1,
-                bullets.length
-            ));
-        }
-
-        update() {
-            if (this.deathTimer != -2) {
-                this.deathTimer--;
-            }
-
-            this.updates++;
-            if (this.updates % 500 == 0) this.shooting();
-
-            if (this.updates % 7.5 == 0) {
-                this.frame++;
-
-                if (this.frame > 2) this.frame = 0;
-            }
-            if ((isKeyPressed[39] || isKeyPressed[68]) && player.angle >= player.defA + cap) {
-                this.angle -= speed;
-            } else if ((isKeyPressed[37] || isKeyPressed[65]) && player.angle <= player.defA - cap) {
-                this.angle += speed;
-            }
-            this.x = planet.x + planet.diameter / 2 + Math.cos(this.angle) * this.h;
-            this.y = planet.y + planet.diameter / 2 + Math.sin(this.angle) * this.h;
-        }
-
-        draw() {
-            if (this.deathTimer == -2) {
-                ctx.drawImage(bigEnemyImages[this.frame], this.x - this.sizeX / 2, this.y - this.sizeY / 2, this.sizeX, this.sizeY);
-            } else if (this.deathTimer >= 0) {
-                console.log(this.deathTimer);
-                ctx.drawImage(sopoldeath[Math.floor(this.deathTimer / 10)], this.x - this.sizeX / 2, this.y - this.sizeY / 2, this.sizeX, this.sizeY);
-            }
+            this.bulletColor = "enemyBullet";
+            this.bulletR = 20;
+            this.bulletSpeed = 5;
         }
     });
 
@@ -329,13 +277,28 @@ class Bullet {
         this.angle = angleCalc(this.x, this.y, player.x, player.y);
 
         for (let i = 0; i < enemies.length; i++) {
-            if (areColliding(this.x - this.r, this.y - this.r, this.r * 2, this.r * 2,
-                enemies[i].x - enemies[i].sizeX / 2, enemies[i].y - enemies[i].sizeY / 2,
-                enemies[i].sizeX, enemies[i].sizeY) && this.color != "enemyBullet" && this.color != "bigBrainBullet") {
+            if (enemies[i] && !enemies[i].dead &&
+                areColliding(this.x - this.r, this.y - this.r, this.r * 2, this.r * 2,
+                    enemies[i].x - enemies[i].width / 2, enemies[i].y - enemies[i].height / 2,
+                    enemies[i].width, enemies[i].height) &&
+                this.color != "enemyBullet" &&
+                this.color != "bigBrainBullet") {
+
                 console.log("dhgsahdgafsds");
-                bullets[this.index] = bullets[bullets.length - 1];
-                bullets.pop();
+                enemies[i].dead = true;
+                bullets.splice(this.index, 1);
                 enemies[i].deathTimer = 39;
+                player.coins += enemies[i].coinsPer
+                this.index--;
+                break;
+            }
+            else if (areColliding(this.x - this.r, this.y - this.r, this.r * 2, this.r * 2,
+                player.x, player.y, player.width, player.height) &&
+                (this.color == "enemyBullet" || this.color == "bigBrainBullet")) {
+
+                player.hp -= this.damage;
+                bullets.splice(this.index, 1);
+                this.index--;
                 break;
             }
         }
@@ -559,13 +522,13 @@ class Player {
         
         if (this.weapon == 'pistol') {
             if (!this.gunShot) {
-                if (gunAngle >= 0.5 * Math.PI && gunAngle <= 1.5 * Math.PI) {
+                if (gunAngle >= Math.PI / 2 && gunAngle <= Math.PI * 1.5) {
                     ctx.drawImage(pistol1LImage, this.x + this.width/2, this.y  + this.height/4, 50, 50);
                 } else {
                     ctx.drawImage(pistol1Image, this.x + this.width / 2, this.y + this.height / 2, 50, 50);
                 }
             } else {
-                if (gunAngle >= 0.5 * Math.PI && gunAngle <= 1.5 * Math.PI) {
+                if (gunAngle >= Math.PI / 2 && gunAngle <= Math.PI * 1.5) {
                     ctx.drawImage(pistol2Image, this.x + this.width / 2, this.y + this.height/4 , 50, 50);
                 } else {
                     ctx.drawImage(pistol2LImage, this.x + this.width / 2, this.y + this.height / 2, 50, 50);
@@ -575,27 +538,28 @@ class Player {
         }
         else if (this.weapon == 'rifle') {
             if (!this.gunShot) {
-                if (gunAngle >= 0.5 * Math.PI && gunAngle <= 1.5 * Math.PI) {
+                if (gunAngle >= Math.PI / 2 && gunAngle <= Math.PI * 1.5) {
                     ctx.drawImage(rifle1LImage, this.x + this.width/2, this.y + this.height / 2 - 25, 100, 50);
                 } else {
                     ctx.drawImage(rifle1Image, this.x + this.width / 2, this.y + this.height / 2 - 25, 100, 50);
                 }
             } else {
-                if (gunAngle >= 0.5 * Math.PI && gunAngle <= 1.5 * Math.PI) {
+                if (gunAngle >= Math.PI / 2 && gunAngle <= Math.PI * 1.5) {
                     ctx.drawImage(rifle2Image, this.x + this.width / 2, this.y + this.height / 2 - 25, 100, 50);
                 } else {
                     ctx.drawImage(rifle2LImage, this.x + this.width / 2, this.y + this.height / 2 - 25, 100, 50);
                 }
             }
-        } else if (this.weapon == 'shotgun') {
+        }
+        else if (this.weapon == 'shotgun') {
             if (!this.gunShot) {
-                if (gunAngle >= 0.5 * Math.PI && gunAngle <= 1.5 * Math.PI) {
+                if (gunAngle >= Math.PI / 2 && gunAngle <= Math.PI * 1.5) {
                     ctx.drawImage(shotgun1LImage, this.x + this.width / 2, this.y + this.height / 2 - 25, 130, 50);
                 } else {
                     ctx.drawImage(shotgun1Image, this.x + this.width / 2, this.y + this.height / 2 - 25, 130, 50);
                 }
             } else {
-                if (gunAngle >= 0.5 * Math.PI && gunAngle <= 1.5 * Math.PI) {
+                if (gunAngle >= Math.PI / 2 && gunAngle <= Math.PI * 1.5) {
                     ctx.drawImage(shotgun2Image, this.x + this.width / 2, this.y + this.height / 2 - 25, 130, 50);
                 } else {
                     ctx.drawImage(shotgun2LImage, this.x + this.width / 2, this.y + this.height / 2 - 25, 130, 50);
@@ -604,19 +568,20 @@ class Player {
         }
         else if (this.weapon == 'uzi') {
             if (!this.gunShot) {
-                if (gunAngle >= 0.5 * Math.PI && gunAngle <= 1.5 * Math.PI) {
+                if (gunAngle >= Math.PI / 2 && gunAngle <= Math.PI * 1.5) {
                     ctx.drawImage(uzi1LImage, this.x + this.width / 2, this.y + this.height / 2 - 25, 75, 50);
                 } else {
                     ctx.drawImage(uzi1Image, this.x + this.width / 2, this.y + this.height / 2 - 25, 75, 50);
                 }
             } else {
-                if (gunAngle >= 0.5 * Math.PI && gunAngle <= 1.5 * Math.PI) {
+                if (gunAngle >= Math.PI / 2 && gunAngle <= Math.PI * 1.5) {
                     ctx.drawImage(uzi2Image, this.x + this.width / 2, this.y + this.height / 2 - 25, 75, 50);
                 } else {
                     ctx.drawImage(uzi2LImage, this.x + this.width / 2, this.y + this.height / 2 - 25, 75, 50);
                 }
             }
         }
+
         //ctx.rotate(-gunAngle);
         ctx.restore();
 
@@ -686,7 +651,7 @@ class Building {
     }
 
     draw() {
-        this.angle = this.defA + planet.angle - 1.5 * Math.PI;
+        this.angle = this.defA + planet.angle + Math.PI / 2;
         this.x = Math.cos(this.angle) * this.h + canvas.width / 2 - this.width / 2;
         this.y = Math.sin(this.angle) * this.h + canvas.height / 2 - this.height / 2;
 

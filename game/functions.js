@@ -39,14 +39,15 @@ let uziBullet = document.getElementById("uziBullet");
 let bigEnemyImages = [
     document.getElementById("bigEnemy1"),
     document.getElementById("bigEnemy2"),
-    document.getElementById("bigEnemy3")];
+    document.getElementById("bigEnemy3"),
+    document.getElementById("bigEnemy2")];
 
 function randomEnemyIndex() {
     let randomEnemyIndexNumber = randomInteger(100);
+    
+    if (randomEnemyIndexNumber < 60) return 0;
+    if (randomEnemyIndexNumber < 80) return 1;
     return 2;
-    //if (randomEnemyIndexNumber < 70) return 0;
-    //if (randomEnemyIndexNumber < 90) return 1;
-    //return 2;
 }
 
 let rocketImages = [
