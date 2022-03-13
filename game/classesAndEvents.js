@@ -73,6 +73,8 @@ function requestBuildingAndPurchasing(type) {
             break;
 
         default: console.log("E R R O R"); break;
+
+        buildings[buildings.length - 1].idx = buildings[buildings.length - 2].idx + 1;
     }
 
     paused = false;
@@ -311,6 +313,23 @@ class Bullet {
                 this.index--;
                 break;
             }
+            else {
+                let collided = false;
+
+                buildings.forEach(building => {
+                    if (areColliding(this.x - this.r, this.y - this.r, this.r * 2, this.r * 2,
+                        building.x, building.y, building.width, building.height) &&
+                        (this.color == "enemyBullet" || this.color == "bigBrainBullet")) {
+
+                        building.hp -= this.damage;
+                        bullets.splice(this.index, 1);
+                        this.index--;
+                        collided = true;
+                    }
+                });
+
+                if (collided) break;
+            }
         }
     }
 
@@ -362,7 +381,7 @@ class Player {
         this.gunShot = false;
         this.gunPossibleToShot = false;
 
-        this.coins = 1000;
+        this.coins = 0;
         this.coinsState = 0;
         this.cooldownC = 10;
 
@@ -643,6 +662,8 @@ class Planet {
 
 class Building {
     constructor(angle, width, height) {
+        this.idx = 0;
+
         this.defA = angle;
         this.angle;
 
@@ -650,7 +671,8 @@ class Building {
         this.height = height;
 
         this.frame = 0;
-        this.hp = 30;
+        this.maxHp = 30;
+        this.hp = this.maxHp;
 
         this.x, this.y;
         this.h = planet.diameter / 2 + this.height / 4;
@@ -659,6 +681,8 @@ class Building {
     }
 
     draw() {
+        if (this.hp <= 0) buildings.splice(this.idx, 1);
+
         this.angle = this.defA + planet.angle + Math.PI / 2;
         this.x = Math.cos(this.angle) * this.h + canvas.width / 2 - this.width / 2;
         this.y = Math.sin(this.angle) * this.h + canvas.height / 2 - this.height / 2;
@@ -671,7 +695,17 @@ class Building {
             
         if (this.type != "house") this.frame += 0.1;
         if (player && this.type == "drill") player.coins += 0.02;
+         
+        if (this.type != "rocket") {
+            ctx.fillStyle = "black";
+            ctx.fillRect(this.x + this.width / 4 - 2.5, this.y - 82.5, this.width / 2 + 5, 45);
 
+            ctx.fillStyle = "red";
+            ctx.fillRect(this.x + this.width / 4, this.y - 80, this.width / 2, 40);
+
+            ctx.fillStyle = "lime";
+            ctx.fillRect(this.x + this.width / 4, this.y - 80, this.width / 2 * (this.hp / this.maxHp), 40);
+        }
         ctx.drawImage(document.getElementById(this.type + Math.floor(this.frame) % 3), this.x, this.y, this.width, this.height)
 
         ctx.restore();
