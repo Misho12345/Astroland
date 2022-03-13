@@ -7,10 +7,14 @@
 </head>
 
 <body onload="init()">
+    <video muted poster="./game/images/background.png" id="endScreen">
+        <source src="./escape.mp4" type="video/mp4">
+    </video>
+
     <div style="position: relative">
         <canvas id="canvas" style="position: absolute"></canvas>
         <canvas id="canvasUI" style="position: absolute"></canvas>
-        
+
         <section id="pause-menu" style="display: none">
             <h1 id="paused">Paused</h1>
             <h1 id="next-gun">Next Gun</h1>
@@ -29,12 +33,12 @@
                 <div id="rocket-price">500</div>
             </section>
         </section>
-        
+
         <section id="game-over-menu" style="display: none">
             <h1 id="game-over">Game Over</h1>
             <dir id="return-main" onclick="location.href='./mainPage.html'">Back To Main Page</dir>
         </section>
-        
+
     </div>
 
     <div style="display: none">

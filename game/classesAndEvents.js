@@ -15,11 +15,15 @@ let buildings = [];
 let paused = false, pausing = false;
 let dead = false;
 
+let rocket;
+let rocketSpeed = 0;
+
 let isKeyPressed = [];
 for (let i = 0; i < 256; isKeyPressed[i++] = 0);
 
 let pauseMenu = document.getElementById("pause-menu");
 let gameOverMenu = document.getElementById("game-over-menu");
+let video = document.getElementById("endScreen");
 
 let weapons = [
     "pistol",
@@ -55,8 +59,16 @@ function requestBuildingAndPurchasing(type) {
 
         case "rocket":
             if (player.coins >= 500) {
-                buildings.push(new Rocket(-planet.angle + Math.PI + player.angle - player.defA, 256, 512));
+                rocket = new Rocket(-planet.angle + Math.PI + player.angle - player.defA, 256, 512);
                 player.coins -= 500;
+
+                bullets = [];
+                gameEnd = true;
+                player = null;
+
+                enemies.forEach(enemy => {
+                    enemy.deathTimer = 39;
+                });
             }
             break;
 
@@ -97,7 +109,7 @@ function init() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctxUI.clearRect(0, 0, canvas.width, canvas.height);
 
-        Draw();
+        Draw(); 
     }
     else if (dead) gameOverMenu.style.display = "block";
     else if (paused) pauseMenu.style.display = "block";
@@ -130,8 +142,7 @@ class Enemy {
     }
 
     shooting() {
-        bullets.push(new Bullet(this.x,
-            this.y,
+        bullets.push(new Bullet(this.x, this.y,
             (angleCalc(this.x, this.y, player.x + player.width / 2, player.y + player.height / 2)),
             (angleCalc(this.x, this.y, player.x + player.width / 2, player.y + player.height / 2)),
             this.bulletColor,
@@ -662,7 +673,7 @@ class Building {
         ctx.translate(-this.x - this.width / 2, -this.y - this.height / 2);
             
         if (this.type != "house") this.frame += 0.1;
-        if (this.type == "drill") player.coins += 0.02;
+        if (player && this.type == "drill") player.coins += 0.02;
 
         ctx.drawImage(document.getElementById(this.type + Math.floor(this.frame) % 3), this.x, this.y, this.width, this.height)
 
@@ -726,3 +737,8 @@ window.addEventListener("mousedown", e => {
 });
 
 window.addEventListener("mouseup", e => isMousePressed = 0);
+
+video.addEventListener('ended', e => {
+    console.log("ap");
+    window.location.replace("mainPage.html")
+});

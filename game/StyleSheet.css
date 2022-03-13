@@ -85,7 +85,7 @@ canvas, body {
     margin: auto;
     text-align: center;
 
-    top: 35%;
+    top: 45%;
     left: 37.5%;
 
     border: 5px solid white;
@@ -114,4 +114,12 @@ canvas, body {
     margin: auto;
     margin-bottom: 35px;
     width: 60px;
+}
+
+#endScreen {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
 }

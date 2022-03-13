@@ -9,38 +9,46 @@ let speed = Math.PI / 720;
 buildings.push(new House(-planet.angle + Math.PI + player.angle - player.defA, 512, 256));
 
 function Update() {
-    if (player.hp <= 0 || buildings.length == 0) {
+    if (player && (player.hp <= 0 || buildings.length == 0)) {
         dead = true;
     }
 
     window.onresize = resizePage();
-    player.update();
 
-    if ((isKeyPressed[39] || isKeyPressed[68]) && (isKeyPressed[37] || isKeyPressed[65])) player.state = 0;
-    else {
-        if (isKeyPressed[39] || isKeyPressed[68]) {
-            if (player.angle >= player.defA + cap) {
-                planet.angle -= speed;
-                player.defA = player.angle - cap;
+    if (player) {
+        player.update();
+        if ((isKeyPressed[39] || isKeyPressed[68]) && (isKeyPressed[37] || isKeyPressed[65])) player.state = 0;
+        else {
+            if (isKeyPressed[39] || isKeyPressed[68]) {
+                if (player.angle >= player.defA + cap) {
+                    planet.angle -= speed;
+                    player.defA = player.angle - cap;
+                }
+                else player.angle += speed;
+
+                player.dir = 1;
+
+                if (player.state == 0) player.state = 1;
             }
-            else player.angle += speed;
+            else if (isKeyPressed[37] || isKeyPressed[65]) {
+                if (player.angle <= player.defA - cap) {
+                    planet.angle += speed;
+                    player.defA = player.angle + cap;
+                }
+                else player.angle -= speed;
 
-            player.dir = 1;
+                player.dir = 0;
 
-            if (player.state == 0) player.state = 1;
-        }
-        else if (isKeyPressed[37] || isKeyPressed[65]) {
-            if (player.angle <= player.defA - cap) {
-                planet.angle += speed;
-                player.defA = player.angle + cap;
+                if (player.state == 0) player.state = 1;
             }
-            else player.angle -= speed;
-
-            player.dir = 0;
-
-            if (player.state == 0) player.state = 1;
+            else if (!isKeyPressed[39] && !isKeyPressed[68]) player.state = 0;
         }
-        else if (!isKeyPressed[39] && !isKeyPressed[68]) player.state = 0;
+
+        if ((isKeyPressed[38] || isKeyPressed[87]) && !player.up) {
+            player.gravitySpeed = -15;
+            player.up = true;
+            player.h++;
+        }
     }
 
     updates++;
@@ -88,10 +96,16 @@ function Update() {
         }
     }
 
-    if ((isKeyPressed[38] || isKeyPressed[87]) && !player.up) {
-        player.gravitySpeed = -15;
-        player.up = true;
-        player.h++;
+    if (rocket) {
+        rocketSpeed += 0.01;
+        rocket.h += rocketSpeed;
+
+        if (rocket.h >= 1000 + planet.diameter / 2) {
+            canvas.style.display = "none";
+            canvasUI.style.display = "none";
+            video.play();
+            video.style.zoom = 0.2;
+        }
     }
 }
 
@@ -114,7 +128,10 @@ function Draw() {
 
     bullets.forEach(bullet => bullet.draw());
 
-    player.draw();
-    player.showCoins();
-    dead = true;
+    if (player) {
+        player.draw();
+        player.showCoins();
+    }
+
+    if (rocket) rocket.draw();
 }
