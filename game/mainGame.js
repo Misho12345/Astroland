@@ -69,7 +69,6 @@ function Update() {
     };
 
     for (let i = 0; i < enemies.length; i++) {
-        console.log(enemies, i)
         if (!enemies[i]) {
             enemies.splice(i, 1);
         }
@@ -90,7 +89,6 @@ function Update() {
 
     for (let i = 0; i < bullets.length;i++) {
         if (bullets[i] && bullets[i].color == "bigBrainBullet" && bullets[i].fiel < 0) {
-            console.log("banana");
             bullets.splice(i, 1);
             i--;
         }
