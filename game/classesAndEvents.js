@@ -295,7 +295,6 @@ class Bullet {
                 this.color != "enemyBullet" &&
                 this.color != "bigBrainBullet") {
 
-                console.log("dhgsahdgafsds");
                 enemies[i].dead = true;
                 bullets.splice(this.index, 1);
                 enemies[i].deathTimer = 39;
@@ -397,7 +396,6 @@ class Player {
                     bullets.length
                 ));
 
-                console.log(bullets);
                 this.gunTime = 0;
                 this.gunShot = true;
             }
@@ -437,7 +435,6 @@ class Player {
                     bullets.length
                 ));
 
-                console.log(bullets);
                 this.gunTime = 0;
                 this.gunShot = true;
             }
@@ -459,7 +456,6 @@ class Player {
                     bullets.length
                 ));
 
-                console.log(bullets);
                 this.gunTime = 0;
                 this.gunShot = true;
             }
@@ -523,7 +519,7 @@ class Player {
         ctx.restore();
 
         let gunAngle = angleCalc(this.x + this.width / 2, this.y + this.height / 2, mouseX , mouseY );
-        //console.log(gunAngle);
+        
         ctx.save();
 
         context.translate(this.x + this.width / 2, this.y + this.height / 2);
@@ -654,6 +650,7 @@ class Building {
         this.height = height;
 
         this.frame = 0;
+        this.hp = 30;
 
         this.x, this.y;
         this.h = planet.diameter / 2 + this.height / 4;
@@ -702,10 +699,6 @@ class Rocket extends Building {
     }
 }
 
-function mousedownFunction() {
-    console.log(event.clientX, event.clientY);
-}
-
 window.addEventListener("keydown", e => {
     isKeyPressed[e.keyCode] = 1;
 
@@ -722,8 +715,8 @@ window.addEventListener("keyup", e => {
 
 canvasUI.addEventListener("mousemove", e => {
     //if (!isKeyPressed[77]) {
-        mouseX = event.clientX;
-        mouseY = event.clientY - planet.diameter / 2 - 250;
+    mouseX = event.clientX;
+    mouseY = event.clientY - planet.diameter / 2 - 250;
     //}
 });
 
@@ -731,14 +724,10 @@ if (typeof mousemove != "undefined") {
     window.addEventListener("mousemove", mousemove);
 }
 
-window.addEventListener("mousedown", e => {
-    isMousePressed = 1;
-    mousedownFunction();
-});
+window.addEventListener("mousedown", e => isMousePressed = 1);
 
 window.addEventListener("mouseup", e => isMousePressed = 0);
 
-video.addEventListener('ended', e => {
-    console.log("ap");
-    window.location.replace("mainPage.html")
+video.addEventListener('ended', function() {
+    if(rocket) window.location.replace("mainPage.html");
 });
