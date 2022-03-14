@@ -68,13 +68,12 @@ function requestBuildingAndPurchasing(type) {
 
                 enemies.forEach(enemy => {
                     enemy.deathTimer = 39;
+                    enemy.hp = 0;
                 });
             }
             break;
 
         default: console.log("E R R O R"); break;
-
-            buildings[buildings.length - 1].idx = buildings[buildings.length - 2].idx + 1;
     }
 
     paused = false;
@@ -146,6 +145,7 @@ class Enemy {
     }
 
     shooting() {
+        if (!player) return;
         bullets.push(new Bullet(this.x, this.y,
             (angleCalc(this.x, this.y, player.x + player.width / 2, player.y + player.height / 2)),
             (angleCalc(this.x, this.y, player.x + player.width / 2, player.y + player.height / 2)),
@@ -158,11 +158,10 @@ class Enemy {
     }
 
     update() {
-        if (this.hp <= 0) {
+        if (this.hp <= 0 && !this.dead) {
             this.deathTimer = 39;
-            player.coins += this.coinsPer;
+            if (player) player.coins += this.coinsPer;
             this.dead = true;
-            this.hp = 69420;
         }
         if (this.deathTimer != -2) {
             this.deathTimer--;
@@ -283,7 +282,7 @@ class Bullet {
         this.angle = 0;
         this.damage = damage_;
         this.index = index_;
-        this.fiel = 1000;
+        this.fuel = 1000;
     }
 
     update() {
@@ -295,7 +294,7 @@ class Bullet {
         if (this.color == "bigBrainBullet") {
             this.dX = angleCalc(this.x, this.y, player.x + player.width / 2, player.y + player.height / 2);
             this.dY = angleCalc(this.x, this.y, player.x + player.width / 2, player.y + player.height / 2);
-            this.fiel--;
+            this.fuel--;
         }
 
         this.x += Math.cos(this.dX) * this.speed;
@@ -690,8 +689,6 @@ class Planet {
 
 class Building {
     constructor(angle, width, height) {
-        this.idx = 0;
-
         this.defA = angle;
         this.angle;
 
@@ -709,8 +706,6 @@ class Building {
     }
 
     draw() {
-        if (this.hp <= 0) buildings.splice(this.idx, 1);
-
         this.angle = this.defA + planet.angle + Math.PI / 2;
         this.x = Math.cos(this.angle) * this.h + canvas.width / 2 - this.width / 2;
         this.y = Math.sin(this.angle) * this.h + canvas.height / 2 - this.height / 2;
