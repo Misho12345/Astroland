@@ -52,9 +52,9 @@ function Update() {
     }
 
     updates++;
-    if (updates % 1000 == 0) {
-        enemies.push(new (enemyClasses[randomEnemyIndex()])(randomInteger(300) + planet.diameter / 2 + 300  , randomInteger(Math.PI * 2 * 100) / 100));
-       // updates=999;
+    if (updates % 333 == 0) {
+        enemies.push(new (enemyClasses[randomEnemyIndex()])(randomInteger(300) + planet.diameter / 2 + 300, randomInteger(Math.PI * 2 * 100) / 100));
+        // updates=999;
     }
 
     enemies.forEach(enemy => {
@@ -65,7 +65,7 @@ function Update() {
         if (!bullets[i] || (bullets[i].x < -10000 || bullets[i].y < -10000 || bullets[i].x > 10000 || bullets[i].y > 10000)) {
             bullets.splice(i, 1);
         }
-        else bullets[i].update();        
+        else bullets[i].update();
     };
 
     for (let i = 0; i < enemies.length; i++) {
@@ -78,7 +78,7 @@ function Update() {
             enemies.splice(i, 1);
             i--;
         }
-       
+
         if (i + 1 < enemies.lenght && !enemies[i + 1]) {
             enemies.splice(i + 1, 1);
         }
@@ -87,7 +87,7 @@ function Update() {
         }
     }
 
-    for (let i = 0; i < bullets.length;i++) {
+    for (let i = 0; i < bullets.length; i++) {
         if (bullets[i] && bullets[i].color == "bigBrainBullet" && bullets[i].fiel < 0) {
             bullets.splice(i, 1);
             i--;

@@ -9,9 +9,9 @@ function randomInteger(upTo) {
 
 function areColliding(Ax, Ay, Awidth, Aheight, Bx, By, Bwidth, Bheight) {
     return (Bx <= Ax + Awidth &&
-            Ax <= Bx + Bwidth &&
-            By <= Ay + Aheight &&
-            Ay <= By + Bheight)
+        Ax <= Bx + Bwidth &&
+        By <= Ay + Aheight &&
+        Ay <= By + Bheight)
 };
 let sopoldeath = [
     document.getElementById("sopoldeath1"),
@@ -44,7 +44,7 @@ let bigEnemyImages = [
 
 function randomEnemyIndex() {
     let randomEnemyIndexNumber = randomInteger(100);
-    
+
     if (randomEnemyIndexNumber < 60) return 0;
     if (randomEnemyIndexNumber < 80) return 1;
     return 2;
