@@ -178,12 +178,12 @@ class Enemy {
             }
         }
 
-        if (this.updates % 50 == 0) {
+        if (this.updates % 20 == 0) {
             this.frame++;
             if (this.frame > 3) this.frame = 0;
         }
 
-        this.angle = this.defA + planet.angle + Math.PI / 2;
+        this.angle = this.defA + planet.angle - Math.PI / 2;
 
         this.x = planet.x + planet.diameter / 2 + Math.cos(this.angle) * this.h;
         this.y = planet.y + planet.diameter / 2 + Math.sin(this.angle) * this.h;
@@ -762,6 +762,11 @@ window.addEventListener("keydown", e => {
     if (e.keyCode == 27 || e.keyCode == 80) {
         if (!pausing) paused = !paused;
         pausing = true;
+    }
+
+    if (e.keyCode == 72 && player.hp < 20 && player.coins >= 5) {
+        player.coins -= 5;
+        player.hp++;
     }
 });
 
