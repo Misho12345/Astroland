@@ -13,11 +13,11 @@
 # Използваните технологии за създаване на проекта са:
 <ul>
   <li>
-    <а href="https://www.javascript.com/">JAVA SCRIPT</а>
+    [JavaScript]("https://www.javascript.com/")
   </li>
   
   <li>
-    <а href="https://www.html.com/">HTML</а>
+    [HTML]("https://www.html.com/")
   </li>
   
   <li>CSS</li>
