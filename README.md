@@ -12,31 +12,36 @@
 
 # Използваните технологии за създаване на проекта са:
 <ul>
-  <li><а href="https://www.javascript.com/">JAVA SCRIPT</а></li>
-  <li><а href="https://www.html.com/">HTML</а></li>
+  <li>
+    <а href="https://www.javascript.com/">JAVA SCRIPT</а>
+  </li>
+  
+  <li>
+    <а href="https://www.html.com/">HTML</а>
+  </li>
+  
   <li>CSS</li>
 </ul>
-(не са използвани никакви готови библиотеки / гейм енджини)
+> (не са използвани никакви готови библиотеки / гейм енджини)
 
 # Създатели:
 <ul>
-<li>Антон Христов – програмист, (AKA ada6a) 
-Github -> DebelToni
-</li>
-  
-<li>
--	Михаил Георгиев – програмист, (AKA mishu)
-Github -> Misho12345
-</li>
-  
-<li>  
--	Стоян Иванов – дизайнер, (АКА тони стоянов)
-Github -> ToonLoL
-<li>
+  <li>
+    **Антон Христов** – програмист, (AKA _Ada6a_) 
+    > Github -> DebelToni
+  </li>
+
+  <li>
+    **Михаил Георгиев** – програмист, (AKA _Mishu_)
+    > Github -> Misho12345
+  </li>
+
+  <li>  
+    **Стоян Иванов** – дизайнер, (АКА _Toни Стоянов_)
+    > Github -> ToonLoL
+  <li>
 </ul>
   
 <img src="./README pictures/otbor.png"/>
 
 История на проекта – след представянето ни в HACK TUES много хора харесаха играта, затова решихме да подобрим играта си и да я публикуваме, за да може всеки, който иска да играе и да се забавлява в вселената на  astroland.
-
-
