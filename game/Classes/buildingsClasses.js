@@ -28,7 +28,7 @@ class Building {
         ctx.translate(-this.x - this.width / 2, -this.y - this.height / 2);
 
         if (this.type != "house") this.frame += 0.1;
-        if (player && this.type == "drill") player.coins += 0.02;
+        if (player && this.type == "drill") player.coins += 0.01;
 
         if (this.type != "rocketship") {
             ctx.fillStyle = "black";

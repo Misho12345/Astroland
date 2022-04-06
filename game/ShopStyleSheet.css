@@ -45,7 +45,7 @@
 #items {
     border: 1vmin solid goldenrod;
     height: 50vh;
-    overflow-y: auto;
+    overflow: hidden auto;
 }
 
 .item {
@@ -79,19 +79,24 @@
 
 .item-properties {
     top: 0;
-
-    width: 60%;
+    left: 0;
+    width: 100%;
     height: 100%;
     margin: auto;
 }
 
 .item-property {
-    font-size: 4vmin;
+    color: gold;
+    font-size: 2vw;
     text-align: left;
 }
 
+.item-property-value {
+    color: white;
+}
+
 .item-tip {
-    font-size: 3vmin;
+    font-size: 2vw;
     color: white;
 }
 

@@ -14,7 +14,7 @@ class Player {
         this.order = 0;
         this.state = 0;
 
-        this.weapon = weapons[0];
+        this.weapon = weapons[3];
         this.gunTime = 0;
         this.gunShot = false;
         this.gunPossibleToShot = false;
@@ -31,104 +31,40 @@ class Player {
     update() {
         this.gunPossibleToShot = (isMousePressed && !isKeyPressed[77]);
 
-        if (this.weapon == 'pistol') {
-            if (this.gunPossibleToShot && this.gunTime >= 75) {
-                let angle = angleCalc(this.x + this.width / 2, this.y + this.height / 2, mouseX, mouseY);
-
-                bullets.push(new Bullet(
-                    this.x + this.width / 2,
-                    this.y + this.height / 2,
-                    (angle + (randomInteger(3) / 100 - 1.5 / 100) * Math.PI),
-                    (angle + (randomInteger(3) / 100 - 1.5 / 100) * Math.PI),
-                    "red",
-                    5,
-                    10,
-                    3,
-                    bullets.length
-                ));
-
-                this.gunTime = 0;
-                this.gunShot = true;
-            }
-            this.gunTime++;
-        }
-        else if (this.weapon == 'shotgun') {
-            if (isMousePressed && this.gunTime >= 100) {
-                let angle = angleCalc(this.x + this.width / 2, this.y + this.height / 2, mouseX, mouseY);
-                for (let i = 0; i < 8; i++) {
-                    bullets.push(new Bullet(
-                        this.x + Math.cos(angle) * 75 + this.width / 2,
-                        this.y + Math.sin(angle) * 75 + this.height / 2,
-                        (angle + (randomInteger(20) / 100 - 10 / 100) * Math.PI),
-                        (angle + (randomInteger(20) / 100 - 10 / 100) * Math.PI),
-                        "green",
-                        3,
-                        7.5,
-                        1,
-                        bullets.length
-                    ));
-                }
-                this.gunTime = 0;
-            }
-            this.gunTime++;
-        }
-        else if (this.weapon == 'riffle') {
-            if (this.gunPossibleToShot && this.gunTime >= 20) {
-                let angle = angleCalc(this.x + this.width / 2, this.y + this.height / 2, mouseX, mouseY);
-
-                bullets.push(new Bullet(
-                    this.x + this.width / 2 + Math.cos(angle + (randomInteger(5) / 100 - 2.5 / 100) * Math.PI) * 100,
-                    this.y + this.height / 2 + Math.sin(angle + (randomInteger(5) / 100 - 2.5 / 100) * Math.PI) * 100 - 15,
-                    (angle + (randomInteger(5) / 100 - 2.5 / 100) * Math.PI),
-                    (angle + (randomInteger(5) / 100 - 2.5 / 100) * Math.PI),
-                    "red",
-                    5,
-                    10,
-                    7.5,
-                    bullets.length
-                ));
-
-                this.gunTime = 0;
-                this.gunShot = true;
-            }
-            this.gunTime++;
-        }
-        else if (this.weapon == 'uzi') {
-            if (this.gunPossibleToShot && this.gunTime >= 8) {
-                let angle = angleCalc(this.x + this.width / 2, this.y + this.height / 2, mouseX, mouseY);
-
-                bullets.push(new Bullet(
-                    this.x + this.width / 2 + Math.cos(angle + (randomInteger(5) / 100 - 2.5 / 100) * Math.PI) * 100,
-                    this.y + this.height / 2 + Math.sin(angle + (randomInteger(5) / 100 - 2.5 / 100) * Math.PI) * 100 - 15,
-                    (angle + (randomInteger(5) / 100 - 2.5 / 100) * Math.PI),
-                    (angle + (randomInteger(5) / 100 - 2.5 / 100) * Math.PI),
-                    "uziBullet",
-                    5,
-                    10,
-                    5,
-                    bullets.length
-                ));
-
-                this.gunTime = 0;
-                this.gunShot = true;
-            }
-            this.gunTime++;
-        }
-
         if (this.gunPossibleToShot && this.gunTime >= this.weapon.fireSpeed) {
             let angle = angleCalc(this.x + this.width / 2, this.y + this.height / 2, mouseX, mouseY);
 
-            bullets.push(new Bullet(
-                this.x + this.width / 2,
-                this.y + this.height / 2,
-                (angle + (randomInteger(3) / 100 - 1.5 / 100) * Math.PI),
-                (angle + (randomInteger(3) / 100 - 1.5 / 100) * Math.PI),
-                this.weapon.bulletColor,
-                5,
-                10,
-                3,
-                bullets.length
-            ));
+            let a = 0, b = 0;
+
+            switch (this.weapon.name) {
+                case "shotgun":
+                    a = Math.cos(angle) * 75;
+                    b = Math.sin(angle) * 75;
+                    break;
+
+                case "uzi":
+                    a = Math.cos(angle + (randomInteger(5) - 2.5) / 100 * Math.PI) * 100;
+                    b = Math.sin(angle + (randomInteger(5) - 2.5) / 100 * Math.PI) * 100 - 15;
+                    break;
+                
+                case "riffle":
+                    a = Math.cos(angle + (randomInteger(5) - 2.5) / 100 * Math.PI) * 100;
+                    b = Math.sin(angle + (randomInteger(5) - 2.5) / 100 * Math.PI) * 100 - 15;
+                    break;
+            }
+
+            for (let i = 0; i < this.weapon.bullets; i++)
+                bullets.push(new Bullet(
+                    this.x + this.width / 2 + a,
+                    this.y + this.height / 2 + b,
+                    (angle + (randomInteger(this.weapon.inaccuracy) - this.weapon.inaccuracy / 2) / 100 * Math.PI),
+                    (angle + (randomInteger(this.weapon.inaccuracy) - this.weapon.inaccuracy / 2) / 100 * Math.PI),
+                    this.weapon.bulletColor,
+                    this.weapon.radius,
+                    this.weapon.bulletSpeed,
+                    this.weapon.dmg,
+                    bullets.length
+                ));
 
             this.gunTime = 0;
             this.gunShot = true;
@@ -199,68 +135,13 @@ class Player {
         context.rotate(gunAngle);
         context.translate(-this.x - this.width / 2, -this.y - this.height / 2);
 
-
-        if (this.weapon == 'pistol') {
-            if (!this.gunShot) {
-                if (gunAngle >= Math.PI / 2 && gunAngle <= Math.PI * 1.5) {
-                    ctx.drawImage(pistol1LImage, this.x + this.width / 2, this.y + this.height / 4, 50, 50);
-                } else {
-                    ctx.drawImage(pistol1Image, this.x + this.width / 2, this.y + this.height / 2, 50, 50);
-                }
-            } else {
-                if (gunAngle >= Math.PI / 2 && gunAngle <= Math.PI * 1.5) {
-                    ctx.drawImage(pistol2Image, this.x + this.width / 2, this.y + this.height / 4, 50, 50);
-                } else {
-                    ctx.drawImage(pistol2LImage, this.x + this.width / 2, this.y + this.height / 2, 50, 50);
-                }
-            }
-
-        }
-        else if (this.weapon == 'riffle') {
-            if (!this.gunShot) {
-                if (gunAngle >= Math.PI / 2 && gunAngle <= Math.PI * 1.5) {
-                    ctx.drawImage(riffle1LImage, this.x + this.width / 2, this.y + this.height / 2 - 25, 100, 50);
-                } else {
-                    ctx.drawImage(riffle1Image, this.x + this.width / 2, this.y + this.height / 2 - 25, 100, 50);
-                }
-            } else {
-                if (gunAngle >= Math.PI / 2 && gunAngle <= Math.PI * 1.5) {
-                    ctx.drawImage(riffle2Image, this.x + this.width / 2, this.y + this.height / 2 - 25, 100, 50);
-                } else {
-                    ctx.drawImage(riffle2LImage, this.x + this.width / 2, this.y + this.height / 2 - 25, 100, 50);
-                }
-            }
-        }
-        else if (this.weapon == 'shotgun') {
-            if (!this.gunShot) {
-                if (gunAngle >= Math.PI / 2 && gunAngle <= Math.PI * 1.5) {
-                    ctx.drawImage(shotgun1LImage, this.x + this.width / 2, this.y + this.height / 2 - 25, 130, 50);
-                } else {
-                    ctx.drawImage(shotgun1Image, this.x + this.width / 2, this.y + this.height / 2 - 25, 130, 50);
-                }
-            } else {
-                if (gunAngle >= Math.PI / 2 && gunAngle <= Math.PI * 1.5) {
-                    ctx.drawImage(shotgun2Image, this.x + this.width / 2, this.y + this.height / 2 - 25, 130, 50);
-                } else {
-                    ctx.drawImage(shotgun2LImage, this.x + this.width / 2, this.y + this.height / 2 - 25, 130, 50);
-                }
-            }
-        }
-        else if (this.weapon == 'uzi') {
-            if (!this.gunShot) {
-                if (gunAngle >= Math.PI / 2 && gunAngle <= Math.PI * 1.5) {
-                    ctx.drawImage(uzi1LImage, this.x + this.width / 2, this.y + this.height / 2 - 25, 75, 50);
-                } else {
-                    ctx.drawImage(uzi1Image, this.x + this.width / 2, this.y + this.height / 2 - 25, 75, 50);
-                }
-            } else {
-                if (gunAngle >= Math.PI / 2 && gunAngle <= Math.PI * 1.5) {
-                    ctx.drawImage(uzi2Image, this.x + this.width / 2, this.y + this.height / 2 - 25, 75, 50);
-                } else {
-                    ctx.drawImage(uzi2LImage, this.x + this.width / 2, this.y + this.height / 2 - 25, 75, 50);
-                }
-            }
-        }
+        let images = this.weapon.images;
+        
+        if (gunAngle >= Math.PI / 2 && gunAngle <= Math.PI * 1.5) {
+            ctx.drawImage(this.gunShot ? images.L_firing : images.L_normal, this.x + this.width / 2, this.y + this.height / 2 - 25, this.weapon.width, this.weapon.height);
+        } else {
+            ctx.drawImage(this.gunShot ? images.R_firing : images.R_normal, this.x + this.width / 2, this.y + this.height / 2 - 25, this.weapon.width, this.weapon.height);
+        }   
 
         //ctx.rotate(-gunAngle);
         ctx.restore();

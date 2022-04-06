@@ -88,7 +88,7 @@ class Enemy {
         if (this.deathTimer == -2) {
             ctx.drawImage(arr[this.frame], this.x - this.width / 2, this.y - this.height / 2, this.width, this.height)
         } else if (this.deathTimer >= 0) {
-            ctx.drawImage(sopoldeath[Math.floor(this.deathTimer / 10)], this.x - this.width / 2, this.y - this.width / 2, this.width, this.width);
+            ctx.drawImage(enemyDeath[Math.floor(this.deathTimer / 10)], this.x - this.width / 2, this.y - this.width / 2, this.width, this.width);
         }
 
         ctx.restore();

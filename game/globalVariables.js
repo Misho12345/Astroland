@@ -43,7 +43,7 @@ let buildingsTypes = [
         url: "url(./game/images/buildings/house/house.png)",
         hp: 30,
         cps: 0,
-        tip: "use as shield"
+        tip: "use as a shield"
     },
     {
         name: "Drill",
@@ -75,7 +75,15 @@ let weapons = [
         bulletSpeed: 10,
         bulletColor: "red",
         radius: 5,
-        accuracy: 0
+        inaccuracy: 3,
+        width: 50,
+        height: 50,
+        images: {
+            L_normal: document.getElementById("pistol1L"),
+            R_normal: document.getElementById("pistol1"),
+            L_firing: document.getElementById("pistol2L"),
+            R_firing: document.getElementById("pistol2")
+        }
     },
     {
         name: "shotgun",
@@ -83,12 +91,20 @@ let weapons = [
         url: "url(./game/images/shotgun/shotgun1.png)",
         dmg: 1,
         fireSpeed: 100,
-        dps: "1 ~ 8",
+        dps: "1 - 8",
         bullets: 8,
         bulletSpeed: 7.5,
         bulletColor: "green",
         radius: 3,
-        accuracy: 0
+        inaccuracy: 20,
+        width: 100,
+        height: 50,
+        images: {
+            L_normal: document.getElementById("shotgun1L"),
+            R_normal: document.getElementById("shotgun1"),
+            L_firing: document.getElementById("shotgun2L"),
+            R_firing: document.getElementById("shotgun2")
+        }
     },
     {
         name: "uzi",
@@ -100,8 +116,16 @@ let weapons = [
         bullets: 1,
         bulletSpeed: 10,
         bulletColor: "uziBullet",
-        radius: 0,
-        accuracy: 0
+        radius: 5,
+        inaccuracy: 10,
+        width: 75,
+        height: 50,
+        images: {
+            L_normal: document.getElementById("uzi1L"),
+            R_normal: document.getElementById("uzi1"),
+            L_firing: document.getElementById("uzi2L"),
+            R_firing: document.getElementById("uzi2")
+        }
     },
     {
         name: "riffle",
@@ -113,16 +137,24 @@ let weapons = [
         bullets: 1,
         bulletSpeed: 10,
         bulletColor: "red",
-        radius: 0,
-        accuracy: 0
+        radius: 5,
+        inaccuracy: 5,
+        width: 130,
+        height: 50,
+        images: {
+            L_normal: document.getElementById("riffle1L"),
+            R_normal: document.getElementById("riffle1"),
+            L_firing: document.getElementById("riffle2L"),
+            R_firing: document.getElementById("riffle2")
+        }
     }
 ];
 
-let sopoldeath = [
-    document.getElementById("sopoldeath1"),
-    document.getElementById("sopoldeath2"),
-    document.getElementById("sopoldeath3"),
-    document.getElementById("sopoldeath4")];
+let enemyDeath = [
+    document.getElementById("enemyDeath1"),
+    document.getElementById("enemyDeath2"),
+    document.getElementById("enemyDeath3"),
+    document.getElementById("enemyDeath4")];
 
 let green_blobImages = [
     document.getElementById("green_blob1"),
@@ -140,7 +172,6 @@ let enemyBullet = document.getElementById("enemyBullet");
 
 let uziBullet = document.getElementById("uziBullet");
 
-
 let bigEnemyImages = [
     document.getElementById("bigEnemy1"),
     document.getElementById("bigEnemy2"),
@@ -156,23 +187,3 @@ let heart1Image = document.getElementById("heart1");
 let heart2Image = document.getElementById("heart2");
 let dead1Image = document.getElementById("dead1");
 let dead2Image = document.getElementById("dead2");
-
-let pistol1Image = document.getElementById("pistol1");
-let pistol1LImage = document.getElementById("pistol1L");
-let pistol2Image = document.getElementById("pistol2");
-let pistol2LImage = document.getElementById("pistol2L");
-
-let riffle1Image = document.getElementById("riffle1");
-let riffle1LImage = document.getElementById("riffle1L");
-let riffle2Image = document.getElementById("riffle2");
-let riffle2LImage = document.getElementById("riffle2L");
-
-let shotgun1Image = document.getElementById("shotgun1");
-let shotgun1LImage = document.getElementById("shotgun1L");
-let shotgun2Image = document.getElementById("shotgun2");
-let shotgun2LImage = document.getElementById("shotgun2L");
-
-let uzi1Image = document.getElementById("uzi1");
-let uzi1LImage = document.getElementById("uzi1L");
-let uzi2Image = document.getElementById("uzi2");
-let uzi2LImage = document.getElementById("uzi2L");
