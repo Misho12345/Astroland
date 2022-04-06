@@ -3,117 +3,22 @@
 * {
     margin: 0;
     padding: 0;
-    color: white;
-    text-shadow: -2px 2px 0 black, 2px 2px 0 black, 2px -2px 0 black, -2px -2px 0 black;
+    color: gold;
+    text-shadow: -0.1ex 0.1ex 0 black, 0.1ex 0.1ex 0 black, 0.1ex -0.1ex 0 black, -0.1ex -0.1ex 0 black;
     font-family: 'Common Pixel', sans-serif;
+    text-align: center;
 }
 
-#pause-menu,#game-over-menu {
-    position: absolute;
+#game-over-menu {
+    position: fixed;
 }
 
 canvas, body {
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
     overflow: hidden;
-}
-
-#guns {
-    background-color: rgba(128, 128, 128, 0.3);
-    border: 2px solid white;
-    position: fixed;
-    width: 160px;
-    height: 160px;
-    right: 30%;
-    top: 42%;
-}
-
-#guns:hover, .name:hover, #return-main:hover{
-    background-color: rgba(128, 128, 128, 0.5);
-}
-
-.buildings {
-    position: fixed;
-    width: 300px;
-    height: 189px;
-    border-style: solid;
-    left: 30%;
-    top: 40%;
-}
-
-#next-gun {
-    font-size: 30px;
-    position: fixed;
-    right: 30%;
-    top: 35%;
-}
-
-#paused, #game-over {
-    position: fixed;
-    font-size: 100px;
-    top: 15%;
-}
-
-#paused {
-    left: 35%;
-}
-
-#game-over {
-    left: 30%;
-}
-
-#buildings {
-    font-size: 30px;
-    position: fixed;
-    left: 35%;
-    top: 35%;
-}
-
-#coins {
-    position: fixed;
-    right: 33%;
-    top: 56%;
-    color: gold;
-    font-size: xx-large;
-}
-
-#return-main {
-    position: fixed;
-    color: gold;
-    font-size: 60px;
-
-    line-clamp: 2;
-    width: 400px;
-    margin: auto;
-    text-align: center;
-
-    top: 45%;
-    left: 37.5%;
-
-    border: 5px solid white;
-    background-color: rgba(128, 128, 128, 0.3);
-}
-
-.name {
-    color: gold;
-    font-size: xx-large;
-    width: 200px;
-    height: 40px;
-    margin: auto;
-    margin-bottom: 20px;
-    margin-left: 0px;
-    text-align: center;
-    border: 5px solid white;
-    background-color: rgba(128, 128, 128, 0.3);
-}
-
-#station-price, #drill-price, #rocket-price {
-    position: relative;
-    color: gold;
-    font-size: xx-large;
-    left: 35%;
-    bottom: 200px;
-    margin: auto;
-    margin-bottom: 35px;
-    width: 60px;
 }
 
 #endScreen {

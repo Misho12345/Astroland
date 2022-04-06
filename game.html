@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <title>Astroland</title>
     <link rel="stylesheet" href="./game/StyleSheet.css" />
+    <link rel="stylesheet" href="./game/ShopStyleSheet.css" />
 </head>
 
 <body onload="init()">
@@ -11,34 +12,47 @@
         <source src="./escape.mp4" type="video/mp4">
     </video>
 
-    <div style="position: relative">
-        <canvas id="canvas" style="position: absolute"></canvas>
-        <canvas id="canvasUI" style="position: absolute"></canvas>
+    <div>
+        <canvas id="canvas" style="position: fixed"></canvas>
+        <canvas id="canvasUI" style="position: fixed"></canvas>
 
-        <section id="pause-menu" style="display: none">
-            <h1 id="paused">Paused</h1>
-            <h1 id="next-gun">Next Gun</h1>
-            <h1 id="buildings">Buildings</h1>
+        <div id="shop-menu" style="display: none">
+            <div id="shop-contents">
+                <h1 id="shop-title">Shop</h1>
 
-            <section id="guns" style="background-image: url('./pics/shotgun1.png')" onclick="requestWeaponUpdrade()"></section>
-            <h1 id="coins">50</h1>
+                <div id="shop">
+                    <div id="shop-buttons">
+                        <div id="buildings-button" class="shop-button" onclick="changeShopItems(1)">Buildings</div>
+                        <div id="weapons-button" class="shop-button" onclick="changeShopItems(0)">Weapons</div>
+                        <div class="shop-button" style="display: none"></div>
+                    </div>
 
-            <section class="buildings">
-                <div class="name" onclick="requestBuildingAndPurchasing('house')">station</div>
-                <div class="name" onclick="requestBuildingAndPurchasing('drill')">drill</div>
-                <div class="name" onclick="requestBuildingAndPurchasing('rocket')">rocket</div>
+                    <div id="items"></div>
+                </div>
+            </div>
+            <!--<div id="shop">
+                <h1 id="next-gun">Next Gun</h1>
+                <h1 id="buildings">Buildings</h1>
 
-                <div id="station-price">50</div>
-                <div id="drill-price">150</div>
-                <div id="rocket-price">500</div>
-            </section>
-        </section>
+                <div id="guns" style="background-image: url('./pics/shotgun1.png')" onclick="requestWeaponUpdrade()"></div>
+                <h1 id="coins">50</h1>
 
-        <section id="game-over-menu" style="display: none">
+                <div class="buildings">
+                    <div class="name" onclick="requestBuildingAndPurchasing('house')">station</div>
+                    <div class="name" onclick="requestBuildingAndPurchasing('drill')">drill</div>
+                    <div class="name" onclick="requestBuildingAndPurchasing('rocket')">rocket</div>
+
+                    <div id="station-price">50</div>
+                    <div id="drill-price">150</div>
+                    <div id="rocket-price">500</div>
+                </div>
+            </div>-->
+        </div>
+
+        <div id="game-over-menu" style="display: none">
             <h1 id="game-over">Game Over</h1>
             <dir id="return-main" onclick="location.href='./mainPage.html'">Back To Main Page</dir>
-        </section>
-
+        </div>
     </div>
 
     <div style="display: none">
@@ -100,10 +114,10 @@
         <img src="./game/images/pistol/pistol2.png" id="pistol2" />
         <img src="./game/images/pistol/pistol2L.png" id="pistol2L" />
 
-        <img src="./game/images/rifle/rifle1.png" id="rifle1" />
-        <img src="./game/images/rifle/rifle1L.png" id="rifle1L" />
-        <img src="./game/images/rifle/rifle2.png" id="rifle2" />
-        <img src="./game/images/rifle/rifle2L.png" id="rifle2L" />
+        <img src="./game/images/riffle/riffle1.png" id="riffle1" />
+        <img src="./game/images/riffle/riffle1L.png" id="riffle1L" />
+        <img src="./game/images/riffle/riffle2.png" id="riffle2" />
+        <img src="./game/images/riffle/riffle2L.png" id="riffle2L" />
 
         <img src="./game/images/buildings/house/house.png" id="house0" />
 
@@ -131,8 +145,18 @@
         <img src="./game/images/sopol death/sopoldeath4.png" id="sopoldeath4" />
     </div>
 
+    <script src="./game/globalVariables.js"></script>
     <script src="./game/functions.js"></script>
-    <script src="./game/classesAndEvents.js"></script>
+
+    <script src="./game/Classes/playerClass.js"></script>
+    <script src="./game/Classes/buildingsClasses.js"></script>
+    <script src="./game/Classes/enemyClasses.js"></script>
+    <script src="./game/Classes/bulletClass.js"></script>
+    <script src="./game/Classes/planetClass.js"></script>
+
+    <script src="./game/events.js"></script>
+    
     <script src="./game/mainGame.js"></script>
+    <script src="./game/shopEvents.js"></script>
 </body>
 </html>

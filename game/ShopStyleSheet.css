@@ -1,0 +1,146 @@
+﻿#shop-menu {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(30, 30, 30, 0.4);
+}
+
+#shop-title {
+    text-shadow: -0.1ex 0.1ex 0 darkgoldenrod, 0.1ex 0.1ex 0 darkgoldenrod, 0.1ex -0.1ex 0 darkgoldenrod, -0.1ex -0.1ex 0 darkgoldenrod;
+    font-size: 15vmin;
+    margin: 5vh;
+}
+
+#shop {
+    border: 1vmin solid darkgoldenrod;
+}
+
+#shop-contents {
+    position: fixed;
+
+    top: 0;
+    height: auto;
+    left: 20%;
+    right: 20%;
+}
+
+#shop-buttons {
+    display: flex;
+    flex-flow: row;
+    width: 100%;
+    --checked-background-color: rgba(200, 150, 20, 0.7);
+    --not-checked-background-color: rgba(128, 128, 128, 0.3);
+    --not-checked-hover-background-color: rgba(128, 128, 128, 0.5);
+}
+
+.shop-button {
+    width: 50%;
+
+    padding: 3vmin;
+    font-size: 8vmin;
+    border: 1vmin solid gold;
+    color: white;
+}
+
+#items {
+    border: 1vmin solid goldenrod;
+    height: 50vh;
+    overflow-y: auto;
+}
+
+.item {
+    display: flex;
+    flex-flow: row;
+    height: auto;
+    border: 1vmin solid gold;
+    background-color: rgba(128, 128, 128, 0.1);
+}
+
+.left-part {
+    left: 0;
+    top: 0;
+    
+    margin: 2vmin;
+    width: 22vmin;
+}
+
+.item-image {
+    height: 20vmin;
+    width: 20vmin;
+    border: 1vmin solid #1f1f1f;
+    background: rgba(128, 128, 128, 0.2) no-repeat center center;
+    background-size: contain;
+}
+
+.item-name {
+    color: white;
+    font-size: 4vmin;
+}
+
+.item-properties {
+    top: 0;
+
+    width: 60%;
+    height: 100%;
+    margin: auto;
+}
+
+.item-property {
+    font-size: 4vmin;
+    text-align: left;
+}
+
+.item-tip {
+    font-size: 3vmin;
+    color: white;
+}
+
+.right-part {
+    display: flex;
+    flex-flow: row;
+
+    width: 100%;
+}
+
+.item-price {
+    text-shadow: -0.1ex 0.1ex 0 darkgoldenrod, 0.1ex 0.1ex 0 darkgoldenrod, 0.1ex -0.1ex 0 darkgoldenrod, -0.1ex -0.1ex 0 darkgoldenrod;
+    color: gold;
+    font-size: 10vmin;
+    margin: auto;
+}
+
+.item-buy-button {
+    font-size: 5vmin;
+
+    margin: auto 5% auto 0;
+    padding: 5%;
+    padding-inline: 10%;
+
+    border-radius: 10px;
+    color: white;
+    background-color: #60ff00;
+    border: 0.7vmin solid green;
+}
+
+.item-buy-button:hover {
+    background-color: #60dd00;
+}
+
+::-webkit-scrollbar {
+    width: 2vw;
+}
+
+::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0);
+    border: 0.5vmin solid darkgoldenrod;
+    border-radius: 0.2vw;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: gold;
+    border: 0.6vmin solid darkgoldenrod;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: goldenrod;
+}
