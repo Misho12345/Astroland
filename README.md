@@ -4,7 +4,7 @@
 
 # Singleplayer (засега) игра, в която развиваш своята планета и я отбраняваш от извънземни.
 
-## За да свалите играта натисканете <img src="./README pictures/CODE.png" width="80px"/> ще ви се покаже меню с опции, след това натиснете <img src="./README pictures/downloadZIP.png" width="80px"/> и разархивирайте папката. След това отворете разархивираната папка и натиснете 2 пъти файла <img src="./README pictures/mainPage.png" width="80px"/>
+## За да свалите играта натисканете **CODE** ще ви се покаже меню с опции, след това натиснете **Download ZIP** и разархивирайте папката. След това отворете разархивираната папка и натиснете 2 пъти файла **mainPage.html**.
 > ще можете скоро да отворите направо на [tonka.pro/Astroland](https://tonka.pro/Astroland) (все още не е вдигнат сайта)
 
 <img src="./README pictures/tehnologii.png"/>
