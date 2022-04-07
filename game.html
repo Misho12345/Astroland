@@ -18,7 +18,7 @@
 
         <div id="shop-menu" style="display: none">
             <div id="shop-contents">
-                <h1 id="shop-title">Shop</h1>
+                <h1 class="menu-title">Shop</h1>
 
                 <div id="shop">
                     <div id="shop-buttons">
@@ -32,9 +32,19 @@
             </div>
         </div>
 
+        <div id="pause-menu" style="display: none">
+            <div id="pause-menu-contents">
+                <h1 class="menu-title">Paused</h1>
+                <dir class="menu-button" onclick="paused = false;">Back To Game</dir>
+                <dir class="menu-button" onclick="location.href='./mainPage.html'">Back To Main Page</dir>
+            </div>
+        </div>
+
         <div id="game-over-menu" style="display: none">
-            <h1 id="game-over">Game Over</h1>
-            <dir id="return-main" onclick="location.href='./mainPage.html'">Back To Main Page</dir>
+            <div id="game-over-contents">
+                <h1 class="menu-title">Game Over</h1>
+                <dir class="menu-button" onclick="location.href='./mainPage.html'">Back To Main Page</dir>
+            </div>
         </div>
     </div>
 

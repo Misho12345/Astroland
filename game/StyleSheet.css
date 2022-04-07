@@ -9,8 +9,34 @@
     text-align: center;
 }
 
-#game-over-menu {
+#game-over-contents, #pause-menu-contents {
+    top: 10%;
+    bottom: 10%;
+    left: 15%;
+    right: 15%;
     position: fixed;
+}
+
+.menu-title {
+    text-shadow: -0.1ex 0.1ex 0 darkgoldenrod, 0.1ex 0.1ex 0 darkgoldenrod, 0.1ex -0.1ex 0 darkgoldenrod, -0.1ex -0.1ex 0 darkgoldenrod;
+    font-size: 8vw;
+    margin: 5vh;
+}
+
+.menu-button {
+    margin: 1% auto;
+    bottom: 10%;
+    width: 50%;
+    padding: 3vmin;
+    font-size: 5vw;
+    border: 1vmin solid gold;
+    color: white;
+    border-radius: 0.2em;
+    background-color: rgba(128, 128, 128, 0.3);
+}
+
+.menu-button:hover {
+    background-color: rgba(128, 128, 128, 0.5);
 }
 
 canvas, body {

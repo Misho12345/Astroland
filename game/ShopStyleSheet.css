@@ -1,8 +1,17 @@
-﻿#shop-menu {
+﻿#shop-menu, #pause-menu, #game-over-menu {
     position: fixed;
     width: 100%;
     height: 100%;
     background-color: rgba(30, 30, 30, 0.4);
+}
+
+#shop-contents {
+    position: fixed;
+
+    top: 0;
+    height: auto;
+    left: 20%;
+    right: 20%;
 }
 
 #shop-title {
@@ -13,15 +22,6 @@
 
 #shop {
     border: 1vmin solid darkgoldenrod;
-}
-
-#shop-contents {
-    position: fixed;
-
-    top: 0;
-    height: auto;
-    left: 20%;
-    right: 20%;
 }
 
 #shop-buttons {

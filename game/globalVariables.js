@@ -12,7 +12,8 @@ const contextUI = canvasUI.getContext("2d");
 let bullets = [], enemyClasses = [], enemies = [];
 let buildings = [], buildingsClasses = [];
 
-let paused = false, pausing = false;
+let shop = false;
+let paused = false;
 let dead = false;
 
 let rocket;
@@ -22,6 +23,7 @@ let isKeyPressed = [];
 for (let i = 0; i < 256; isKeyPressed[i++] = 0);
 
 let shopMenu = document.getElementById("shop-menu");
+let pauseMenu = document.getElementById("pause-menu");
 let gameOverMenu = document.getElementById("game-over-menu");
 let video = document.getElementById("endScreen");
 

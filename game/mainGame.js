@@ -70,7 +70,7 @@ function Update() {
         else if (!isKeyPressed[39] && !isKeyPressed[68]) player.state = 0;
     }
 
-    if ((isKeyPressed[38] || isKeyPressed[87]) && !player.up) {
+    if ((isKeyPressed[38] || isKeyPressed[87] || isKeyPressed[32]) && !player.up) {
         player.gravitySpeed = -15;
         player.up = true;
         player.h++;

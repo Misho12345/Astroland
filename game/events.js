@@ -1,10 +1,15 @@
 resizePage();
 
 function init() {
-    if (!paused && !dead) {
-        if (shopMenu.style.display != "none") {
+    if (dead) gameOverMenu.style.display = "block";
+    else if (shop) shopMenu.style.display = "block";
+    else if (paused) pauseMenu.style.display = "block";
+    else {
+        if (shopMenu.style.display != "none")
             shopMenu.style.display = "none";
-        }
+
+        if (pauseMenu.style.display != "none")
+            pauseMenu.style.display = "none";
 
         Update();
 
@@ -16,8 +21,6 @@ function init() {
 
         Draw();
     }
-    else if (dead) gameOverMenu.style.display = "block";
-    else if (paused) shopMenu.style.display = "block";
 
     setTimeout(init, 10);
 }
@@ -27,9 +30,13 @@ window.addEventListener("keydown", e => {
     isKeyPressed[e.keyCode] = 1;
 
     if ((e.keyCode == 27 || e.keyCode == 80) && !rocket) {
-        if (!pausing) paused = !paused;
-        pausing = true;
+        if (shop) shop = false;
+        else paused = !paused;
     }
+
+    if (e.keyCode == 83)
+        if (!paused)
+            shop = !shop;
 
     if (e.keyCode == 72 && player.hp < 20 && player.coins >= 5) {
         player.coins -= 5;
@@ -39,7 +46,6 @@ window.addEventListener("keydown", e => {
 
 window.addEventListener("keyup", e => {
     isKeyPressed[e.keyCode] = 0;
-    pausing = false;
 });
 
 canvasUI.addEventListener("mousemove", e => {

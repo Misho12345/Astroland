@@ -60,6 +60,7 @@ function requestPurchasingABuilding(idx) {
     changeShopItems(1);
 
     paused = false;
+    shop = false;
 }
 
 function equipWeapon(idx) {
