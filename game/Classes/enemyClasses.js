@@ -25,7 +25,8 @@ class Enemy {
     }
 
     shooting() {
-        if (!player) return;
+        if (!player || this.deathTimer != -2) return;
+
         bullets.push(new Bullet(this.x, this.y,
             (angleCalc(this.x, this.y, player.x + player.width / 2, player.y + player.height / 2)),
             (angleCalc(this.x, this.y, player.x + player.width / 2, player.y + player.height / 2)),
