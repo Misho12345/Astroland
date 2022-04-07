@@ -80,7 +80,7 @@
 .item-properties {
     top: 0;
     left: 0;
-    width: 100%;
+    width: 70%;
     height: 100%;
     margin: auto;
 }
@@ -96,7 +96,7 @@
 }
 
 .item-tip {
-    font-size: 2vw;
+    font-size: 1.8vw;
     color: white;
 }
 

@@ -1,39 +1,26 @@
 resizePage();
 
-function requestPurchasingABuilding(type, price) {
-    switch (type) {
-        case "house":
-            if (player.coins >= price) {
-                buildings.push(new House(-planet.angle + Math.PI + player.angle - player.defA, 512, 256));
-                player.coins -= price;
-            }
-            break;
+function requestPurchasingABuilding(idx) {
+    if (player.coins < buildingsTypes[idx].price) return;
 
-        case "drill":
-            if (player.coins >= price) {
-                buildings.push(new Drill(-planet.angle + Math.PI + player.angle - player.defA, 256, 256));
-                player.coins -= price;
-            }
-            break;
+    player.coins -= buildingsTypes[idx].price;
+    buildings.push(new (buildingsClasses[idx])(-planet.angle + Math.PI + player.angle - player.defA, buildingsTypes[idx].width, buildingsTypes[idx].height));
 
-        case "rocket":
-            if (player.coins >= price) {
-                rocket = new Rocket(-planet.angle + Math.PI + player.angle - player.defA, 256, 512);
-                player.coins -= price;
+    if (buildingsTypes[idx].name == "rocket") {
+        rocket = buildings[buildings.length - 1];
+        bullets = [];
+        gameEnd = true;
+        player = null;
 
-                bullets = [];
-                gameEnd = true;
-                player = null;
-
-                enemies.forEach(enemy => {
-                    enemy.deathTimer = 39;
-                    enemy.hp = 0;
-                });
-            }
-            break;
-
-        default: console.log("E R R O R"); break;
+        enemies.forEach(enemy => {
+            enemy.deathTimer = 39;
+            enemy.hp = 0;
+        });
     }
+    else buildingsTypes[idx].price = Math.round(0.11 * buildingsTypes[idx].price) * 10;
+
+    changeShopItems(0);
+    changeShopItems(1);
 
     paused = false;
 }
@@ -80,7 +67,7 @@ function init() {
 window.addEventListener("keydown", e => {
     isKeyPressed[e.keyCode] = 1;
 
-    if (e.keyCode == 27 || e.keyCode == 80) {
+    if ((e.keyCode == 27 || e.keyCode == 80) && !rocket) {
         if (!pausing) paused = !paused;
         pausing = true;
     }

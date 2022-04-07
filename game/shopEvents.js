@@ -25,25 +25,26 @@ function changeShopItems(mode) {
 
         items.innerHTML = "";
 
-        buildingsTypes.forEach(building => {
+        for (let i = 0; i < buildingsTypes.length; i++) {
             items.innerHTML +=
                 "<div class='item'>\
                     <div class='left-part'>\
-                        <div class='item-image' style='background-image: " + building.url + ";'></div>\
-                        <div class='item-name'>" + building.name + "</div>\
+                        <div class='item-image' style='background-image: " + buildingsTypes[i].url + ";'></div>\
+                        <div class='item-name'>" + buildingsTypes[i].name + "</div>\
                     </div>\
                     <div class='item-properties'>\
-                        " + (building.hp ? "<div class='item-property'><abbr title='Health points'>HP</abbr>: <span class='item-property-value'>" + building.hp + "</span></div>" : "") + "\
-                        " + (building.cps ? "<div class='item-property'><abbr title='Coins per second'>CPS</abbr>: <span class='item-property-value'>" + building.cps + "</span></div>" : "") + "\
-                        " + (building.hp || building.cps  ? "<br><br>" : "") + "\
-                        <div class='item-tip' >" + building.tip + "</div>\
+                        " + (buildingsTypes[i].hp ? "<div class='item-property'><abbr title='Health points'>HP</abbr>: <span class='item-property-value'>" + buildingsTypes[i].hp + "</span></div>" : "") + "\
+                        " + (buildingsTypes[i].cps ? "<div class='item-property'><abbr title='Coins per second'>CPS</abbr>: <span class='item-property-value'>" + buildingsTypes[i].cps + "</span></div>" : "") + "\
+                        " + (buildingsTypes[i].cps ? "<div class='item-property'><abbr title='Coins per second'>CPS</abbr>: <span class='item-property-value'>" + buildingsTypes[i].cps + "</span></div>" : "") + "\
+                        " + (buildingsTypes[i].hp || buildingsTypes[i].cps  ? "<br><br>" : "") + "\
+                        <div class='item-tip' >" + buildingsTypes[i].tip + "</div>\
                     </div>\
                     <div class='right-part'>\
-                        <div class='item-price'>" + building.price + "</div>\
-                        <div class='item-buy-button'>BUY</div>\
+                        <div class='item-price'>" + buildingsTypes[i].price + "</div>\
+                        <div class='item-buy-button' onclick='requestPurchasingABuilding(" + i + ")'>BUY</div>\
                     </div>\
                 </div>";
-        });
+        }
     } else {
         weaponsButton.style.backgroundColor = "var(--checked-background-color)";
         buildingsButton.style.backgroundColor = "var(--not-checked-background-color)";
@@ -74,7 +75,7 @@ function changeShopItems(mode) {
                         "<div class='item-price' > " + weapons[i].price + "</div >\
                         <div id='" + weapons[i].name + "_button' class='item-buy-button' onclick='requestPurchasingAWeapon(" + i + ")'>BUY</div>"
                         :
-                        (player.weaponIdx == i ?
+                        (player && player.weaponIdx == i ?
                         "<div id='" + weapons[i].name + "_button' class='item-buy-button' style='margin: auto; background-color: gray; border-color: darkgray;'>EQUIPPED</div>\ " :
                         "<div id='" + weapons[i].name + "_button' class='item-buy-button' style='margin: auto; background-color: #FF5733; border-color: red' onmouseover='EQUIP_Btn_onmouseover(this)' onmouseout='EQUIP_Btn_onmouseout(this)' onclick='equipWeapon(" + i + ")'>EQUIP</div>\ ")) +
                     "</div>\

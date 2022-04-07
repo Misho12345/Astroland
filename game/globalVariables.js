@@ -10,7 +10,7 @@ const ctxUI = canvasUI.getContext("2d");
 const contextUI = canvasUI.getContext("2d");
 
 let bullets = [], enemyClasses = [], enemies = [];
-let buildings = [];
+let buildings = [], buildingsClasses = [];
 
 let paused = false, pausing = false;
 let dead = false;
@@ -32,28 +32,34 @@ let items = document.getElementById("items");
 
 let buildingsTypes = [
     {
-        name: "Station",
+        name: "station",
         price: 50,
-        url: "url(./game/images/buildings/house/house.png)",
+        url: "url(./game/images/buildings/station/station.png)",
         hp: 30,
         cps: 0,
-        tip: "use as a shield"
+        tip: "use as a shield",
+        width: 512,
+        height: 256
     },
     {
-        name: "Drill",
+        name: "drill",
         price: 150,
         url: "url(./game/images/buildings/drill/drill0.png)",
         hp: 30,
-        cps: 2,
-        tip: "gives you more and more coins"
+        cps: 1,
+        tip: "gives you more and more coins",
+        width: 256,
+        height: 256
     },
     {
-        name: "Rocket",
+        name: "rocket",
         price: 500,
         url: "url(./game/images/buildings/rocket/rocket.png)",
         hp: 0,
         cps: 0,
-        tip: "escape from the planet and win the game"
+        tip: "escape from the planet and win the game",
+        width: 256,
+        height: 512
     }
 ];
 

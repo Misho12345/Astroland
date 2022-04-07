@@ -6,7 +6,7 @@ let updates = 0;
 let cap = Math.PI / 20;
 let speed = Math.PI / 720;
 
-buildings.push(new House(-planet.angle + Math.PI + player.angle - player.defA, 512, 256));
+buildings.push(new buildingsClasses[0](-planet.angle + Math.PI + player.angle - player.defA, buildingsTypes[0].width, buildingsTypes[0].height));
 
 function Update() {
     updates++;
