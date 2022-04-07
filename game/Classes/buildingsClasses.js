@@ -7,8 +7,8 @@ class Building {
         this.height = height;
 
         this.frame = 0;
-        this.maxHp = 30;
-        this.hp = this.maxHp;
+        this.maxHp;
+        this.hp;
 
         this.x, this.y;
         this.h = planet.diameter / 2 + this.height / 4;
@@ -27,12 +27,12 @@ class Building {
         ctx.rotate(this.angle + Math.PI / 2);
         ctx.translate(-this.x - this.width / 2, -this.y - this.height / 2);
 
-        if (this.type > 0) this.frame += 0.1;
+        if (this.idx > 0) this.frame += 0.1;
         if (player && buildingsTypes[this.idx].cps > 0) player.coins += buildingsTypes[this.idx].cps / 100;
 
-        if (this.maxHp != Infinity) {
-            ctx.fillStyle = "black";
-            ctx.fillRect(this.x + this.width / 4 - 2.5, this.y - 82.5, this.width / 2 + 5, 45);
+        if (buildingsTypes[this.idx].name != "rocket") {
+            ctx.fillStyle = "#555555cc";
+            ctx.fillRect(this.x + this.width / 4 - 5, this.y - 85, this.width / 2 + 10, 50);
 
             ctx.fillStyle = "red";
             ctx.fillRect(this.x + this.width / 4, this.y - 80, this.width / 2, 40);
@@ -41,8 +41,9 @@ class Building {
             ctx.fillRect(this.x + this.width / 4, this.y - 80, this.width / 2 * (this.hp / this.maxHp), 40);
         }
 
-        ctx.drawImage(document.getElementById(buildingsTypes[this.idx].name + (buildingsTypes[this.idx].name == "rocket" ? "ship" : "") + Math.floor(this.frame) % 3), this.x, this.y, this.width, this.height)
-
+        let id = buildingsTypes[this.idx].name + (buildingsTypes[this.idx].name == "rocket" ? "ship" : "") + Math.floor(this.frame) % 3;
+        ctx.drawImage(document.getElementById(id), this.x, this.y, this.width, this.height);
+        //if (rocket) console.log(id);
         ctx.restore();
     }
 }
@@ -52,19 +53,40 @@ buildingsClasses.push(
         constructor(angle, width, height) {
             super(angle, width, height);
             this.idx = 0;
+            this.maxHp = buildingsTypes[this.idx].hp;
+            this.hp = this.maxHp;
         }
     },
-    class Drill extends Building {
+    class Drill1 extends Building {
         constructor(angle, width, height) {
             super(angle, width, height);
             this.idx = 1;
+            this.maxHp = buildingsTypes[this.idx].hp;
+            this.hp = this.maxHp;
+        }
+    },
+    class Drill2 extends Building {
+        constructor(angle, width, height) {
+            super(angle, width, height);
+            this.idx = 2;
+            this.maxHp = buildingsTypes[this.idx].hp;
+            this.hp = this.maxHp;
+        }
+    },
+    class Drill3 extends Building {
+        constructor(angle, width, height) {
+            super(angle, width, height);
+            this.idx = 3;
+            this.maxHp = buildingsTypes[this.idx].hp;
+            this.hp = this.maxHp;
         }
     },
     class Rocket extends Building {
         constructor(angle, width, height) {
             super(angle, width, height);
-            this.idx = 2;
-            this.maxHp = Infinity;
+            this.idx = 4;
+            this.maxHp = buildingsTypes[this.idx].hp;
+            this.hp = this.maxHp;
         }
     }
 );

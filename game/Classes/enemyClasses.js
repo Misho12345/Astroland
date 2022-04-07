@@ -25,7 +25,7 @@ class Enemy {
     }
 
     shooting() {
-        if (!player || this.deathTimer != -2) return;
+        if (!player || this.deathTimer != -2 || distance(player.x, player.y, this.x, this.y) > 2000) return;
 
         bullets.push(new Bullet(this.x, this.y,
             (angleCalc(this.x, this.y, player.x + player.width / 2, player.y + player.height / 2)),
@@ -64,10 +64,10 @@ class Enemy {
             if (this.frame > 3) this.frame = 0;
         }
 
-        this.angle = this.defA + planet.angle - Math.PI / 2;
+        this.angle = this.defA + planet.angle + Math.PI / 2;
 
-        this.x = planet.x + planet.diameter / 2 + Math.cos(this.angle) * this.h;
-        this.y = planet.y + planet.diameter / 2 + Math.sin(this.angle) * this.h;
+        this.x = Math.cos(this.angle) * this.h + canvas.width / 2 - this.width / 2;
+        this.y = Math.sin(this.angle) * this.h + canvas.height / 2 - this.height / 2;
     }
 
     draw() {

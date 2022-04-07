@@ -35,7 +35,6 @@ function changeShopItems(mode) {
                     <div class='item-properties'>\
                         " + (buildingsTypes[i].hp ? "<div class='item-property'><abbr title='Health points'>HP</abbr>: <span class='item-property-value'>" + buildingsTypes[i].hp + "</span></div>" : "") + "\
                         " + (buildingsTypes[i].cps ? "<div class='item-property'><abbr title='Coins per second'>CPS</abbr>: <span class='item-property-value'>" + buildingsTypes[i].cps + "</span></div>" : "") + "\
-                        " + (buildingsTypes[i].cps ? "<div class='item-property'><abbr title='Coins per second'>CPS</abbr>: <span class='item-property-value'>" + buildingsTypes[i].cps + "</span></div>" : "") + "\
                         " + (buildingsTypes[i].hp || buildingsTypes[i].cps  ? "<br><br>" : "") + "\
                         <div class='item-tip' >" + buildingsTypes[i].tip + "</div>\
                     </div>\
@@ -66,9 +65,10 @@ function changeShopItems(mode) {
                     </div>\
                     <div class='item-properties'>\
                         <div class='item-property'>damage: <span class='item-property-value'>" + weapons[i].dmg + "</span> </div>\
-                        <div class='item-property'>firing speed: <span class='item-property-value'>" + Math.round(100 / weapons[i].fireSpeed * 100) / 100 + "</span></div>\
+                        <div class='item-property'><abbr title='Revolutions per minute (firing speed)'>RPM</abbr>: <span class='item-property-value'>" + Math.round(100 / weapons[i].fireSpeed * 6000) / 100 + "</span></div>\
                         <div class='item-property'><abbr title='Damage per second'>DPS</abbr>: <span class='item-property-value'>" + weapons[i].dps + "</span></div>\
-                    " + (weapons[i].bullets > 1 ? "<div class='item-property'>bullet count: <span class='item-property-value'>" + weapons[i].bullets + "</span></div>" : "")
+                        <div class='item-property'>accuracy: <span class='item-property-value'>" + (100 - 5 * weapons[i].inaccuracy) + "</span></div>\
+                    " + (weapons[i].bulletCount > 1 ? "<div class='item-property'>bullets: <span class='item-property-value'>" + weapons[i].bulletCount + "</span></div>" : "")
                  + "</div>\
                     <div class='right-part'>" +
                         (weapons[i].price != 0 ?

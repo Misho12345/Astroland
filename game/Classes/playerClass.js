@@ -37,29 +37,10 @@ class Player {
         if (this.gunPossibleToShot && this.gunTime >= this.weapon.fireSpeed) {
             let angle = angleCalc(this.x + this.width / 2, this.y + this.height / 2, mouseX, mouseY);
 
-            let a = 0, b = 0;
-
-            switch (this.weapon.name) {
-                case "shotgun":
-                    a = Math.cos(angle) * 75;
-                    b = Math.sin(angle) * 75;
-                    break;
-
-                case "uzi":
-                    a = Math.cos(angle + (randomInteger(5) - 2.5) / 100 * Math.PI) * 100;
-                    b = Math.sin(angle + (randomInteger(5) - 2.5) / 100 * Math.PI) * 100 - 15;
-                    break;
-                
-                case "riffle":
-                    a = Math.cos(angle + (randomInteger(5) - 2.5) / 100 * Math.PI) * 100;
-                    b = Math.sin(angle + (randomInteger(5) - 2.5) / 100 * Math.PI) * 100 - 15;
-                    break;
-            }
-
-            for (let i = 0; i < this.weapon.bullets; i++)
+            for (let i = 0; i < this.weapon.bulletCount; i++)
                 bullets.push(new Bullet(
-                    this.x + this.width / 2 + a,
-                    this.y + this.height / 2 + b,
+                    this.x + this.width / 2 + Math.cos(angle) * this.weapon.width,
+                    this.y + this.height / 2 + Math.sin(angle) * this.weapon.width - this.weapon.height / 4,
                     (angle + (randomInteger(this.weapon.inaccuracy) - this.weapon.inaccuracy / 2) / 100 * Math.PI),
                     (angle + (randomInteger(this.weapon.inaccuracy) - this.weapon.inaccuracy / 2) / 100 * Math.PI),
                     this.weapon.bulletColor,

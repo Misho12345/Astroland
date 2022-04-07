@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\game"
+    "\\game",
+    "\\game\\Classes"
   ],
-  "SelectedNode": "\\game\\StyleSheet.css",
+  "SelectedNode": "\\game\\functions.js",
   "PreviewInSolutionExplorer": false
 }

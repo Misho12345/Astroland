@@ -106,8 +106,8 @@ function Draw() {
     planet.draw();
 
     for (let i = 0; i < buildings.length; i++) {
-        if (buildings[i].hp > 0) buildings[i].draw();
-        else buildings.splice(i, 1);
+        if (buildings[i].hp <= 0 || buildings[i] == rocket) buildings.splice(i, 1);
+        else buildings[i].draw();
     }
 
     enemies.forEach(enemy => {
