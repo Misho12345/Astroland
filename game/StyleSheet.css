@@ -15,6 +15,7 @@
     left: 15%;
     right: 15%;
     position: fixed;
+    margin: auto;
 }
 
 .menu-title {
@@ -24,14 +25,13 @@
 }
 
 .menu-button {
-    margin: 1% auto;
-    bottom: 10%;
-    width: 50%;
+    top: 10%;
+    margin: 2% auto;
+    width: 30%;
     padding: 3vmin;
-    font-size: 5vw;
+    font-size: 3.5vw;
     border: 1vmin solid gold;
     color: white;
-    border-radius: 0.2em;
     background-color: rgba(128, 128, 128, 0.3);
 }
 

@@ -150,9 +150,9 @@ let weapons = [
         }
     },
     {
-        name: "riffle",
+        name: "rifle",
         price: 250,
-        url: "url(./game/images/riffle/riffle1.png)",
+        url: "url(./game/images/rifle/rifle1.png)",
         dmg: 7.5,
         fireSpeed: 20,
         dps: 37.5,
@@ -160,14 +160,14 @@ let weapons = [
         bulletSpeed: 10,
         bulletColor: "red",
         radius: 5,
-        inaccuracy: 5,
+        inaccuracy: 0,
         width: 130,
         height: 50,
         images: {
-            L_normal: document.getElementById("riffle1L"),
-            R_normal: document.getElementById("riffle1"),
-            L_firing: document.getElementById("riffle2L"),
-            R_firing: document.getElementById("riffle2")
+            L_normal: document.getElementById("rifle1L"),
+            R_normal: document.getElementById("rifle1"),
+            L_firing: document.getElementById("rifle2L"),
+            R_firing: document.getElementById("rifle2")
         }
     }
 ];
