@@ -76,7 +76,7 @@ function changeShopItems(mode) {
                         :
                         (player.weaponIdx == i ?
                         "<div id='" + weapons[i].name + "_button' class='item-buy-button' style='margin: auto; background-color: gray; border-color: darkgray;'>EQUIPPED</div>\ " :
-                    "<div id='" + weapons[i].name + "_button' class='item-buy-button' style='margin: auto; background-color: #FF5733; border-color: red' onmouseover='EQUIP_Btn_onmouseover(this)' onmouseout='EQUIP_Btn_onmouseout(this)'>EQUIP</div>\ ")) +
+                        "<div id='" + weapons[i].name + "_button' class='item-buy-button' style='margin: auto; background-color: #FF5733; border-color: red' onmouseover='EQUIP_Btn_onmouseover(this)' onmouseout='EQUIP_Btn_onmouseout(this)' onclick='equipWeapon(" + i + ")'>EQUIP</div>\ ")) +
                     "</div>\
                 </div>";
         }

@@ -38,16 +38,21 @@ function requestPurchasingABuilding(type, price) {
     paused = false;
 }
 
-function requestPurchasingAWeapon(idx) {
-    if (player.coins < weapons[idx].price) return;
-    
-    player.coins -= weapons[idx].price;
-    weapons[idx].price = 0;
+function equipWeapon(idx) {
     player.weaponIdx = idx;
 
     changeShopItems(1);
     changeShopItems(0);
 }
+
+function requestPurchasingAWeapon(idx) {
+    if (player.coins < weapons[idx].price) return;
+    
+    player.coins -= weapons[idx].price;
+    weapons[idx].price = 0;
+    equipWeapon(idx);
+}
+
 
 function init() {
     if (!paused && !dead) {

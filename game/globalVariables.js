@@ -102,7 +102,7 @@ let weapons = [
     },
     {
         name: "uzi",
-        price: 0,
+        price: 150,
         url: "url(./game/images/uzi/uzi1.png)",
         dmg: 1,
         fireSpeed: 8,
