@@ -1,6 +1,6 @@
 resizePage();
 
-function requestBuildingAndPurchasing(type, price) {
+function requestPurchasingABuilding(type, price) {
     switch (type) {
         case "house":
             if (player.coins >= price) {
@@ -36,6 +36,17 @@ function requestBuildingAndPurchasing(type, price) {
     }
 
     paused = false;
+}
+
+function requestPurchasingAWeapon(idx) {
+    if (player.coins < weapons[idx].price) return;
+    
+    player.coins -= weapons[idx].price;
+    weapons[idx].price = 0;
+    player.weaponIdx = idx;
+
+    changeShopItems(1);
+    changeShopItems(0);
 }
 
 function init() {

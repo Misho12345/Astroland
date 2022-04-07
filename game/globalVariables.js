@@ -28,12 +28,6 @@ let video = document.getElementById("endScreen");
 let buildingsButton = document.getElementById("buildings-button");
 let weaponsButton = document.getElementById("weapons-button");
 
-let handleBuildingsButtonMouseover = () => buildingsButton.style.backgroundColor = "var(--not-checked-hover-background-color)";
-let handleBuildingsButtonMouseout = () => buildingsButton.style.backgroundColor = "var(--not-checked-background-color)";
-
-let handleWeaponsButtonMouseover = () => weaponsButton.style.backgroundColor = "var(--not-checked-hover-background-color)";
-let handleWeaponsButtonMouseout = () => weaponsButton.style.backgroundColor = "var(--not-checked-background-color)";
-
 let items = document.getElementById("items");
 
 let buildingsTypes = [
@@ -108,7 +102,7 @@ let weapons = [
     },
     {
         name: "uzi",
-        price: 150,
+        price: 0,
         url: "url(./game/images/uzi/uzi1.png)",
         dmg: 1,
         fireSpeed: 8,

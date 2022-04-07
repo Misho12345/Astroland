@@ -14,7 +14,8 @@ class Player {
         this.order = 0;
         this.state = 0;
 
-        this.weapon = weapons[3];
+        this.weaponIdx = 0;
+        this.weapon;
         this.gunTime = 0;
         this.gunShot = false;
         this.gunPossibleToShot = false;
@@ -29,6 +30,8 @@ class Player {
     }
 
     update() {
+        this.weapon = weapons[this.weaponIdx];
+
         this.gunPossibleToShot = (isMousePressed && !isKeyPressed[77]);
 
         if (this.gunPossibleToShot && this.gunTime >= this.weapon.fireSpeed) {

@@ -1,3 +1,17 @@
+let handleBuildingsButtonMouseover = () => buildingsButton.style.backgroundColor = "var(--not-checked-hover-background-color)";
+let handleBuildingsButtonMouseout = () => buildingsButton.style.backgroundColor = "var(--not-checked-background-color)";
+
+let handleWeaponsButtonMouseover = () => weaponsButton.style.backgroundColor = "var(--not-checked-hover-background-color)";
+let handleWeaponsButtonMouseout = () => weaponsButton.style.backgroundColor = "var(--not-checked-background-color)";
+
+function EQUIP_Btn_onmouseover(button) {
+    button.style.backgroundColor = "#EE4622";
+}
+
+function EQUIP_Btn_onmouseout(button) {
+    button.style.backgroundColor = "#FF5733";
+}
+
 function changeShopItems(mode) {
     if (mode) {
         buildingsButton.style.backgroundColor = "var(--checked-background-color)";
@@ -28,7 +42,6 @@ function changeShopItems(mode) {
                         <div class='item-price'>" + building.price + "</div>\
                         <div class='item-buy-button'>BUY</div>\
                     </div>\
-                    <div></div>\
                 </div>";
         });
     } else {
@@ -43,26 +56,30 @@ function changeShopItems(mode) {
 
         items.innerHTML = "";
 
-        weapons.forEach(weapon => {
+        for (let i = 0; i < weapons.length; i++) {
             items.innerHTML +=
                 "<div class='item'>\
                     <div class='left-part'>\
-                        <div class='item-image' style='background-image: " + weapon.url + ";'></div>\
-                        <div class='item-name'>" + weapon.name + "</div>\
+                        <div class='item-image' style='background-image: " + weapons[i].url + ";'></div>\
+                        <div class='item-name'>" + weapons[i].name + "</div>\
                     </div>\
                     <div class='item-properties'>\
-                        <div class='item-property'>damage: <span class='item-property-value'>" + weapon.dmg + "</span> </div>\
-                        <div class='item-property'>firing speed: <span class='item-property-value'>" + Math.round(100 / weapon.fireSpeed * 100) / 100 + "</span></div>\
-                        <div class='item-property'><abbr title='Damage per second'>DPS</abbr>: <span class='item-property-value'>" + weapon.dps + "</span></div>\
-                    " + (weapon.bullets > 1 ? "<div class='item-property'>bullet count: <span class='item-property-value'>" + weapon.bullets + "</span></div>" : "")
+                        <div class='item-property'>damage: <span class='item-property-value'>" + weapons[i].dmg + "</span> </div>\
+                        <div class='item-property'>firing speed: <span class='item-property-value'>" + Math.round(100 / weapons[i].fireSpeed * 100) / 100 + "</span></div>\
+                        <div class='item-property'><abbr title='Damage per second'>DPS</abbr>: <span class='item-property-value'>" + weapons[i].dps + "</span></div>\
+                    " + (weapons[i].bullets > 1 ? "<div class='item-property'>bullet count: <span class='item-property-value'>" + weapons[i].bullets + "</span></div>" : "")
                  + "</div>\
-                    <div class='right-part'>\
-                        <div class='item-price'>" + weapon.price + "</div>\
-                        <div class='item-buy-button'>BUY</div>\
-                    </div>\
-                    <div></div>\
+                    <div class='right-part'>" +
+                        (weapons[i].price != 0 ?
+                        "<div class='item-price' > " + weapons[i].price + "</div >\
+                        <div id='" + weapons[i].name + "_button' class='item-buy-button' onclick='requestPurchasingAWeapon(" + i + ")'>BUY</div>"
+                        :
+                        (player.weaponIdx == i ?
+                        "<div id='" + weapons[i].name + "_button' class='item-buy-button' style='margin: auto; background-color: gray; border-color: darkgray;'>EQUIPPED</div>\ " :
+                    "<div id='" + weapons[i].name + "_button' class='item-buy-button' style='margin: auto; background-color: #FF5733; border-color: red' onmouseover='EQUIP_Btn_onmouseover(this)' onmouseout='EQUIP_Btn_onmouseout(this)'>EQUIP</div>\ ")) +
+                    "</div>\
                 </div>";
-        });
+        }
     }
 }
 
