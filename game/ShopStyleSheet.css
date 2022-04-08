@@ -10,8 +10,8 @@
 
     top: 0;
     height: auto;
-    left: 20%;
-    right: 20%;
+    left: 12%;
+    right: 12%;
 }
 
 #shop-title {
@@ -21,7 +21,7 @@
 }
 
 #shop {
-    border: 1vmin solid darkgoldenrod;
+    border: 0.4vw solid darkgoldenrod;
 }
 
 #shop-buttons {
@@ -34,25 +34,25 @@
 }
 
 .shop-button {
-    width: 50%;
+    width: calc(100% / 3);
 
     padding: 3vmin;
-    font-size: 8vmin;
-    border: 1vmin solid gold;
+    font-size: 4vw;
+    border: 0.35vw solid gold;
     color: white;
 }
 
 #items {
-    border: 1vmin solid goldenrod;
+    border: 0.35vw solid goldenrod;
     height: 50vh;
-    overflow: hidden auto;
+    overflow: hidden scroll;
 }
 
 .item {
     display: flex;
     flex-flow: row;
     height: auto;
-    border: 1vmin solid gold;
+    border: 0.35vw solid gold;
     background-color: rgba(128, 128, 128, 0.1);
 }
 
@@ -60,34 +60,34 @@
     left: 0;
     top: 0;
     
-    margin: 2vmin;
-    width: 22vmin;
+    margin: 1vw;
+    width: calc(15vw + 2vmin);
 }
 
 .item-image {
-    height: 20vmin;
-    width: 20vmin;
-    border: 1vmin solid #1f1f1f;
+    height: 15vw;
+    width: 15vw;
+    border: 0.5vw solid #111a;
     background: rgba(128, 128, 128, 0.2) no-repeat center center;
     background-size: contain;
 }
 
 .item-name {
     color: white;
-    font-size: 4vmin;
+    font-size: 2vw;
 }
 
 .item-properties {
     top: 0;
     left: 0;
-    width: 70%;
+    width: 100%;
     height: 100%;
     margin: auto;
 }
 
 .item-property {
     color: gold;
-    font-size: 2vw;
+    font-size: 2.5vw;
     text-align: left;
 }
 
@@ -96,7 +96,7 @@
 }
 
 .item-tip {
-    font-size: 1.8vw;
+    font-size: 2vw;
     color: white;
 }
 
@@ -110,21 +110,21 @@
 .item-price {
     text-shadow: -0.1ex 0.1ex 0 darkgoldenrod, 0.1ex 0.1ex 0 darkgoldenrod, 0.1ex -0.1ex 0 darkgoldenrod, -0.1ex -0.1ex 0 darkgoldenrod;
     color: gold;
-    font-size: 10vmin;
-    margin: auto;
+    font-size: 5vw;
+    margin: auto 3% auto auto;
 }
 
 .item-buy-button {
-    font-size: 5vmin;
+    font-size: 3vw;
 
     margin: auto 5% auto 0;
     padding: 5%;
     padding-inline: 10%;
 
-    border-radius: 10px;
+    border-radius: 0.75vw;
     color: white;
     background-color: #60ff00;
-    border: 0.7vmin solid green;
+    border: 0.35vw solid green;
 }
 
 .item-buy-button:hover {
@@ -137,13 +137,13 @@
 
 ::-webkit-scrollbar-track {
     background-color: rgba(0, 0, 0, 0);
-    border: 0.5vmin solid darkgoldenrod;
+    border: 0.3vw solid darkgoldenrod;
     border-radius: 0.2vw;
 }
 
 ::-webkit-scrollbar-thumb {
     background-color: gold;
-    border: 0.6vmin solid darkgoldenrod;
+    border: 0.3vw solid darkgoldenrod;
 }
 
 ::-webkit-scrollbar-thumb:hover {

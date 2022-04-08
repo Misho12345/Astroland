@@ -1,7 +1,8 @@
 class Player {
     constructor(width, height) {
         this.x, this.y;
-        this.hp = 20;
+        this.maxHp = 20;
+        this.hp = this.maxHp;
         this.width = width;
         this.height = height;
 
@@ -72,7 +73,7 @@ class Player {
             if (i % 2 == 0) ctxUI.drawImage(heart1, i * 20, 0, 20, 30);
             else ctxUI.drawImage(heart2, i * 20, 0, 20, 30);
         }
-        for (let i = this.hp; i < 20; i++) {
+        for (let i = this.hp; i < this.maxHp; i++) {
             if (i % 2 == 0) ctxUI.drawImage(dead1, i * 20, 0, 20, 30);
             else ctxUI.drawImage(dead2, i * 20, 0, 20, 30);
         }

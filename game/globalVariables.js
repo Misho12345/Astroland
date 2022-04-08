@@ -27,9 +27,6 @@ let pauseMenu = document.getElementById("pause-menu");
 let gameOverMenu = document.getElementById("game-over-menu");
 let video = document.getElementById("endScreen");
 
-let buildingsButton = document.getElementById("buildings-button");
-let weaponsButton = document.getElementById("weapons-button");
-
 let items = document.getElementById("items");
 
 let buildingsTypes = [
@@ -168,6 +165,25 @@ let weapons = [
             R_normal: document.getElementById("rifle1"),
             L_firing: document.getElementById("rifle2L"),
             R_firing: document.getElementById("rifle2")
+        }
+    }
+];
+
+let other = [
+    {
+        name: "HP",
+        price: 5,
+        url: "url(./game/images/hearts/heart1.png)",
+        property: "+ 1 <abbr title='Health point (half a heart)'>HP</abbr>",
+        tip: "(you can buy it only when you're not at full health)",
+        func: () => {
+            if (player.hp < player.maxHp) {
+                player.hp++;
+                this.price = Math.round(1.2 * this.price / 10) * 10;
+                return true;
+            }
+
+            return false;
         }
     }
 ];

@@ -25,7 +25,7 @@ class Enemy {
     }
 
     shooting() {
-        if (!player || this.deathTimer != -2 || distance(player.x, player.y, this.x, this.y) > 2000) return;
+        if (!player || this.deathTimer != -2) return;
 
         bullets.push(new Bullet(this.x, this.y,
             (angleCalc(this.x, this.y, player.x + player.width / 2, player.y + player.height / 2)),

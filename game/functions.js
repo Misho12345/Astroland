@@ -56,8 +56,8 @@ function requestPurchasingABuilding(idx) {
     }
     else buildingsTypes[idx].price = Math.round(0.11 * buildingsTypes[idx].price) * 10;
 
-    changeShopItems(0);
     changeShopItems(1);
+    changeShopItems(0);
 
     paused = false;
     shop = false;
@@ -66,8 +66,8 @@ function requestPurchasingABuilding(idx) {
 function equipWeapon(idx) {
     player.weaponIdx = idx;
 
-    changeShopItems(1);
     changeShopItems(0);
+    changeShopItems(1);
 }
 
 function requestPurchasingAWeapon(idx) {
@@ -76,4 +76,13 @@ function requestPurchasingAWeapon(idx) {
     player.coins -= weapons[idx].price;
     weapons[idx].price = 0;
     equipWeapon(idx);
+}
+
+function requestPurchasingOther(idx) {
+    if (player.coins < weapons[idx].price) return;
+
+    if (other[idx].func()) {
+        player.coins -= weapons[idx].price;
+        shop = false;
+    }
 }
