@@ -56,7 +56,6 @@ function requestPurchasingABuilding(idx) {
     }
     else buildingsTypes[idx].price = Math.round(0.11 * buildingsTypes[idx].price) * 10;
 
-    changeShopItems(1);
     changeShopItems(0);
 
     paused = false;
@@ -66,7 +65,6 @@ function requestPurchasingABuilding(idx) {
 function equipWeapon(idx) {
     player.weaponIdx = idx;
 
-    changeShopItems(0);
     changeShopItems(1);
 }
 
@@ -86,7 +84,6 @@ function requestPurchasingUtilities(idx) {
         shop = false;
 
         utilities[idx].price++;
-        changeShopItems(1);
         changeShopItems(2);
     }
 }

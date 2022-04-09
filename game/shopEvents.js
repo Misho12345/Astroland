@@ -21,28 +21,28 @@ function changeShopItems(mode) {
     switch (mode) {
         case 0:
             for (let i = 0; i < buildingsTypes.length; i++) {
-            items.innerHTML +=
-                "<div class='item'>\
-                    <div class='left-part'>\
-                        <div class='item-image' style='background-image: " + buildingsTypes[i].url + ";'></div>\
-                        <div class='item-name'>" + buildingsTypes[i].name + "</div>\
-                    </div>\
-                    <div class='item-properties'>\
-                        " + (buildingsTypes[i].hp ? "<div class='item-property'><abbr title='Health points'>HP</abbr>: <span class='item-property-value'>" + buildingsTypes[i].hp + "</span></div>" : "") + "\
-                        " + (buildingsTypes[i].cps ? "<div class='item-property'><abbr title='Coins per second'>CPS</abbr>: <span class='item-property-value'>" + buildingsTypes[i].cps + "</span></div>" : "") + "\
-                        " + (buildingsTypes[i].hp || buildingsTypes[i].cps  ? "<br><br>" : "") + "\
-                        <div class='item-tip' >" + buildingsTypes[i].tip + "</div>\
-                    </div>\
-                    <div class='right-part'>\
-                        <div class='item-price'>" + buildingsTypes[i].price + "</div>\
-                        <div class='item-buy-button' onclick='requestPurchasingABuilding(" + i + ")'>BUY</div>\
-                    </div>\
-                </div>";
+                items.innerHTML +=
+                    "<div class='item'>\
+                        <div class='left-part'>\
+                            <div class='item-image' style='background-image: " + buildingsTypes[i].url + ";'></div>\
+                            <div class='item-name'>" + buildingsTypes[i].name + "</div>\
+                        </div>\
+                        <div class='item-properties'>\
+                            " + (buildingsTypes[i].hp ? "<div class='item-property'><abbr title='Health points'>HP</abbr>: <span class='item-property-value'>" + buildingsTypes[i].hp + "</span></div>" : "") + "\
+                            " + (buildingsTypes[i].cps ? "<div class='item-property'><abbr title='Coins per second'>CPS</abbr>: <span class='item-property-value'>" + buildingsTypes[i].cps + "</span></div>" : "") + "\
+                            " + (buildingsTypes[i].hp || buildingsTypes[i].cps  ? "<br><br>" : "") + "\
+                            <div class='item-tip' >" + buildingsTypes[i].tip + "</div>\
+                        </div>\
+                        <div class='right-part'>\
+                            <div class='item-price'>" + buildingsTypes[i].price + "</div>\
+                            <div class='item-buy-button' onclick='requestPurchasingABuilding(" + i + ")'>BUY</div>\
+                        </div>\
+                    </div>";
             }
 
             break;
 
-        case 1: 
+        case 1:
             for (let i = 0; i < weapons.length; i++) {
                 items.innerHTML +=
                     "<div class='item'>\
@@ -89,8 +89,11 @@ function changeShopItems(mode) {
                     </div>\
                 </div>";
             }
+
             break;
     }
+    
+    items.scrollTop = 0;
 
     currentShopMode = mode;
 }
