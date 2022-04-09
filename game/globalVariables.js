@@ -169,17 +169,16 @@ let weapons = [
     }
 ];
 
-let other = [
+let utilities = [
     {
         name: "HP",
-        price: 5,
-        url: "url(./game/images/hearts/heart1.png)",
-        property: "+ 1 <abbr title='Health point (half a heart)'>HP</abbr>",
+        price: 5    ,
+        url: "url(./pics/heart.png)",
+        property: "+2 <abbr title='Health points (a heart)'>HP</abbr>",
         tip: "(you can buy it only when you're not at full health)",
-        func: () => {
-            if (player.hp < player.maxHp) {
-                player.hp++;
-                this.price = Math.round(1.2 * this.price / 10) * 10;
+        func: function () {
+            if (player.hp < player.maxHp - 1) {
+                player.hp += 2;
                 return true;
             }
 

@@ -78,11 +78,15 @@ function requestPurchasingAWeapon(idx) {
     equipWeapon(idx);
 }
 
-function requestPurchasingOther(idx) {
-    if (player.coins < weapons[idx].price) return;
+function requestPurchasingUtilities(idx) {
+    if (player.coins < utilities[idx].price) return;
 
-    if (other[idx].func()) {
-        player.coins -= weapons[idx].price;
+    if (utilities[idx].func()) {
+        player.coins -= utilities[idx].price;
         shop = false;
+
+        utilities[idx].price++;
+        changeShopItems(1);
+        changeShopItems(2);
     }
 }

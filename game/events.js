@@ -37,11 +37,6 @@ window.addEventListener("keydown", e => {
     if (e.keyCode == 83)
         if (!paused)
             shop = !shop;
-
-    if (e.keyCode == 72 && player.hp < 20 && player.coins >= 5) {
-        player.coins -= 5;
-        player.hp++;
-    }
 });
 
 window.addEventListener("keyup", e => {

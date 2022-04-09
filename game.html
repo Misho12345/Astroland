@@ -12,7 +12,7 @@
         <source src="./escape.mp4" type="video/mp4">
     </video>
 
-    <div>
+    <div class="noselect">
         <canvas id="canvas" style="position: fixed"></canvas>
         <canvas id="canvasUI" style="position: fixed"></canvas>
 
@@ -22,9 +22,9 @@
 
                 <div id="shop">
                     <div id="shop-buttons">
-                        <div id="buildings-button" class="shop-button" onclick="changeShopItems(0)">Buildings</div>
-                        <div id="weapons-button" class="shop-button" onclick="changeShopItems(1)">Weapons</div>
-                        <div id="other-button" class="shop-button" onclick="changeShopItems(2)">Other</div>
+                        <div id="buildings-button" class="shop-button shop-button-selected" onclick="changeShopItems(0)">Buildings</div>
+                        <div id="weapons-button" class="shop-button shop-button-not-selected" onclick="changeShopItems(1)">Weapons</div>
+                        <div id="utilities-button" class="shop-button shop-button-not-selected" onclick="changeShopItems(2)">Utilities</div>
                         <div class="shop-button" style="display: none"></div>
                     </div>
 

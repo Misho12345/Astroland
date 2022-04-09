@@ -1,51 +1,23 @@
 let shopButtons = [
-    {
-        button: document.getElementById("buildings-button"),
-        mouseover: () => this.button.style.backgroundColor = "var(--not-checked-hover-background-color)",
-        mouseout: () => this.button.style.backgroundColor = "var(--not-checked-background-color)"
-    },
-    {
-        button: document.getElementById("weapons-button"),
-        mouseover: () => this.button.style.backgroundColor = "var(--not-checked-hover-background-color)",
-        mouseout: () => this.button.style.backgroundColor = "var(--not-checked-background-color)"
-    },
-    {
-        button: document.getElementById("other-button"),
-        mouseover: () => this.button.style.backgroundColor = "var(--not-checked-hover-background-color)",
-        mouseout: () => this.button.style.backgroundColor = "var(--not-checked-background-color)"
-    }
+    document.getElementById("buildings-button"),
+    document.getElementById("weapons-button"),
+    document.getElementById("utilities-button")
 ];
 
 let currentShopMode = 0;
 
-for (let i = 0; i < shopButtons.length; i++)
-    if (i != currentShopMode)
-        shopButtons[i].button.style.backgroundColor = "var(--not-checked-background-color)";
-
-function EQUIP_Btn_onmouseover(button) {
-    button.style.backgroundColor = "#EE4622";
-}
-
-function EQUIP_Btn_onmouseout(button) {
-    button.style.backgroundColor = "#FF5733";
-}
+function EQUIP_Btn_onmouseover(button) { button.style.backgroundColor = "#EE4622" }
+function EQUIP_Btn_onmouseout(button) { button.style.backgroundColor = "#FF5733" }
 
 function changeShopItems(mode) {
-    if (mode != currentShopMode) {
-        shopButtons[currentShopMode].button.removeEventListener("mouseover", shopButtons[currentShopMode].mouseover)
-        shopButtons[currentShopMode].button.removeEventListener("mouseout", shopButtons[currentShopMode].mouseout)
+    shopButtons[currentShopMode].classList.add("shop-button-not-selected");
+    shopButtons[currentShopMode].classList.remove("shop-button-selected");
 
-        shopButtons[currentShopMode].button.style.backgroundColor = "var(--not-checked-background-color)";
-    }
-    
+    shopButtons[mode].classList.add("shop-button-selected");
+    shopButtons[mode].classList.remove("shop-button-not-selected");
+
     items.innerHTML = "";
 
-    shopButtons[mode].button.addEventListener("mouseover", shopButtons[currentShopMode].mouseover);
-    shopButtons[mode].button.addEventListener("mouseout", shopButtons[currentShopMode].mouseout);
-
-    
-    shopButtons[mode].button.style.backgroundColor = "var(--checked-background-color)";
-    
     switch (mode) {
         case 0:
             for (let i = 0; i < buildingsTypes.length; i++) {
@@ -100,20 +72,20 @@ function changeShopItems(mode) {
             break;
 
         case 2:
-            for (let i = 0; i < other.length; i++) {
+            for (let i = 0; i < utilities.length; i++) {
                 items.innerHTML +=
                 "<div class='item'>\
                     <div class='left-part'>\
-                        <div class='item-image' style='background-image: " + other[i].url + ";'></div>\
-                        <div class='item-name'>" + other[i].name + "</div>\
+                        <div class='item-image' style='background-image: " + utilities[i].url + ";'></div>\
+                        <div class='item-name'>" + utilities[i].name + "</div>\
                     </div>\
                     <div class='item-properties'>\
-                        <div class='item-property' >" + other[i].property + "</div>\
-                        <div class='item-tip' >" + other[i].tip + "</div>\
+                        <div class='item-property' >" + utilities[i].property + "</div>\
+                        <div class='item-tip' >" + utilities[i].tip + "</div>\
                     </div>\
                     <div class='right-part'>\
-                        <div class='item-price' > " + other[i].price + "</div >\
-                        <div class='item-buy-button' onclick='requestPurchasingOther(" + i + ")'>BUY</div>\
+                        <div class='item-price' > " + utilities[i].price + "</div >\
+                        <div class='item-buy-button' onclick='requestPurchasingUtilities(" + i + ")'>BUY</div>\
                     </div>\
                 </div>";
             }
