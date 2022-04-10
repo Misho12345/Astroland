@@ -220,6 +220,12 @@ let rocketImages = [
     document.getElementById("rocket2"),
     document.getElementById("rocket3")];
 
+let bossImages = [];
+for (let i = 0; i < 2; i++) {
+    bossImages[i] = [];
+}
+bossImages[0].push(document.getElementById("Bossp1f1"));
+
 let heart1Image = document.getElementById("heart1");
 let heart2Image = document.getElementById("heart2");
 let dead1Image = document.getElementById("dead1");
