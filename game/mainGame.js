@@ -82,7 +82,7 @@ function Update() {
     }
 
     for (let i = 0; i < bullets.length; i++) {
-        if (!bullets[i] || (bullets[i].x < -10000 || bullets[i].y < -10000 || bullets[i].x > 10000 || bullets[i].y > 10000)) {
+        if (this.collided || bullets[i].x < -10000 || bullets[i].y < -10000 || bullets[i].x > 10000 || bullets[i].y > 10000) {
             bullets.splice(i, 1);
         }
         else bullets[i].update();

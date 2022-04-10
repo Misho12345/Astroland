@@ -57,9 +57,7 @@ class Player {
         this.gunTime++;
 
         if (this.gunTime > 10) this.gunShot = false;
-    }
 
-    draw() {
         if (this.h > planet.diameter / 2 + this.height / 4 && this.up) {
             this.gravitySpeed += this.gravity;
             this.h -= this.gravitySpeed;
@@ -68,24 +66,6 @@ class Player {
             this.gravitySpeed = 0;
             this.h = planet.diameter / 2 + this.height / 4;
         }
-
-        for (let i = 0; i < this.hp; i++) {
-            if (i % 2 == 0) ctxUI.drawImage(heart1, i * 20, 0, 20, 30);
-            else ctxUI.drawImage(heart2, i * 20, 0, 20, 30);
-        }
-        for (let i = this.hp; i < this.maxHp; i++) {
-            if (i % 2 == 0) ctxUI.drawImage(dead1, i * 20, 0, 20, 30);
-            else ctxUI.drawImage(dead2, i * 20, 0, 20, 30);
-        }
-
-        this.x = Math.cos(this.angle) * this.h + canvas.width / 2 - this.width / 2;
-        this.y = Math.sin(this.angle) * this.h + canvas.height / 2 - this.height / 2;
-
-        ctx.save();
-
-        ctx.translate(this.x + this.width / 2, this.y + this.height / 2);
-        ctx.rotate(this.angle + Math.PI / 2);
-        ctx.translate(-this.x - this.width / 2, -this.y - this.height / 2);
 
         if (this.state > 0) {
             if (this.cooldown < 1) {
@@ -107,6 +87,30 @@ class Player {
                 player.angle -= speed;
             }
         }
+    }
+
+    drawHP() {
+        for (let i = 0; i < this.hp; i++) {
+            if (i % 2 == 0) ctxUI.drawImage(heart1, i * 20, 0, 20, 30);
+            else ctxUI.drawImage(heart2, i * 20, 0, 20, 30);
+        }
+        for (let i = this.hp; i < this.maxHp; i++) {
+            if (i % 2 == 0) ctxUI.drawImage(dead1, i * 20, 0, 20, 30);
+            else ctxUI.drawImage(dead2, i * 20, 0, 20, 30);
+        }
+    }
+
+    draw() {
+        this.drawHP();
+
+        this.x = Math.cos(this.angle) * this.h + canvas.width / 2 - this.width / 2;
+        this.y = Math.sin(this.angle) * this.h + canvas.height / 2 - this.height / 2;
+
+        ctx.save();
+
+        ctx.translate(this.x + this.width / 2, this.y + this.height / 2);
+        ctx.rotate(this.angle + Math.PI / 2);
+        ctx.translate(-this.x - this.width / 2, -this.y - this.height / 2);
 
         ctx.drawImage(document.getElementById("player" + (this.state > 0 ? this.dir : 0) + "_" + this.state), this.x, this.y, this.width, this.height);
 

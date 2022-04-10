@@ -12,15 +12,15 @@ function init() {
             pauseMenu.style.display = "none";
 
         Update();
-
-        ctx.globalAlpha = 1;
-        ctxUI.globalAlpha = 1;
-
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctxUI.clearRect(0, 0, canvas.width, canvas.height);
-
-        Draw();
     }
+
+    ctx.globalAlpha = 1;
+    ctxUI.globalAlpha = 1;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctxUI.clearRect(0, 0, canvas.width, canvas.height);
+
+    Draw();
 
     setTimeout(init, 10);
 }
@@ -35,8 +35,11 @@ window.addEventListener("keydown", e => {
     }
 
     if (e.keyCode == 83)
-        if (!paused)
+        if (!paused) {
             shop = !shop;
+            items.scrollTop = 0;
+            changeShopItems(0);
+        }
 });
 
 window.addEventListener("keyup", e => {
@@ -48,9 +51,9 @@ canvasUI.addEventListener("mousemove", e => {
     mouseY = e.clientY - planet.diameter / 2 - 250;
 });
 
-window.addEventListener("mousedown", e => isMousePressed = 1);
+window.addEventListener("mousedown", () => isMousePressed = 1);
 
-window.addEventListener("mouseup", e => isMousePressed = 0);
+window.addEventListener("mouseup", () => isMousePressed = 0);
 
 video.addEventListener('ended', () => {
     if (rocket) location.href = './mainPage.html';

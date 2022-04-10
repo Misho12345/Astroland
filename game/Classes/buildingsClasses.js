@@ -28,7 +28,7 @@ class Building {
         ctx.translate(-this.x - this.width / 2, -this.y - this.height / 2);
 
         if (this.idx > 0) this.frame += 0.1;
-        if (player && buildingsTypes[this.idx].cps > 0) player.coins += buildingsTypes[this.idx].cps / 100;
+        if (!shop && !paused && player && buildingsTypes[this.idx].cps > 0) player.coins += buildingsTypes[this.idx].cps / 100;
 
         if (buildingsTypes[this.idx].name != "rocket") {
             ctx.fillStyle = "#555555cc";

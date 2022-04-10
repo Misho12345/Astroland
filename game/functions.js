@@ -58,7 +58,6 @@ function requestPurchasingABuilding(idx) {
 
     changeShopItems(0);
 
-    paused = false;
     shop = false;
 }
 
@@ -81,7 +80,6 @@ function requestPurchasingUtilities(idx) {
 
     if (utilities[idx].func()) {
         player.coins -= utilities[idx].price;
-        shop = false;
 
         utilities[idx].price++;
         changeShopItems(2);

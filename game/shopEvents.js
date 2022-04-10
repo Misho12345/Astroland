@@ -93,9 +93,8 @@ function changeShopItems(mode) {
             break;
     }
     
-    items.scrollTop = 0;
-
-    currentShopMode = mode;
+    if (mode != currentShopMode) {
+        items.scrollTop = 0;
+        currentShopMode = mode;
+    }
 }
-
-changeShopItems(0);

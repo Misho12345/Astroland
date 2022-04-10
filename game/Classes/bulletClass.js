@@ -13,12 +13,15 @@ class Bullet {
         this.damage = damage_;
         this.index = index_;
         this.fuel = 1000;
+
+        this.collided = false;
     }
 
     update() {
+        if (this.collided) return;
+
         if (distance(this.x, this.y, planet.x + planet.diameter / 2, planet.y + planet.diameter / 2) < planet.diameter / 2) {
-            this.x = -100000;
-            this.y = -100000;
+            this.collided = true;
         }
 
         if (this.color == "bigBrainBullet") {
@@ -44,51 +47,40 @@ class Bullet {
                     enemies[i].width, enemies[i].height) &&
                 this.color != "enemyBullet" &&
                 this.color != "bigBrainBullet") {
-                //console.log(this.demage,enemies[i].hp);
+
                 enemies[i].hp -= this.damage;
-                bullets.splice(this.index, 1);
-                /*
-                enemies[i].deathTimer = 39;
-                player.coins += enemies[i].coinsPer
-                enemies[i].dead = true;
-                */
-                this.index--;
-                break;
+                this.collided = true;
+                
+                return;
             }
             else if (areColliding(this.x - this.r, this.y - this.r, this.r * 2, this.r * 2,
                 player.x, player.y, player.width, player.height) &&
                 (this.color == "enemyBullet" || this.color == "bigBrainBullet")) {
 
                 player.hp -= this.damage;
-                this.x = -100000;
-                this.y = -100000;
-                //bullets.splice(this.index, 1);
-                //this.index--;
-                break;
+                this.collided = true;
+
+                return;
             }
             else {
-                let collided = false;
-
                 buildings.forEach(building => {
                     if (areColliding(this.x - this.r, this.y - this.r, this.r * 2, this.r * 2,
                         building.x, building.y, building.width, building.height) &&
                         (this.color == "enemyBullet" || this.color == "bigBrainBullet")) {
 
                         building.hp -= this.damage;
-                        bullets.splice(this.index, 1);
-                        this.x = -1000000;
-                        this.y = -1000000;
-                        //this.index--;
-                        collided = true;
+                        this.collided = true;
                     }
                 });
 
-                if (collided) break;
+                if (this.collided) return;
             }
         }
     }
 
     draw() {
+        if (this.collided) return;
+
         ctx.beginPath();
         if (this.color == "enemyBullet") {
             ctx.drawImage(enemyBullet, this.x - this.r, this.y - this.r, this.r * 2, this.r * 2);
