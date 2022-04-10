@@ -38,7 +38,7 @@ function resizePage() {
 }
 
 function requestPurchasingABuilding(idx) {
-    if (player.coins < buildingsTypes[idx].price) return;
+    if (player.coins < buildingsTypes[idx].price || (buildingsTypes[idx].name == "rocket" && boss.spawned)) return;
 
     player.coins -= buildingsTypes[idx].price;
     buildings.push(new (buildingsClasses[idx])(-planet.angle + Math.PI + player.angle - player.defA, buildingsTypes[idx].width, buildingsTypes[idx].height));

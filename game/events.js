@@ -29,13 +29,13 @@ function init() {
 window.addEventListener("keydown", e => {
     isKeyPressed[e.keyCode] = 1;
 
-    if ((e.keyCode == 27 || e.keyCode == 80) && !rocket) {
+    if (e.keyCode == 27 || e.keyCode == 80) {
         if (shop) shop = false;
         else paused = !paused;
     }
 
     if (e.keyCode == 83)
-        if (!paused) {
+        if (!rocket && !paused) {
             shop = !shop;
             items.scrollTop = 0;
             changeShopItems(0);

@@ -28,6 +28,8 @@ class Player {
         this.up = false;
         this.gravitySpeed = 0;
         this.gravity = 0.5;
+
+        this.mobKills = 0;
     }
 
     update() {

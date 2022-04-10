@@ -1,7 +1,10 @@
 let planet = new Planet(canvas.width * 2);
 let player = new Player(100, 200);
+let boss = new Boss();
 
 let updates = 0;
+
+let enemyTimer = 800, minEnemyTimer = 300;
 
 let cap = Math.PI / 20;
 let speed = Math.PI / 720;
@@ -9,6 +12,7 @@ let speed = Math.PI / 720;
 buildings.push(new buildingsClasses[0](-planet.angle + Math.PI + player.angle - player.defA, buildingsTypes[0].width, buildingsTypes[0].height));
 
 function Update() {
+    boss.update();
     updates++;
 
     window.onresize = resizePage();
@@ -76,7 +80,10 @@ function Update() {
         player.h++;
     }
 
-    if (updates % 333 == 0) {
+    if (updates % enemyTimer == 0 && !boss.spawned) {
+        if (enemyTimer < minEnemyTimer) {
+            enemyTimer = minEnemyTimer;
+        }
         enemies.push(new (enemyClasses[randomEnemyIndex()])(randomInteger(300) + planet.diameter / 2 + 300, randomInteger(Math.PI * 2 * 100) / 100));
         // updates=999;
     }
@@ -100,7 +107,11 @@ function Draw() {
     if (!isKeyPressed[77]) ctx.translate(0, planet.diameter - canvas.width + 250);
     else {
         context.scale(0.2, 0.2);
-        ctx.translate(canvas.width + planet.diameter / 2, 0 + planet.diameter / 2);
+        if (boss.spawned) {
+            ctx.translate(canvas.width + planet.diameter / 2, 0 + planet.diameter);
+        } else {
+            ctx.translate(canvas.width + planet.diameter / 2, 0 + planet.diameter / 2);
+        }
     }
 
     planet.draw();
@@ -114,6 +125,7 @@ function Draw() {
         if (enemy) enemy.draw();
     });
 
+    boss.draw();
     bullets.forEach(bullet => bullet.draw());
 
     if (player) {
