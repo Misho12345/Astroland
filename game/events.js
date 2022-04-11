@@ -31,14 +31,36 @@ window.addEventListener("keydown", e => {
 
     if (e.keyCode == 27 || e.keyCode == 80) {
         if (shop) shop = false;
-        else paused = !paused;
+        else {
+            paused = !paused;
+            if (paused) {
+                buildings.forEach(building => {
+                    if (buildingsTypes[building.idx].audio)
+                        buildingsTypes[building.idx].audio.pause();
+                });
+            } else {
+                buildings.forEach(building => {
+                    if (buildingsTypes[building.idx].audio)
+                        buildingsTypes[building.idx].audio.play();
+                });
+            }            
+        }
     }
 
     if (e.keyCode == 83)
         if (!rocket && !paused) {
             shop = !shop;
-            items.scrollTop = 0;
-            changeShopItems(0);
+            if (shop) {
+                items.scrollTop = 0;
+                changeShopItems(0);
+                buildings.forEach(building => {
+                    if (buildingsTypes[building.idx].audio)
+                        buildingsTypes[building.idx].audio.pause();
+                });
+            } else buildings.forEach(building => {
+                if (buildingsTypes[building.idx].audio)
+                    buildingsTypes[building.idx].audio.play();
+            });
         }
 });
 

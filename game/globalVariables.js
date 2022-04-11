@@ -38,7 +38,8 @@ let buildingsTypes = [
         cps: 0,
         tip: "use as a shield",
         width: 512,
-        height: 256
+        height: 256,
+        audio_src: undefined
     },
     {
         name: "drill-lv1",
@@ -48,7 +49,8 @@ let buildingsTypes = [
         cps: 1,
         tip: "gives you more and more coins",
         width: 256,
-        height: 256
+        height: 256,
+        audio_src: "./game/Audio/drill.mp3"
     },
     {
         name: "drill-lv2",
@@ -58,7 +60,8 @@ let buildingsTypes = [
         cps: 3,
         tip: "gives you more and more coins",
         width: 256,
-        height: 256
+        height: 256,
+        audio_src: "./game/Audio/drill.mp3"
     },
     {
         name: "drill-lv3",
@@ -68,7 +71,8 @@ let buildingsTypes = [
         cps: 5,
         tip: "gives you more and more coins",
         width: 256,
-        height: 256
+        height: 256,
+        audio_src: "./game/Audio/drill.mp3"
     },
     {
         name: "rocket",
@@ -78,7 +82,8 @@ let buildingsTypes = [
         cps: 0,
         tip: "escape from the planet and win the game",
         width: 256,
-        height: 512
+        height: 512,
+        audio_src: undefined
     }
 ];
 
@@ -102,7 +107,9 @@ let weapons = [
             R_normal: document.getElementById("pistol1"),
             L_firing: document.getElementById("pistol2L"),
             R_firing: document.getElementById("pistol2")
-        }
+        },
+        audio_src: "./game/Audio/pistol.mp3",
+        audio_volume: 1
     },
     {
         name: "shotgun",
@@ -123,7 +130,9 @@ let weapons = [
             R_normal: document.getElementById("shotgun1"),
             L_firing: document.getElementById("shotgun2L"),
             R_firing: document.getElementById("shotgun2")
-        }
+        },
+        audio_src: "./game/Audio/shotgun.mp3",
+        audio_volume: 0.3
     },
     {
         name: "uzi",
@@ -144,7 +153,9 @@ let weapons = [
             R_normal: document.getElementById("uzi1"),
             L_firing: document.getElementById("uzi2L"),
             R_firing: document.getElementById("uzi2")
-        }
+        },
+        audio_src: "./game/Audio/uzi.mp3",
+        audio_volume: 0.2
     },
     {
         name: "rifle",
@@ -165,7 +176,9 @@ let weapons = [
             R_normal: document.getElementById("rifle1"),
             L_firing: document.getElementById("rifle2L"),
             R_firing: document.getElementById("rifle2")
-        }
+        },
+        audio_src: "./game/Audio/rifle.mp3",
+        audio_volume: 0.2
     }
 ];
 

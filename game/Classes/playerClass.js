@@ -40,6 +40,10 @@ class Player {
         if (this.gunPossibleToShot && this.gunTime >= this.weapon.fireSpeed) {
             let angle = angleCalc(this.x + this.width / 2, this.y + this.height / 2, mouseX, mouseY);
 
+            let audio = new Audio(this.weapon.audio_src);
+            audio.play();
+            audio.volume = this.weapon.audio_volume;
+
             for (let i = 0; i < this.weapon.bulletCount; i++)
                 bullets.push(new Bullet(
                     this.x + this.width / 2 + Math.cos(angle) * this.weapon.width,
