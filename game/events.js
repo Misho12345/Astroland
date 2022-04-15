@@ -29,39 +29,38 @@ function init() {
 window.addEventListener("keydown", e => {
     isKeyPressed[e.keyCode] = 1;
 
-    if (e.keyCode == 27 || e.keyCode == 80) {
+    if (!dead && (e.keyCode == 27 || e.keyCode == 80)) {
         if (shop) shop = false;
         else {
             paused = !paused;
             if (paused) {
                 buildings.forEach(building => {
-                    if (buildingsTypes[building.idx].audio)
-                        buildingsTypes[building.idx].audio.pause();
+                    if (building.audio)
+                        building.audio.pause();
                 });
             } else {
                 buildings.forEach(building => {
-                    if (buildingsTypes[building.idx].audio)
-                        buildingsTypes[building.idx].audio.play();
+                    if (building.audio)
+                        building.audio.play();
                 });
             }            
         }
     }
 
-    if (e.keyCode == 83)
-        if (!rocket && !paused) {
-            shop = !shop;
-            if (shop) {
-                items.scrollTop = 0;
-                changeShopItems(0);
-                buildings.forEach(building => {
-                    if (buildingsTypes[building.idx].audio)
-                        buildingsTypes[building.idx].audio.pause();
-                });
-            } else buildings.forEach(building => {
-                if (buildingsTypes[building.idx].audio)
-                    buildingsTypes[building.idx].audio.play();
+    if (e.keyCode == 83 && !dead && !rocket && !paused) {
+        shop = !shop;
+        if (shop) {
+            items.scrollTop = 0;
+            changeShopItems(0);
+            buildings.forEach(building => {
+                if (building.audio)
+                    building.audio.pause();
             });
-        }
+        } else buildings.forEach(building => {
+            if (building.audio)
+                building.audio.play();
+        });
+    }
 });
 
 window.addEventListener("keyup", e => {

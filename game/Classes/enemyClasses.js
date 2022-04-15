@@ -33,20 +33,22 @@ class Enemy {
             this.bulletColor,
             this.bulletR,
             this.bulletSpeed,
-            1,
-            bullets.length
+            1
         ));
     }
 
     update() {
+        if (this.deathTimer != -2) {
+            this.deathTimer--;
+        }
+
+        if (!player) return;
+
         if (this.hp <= 0 && !this.dead) {
             this.deathTimer = 39;
             if (player) player.coins += this.coinsPer;
             this.dead = true;
             player.mobKills++;
-        }
-        if (this.deathTimer != -2) {
-            this.deathTimer--;
         }
 
         this.updates++;

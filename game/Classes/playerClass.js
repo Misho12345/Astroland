@@ -21,7 +21,7 @@ class Player {
         this.gunShot = false;
         this.gunPossibleToShot = false;
 
-        this.coins = 0;
+        this.coins = 10000;
         this.coinsState = 0;
         this.cooldownC = 10;
 
@@ -53,8 +53,7 @@ class Player {
                     this.weapon.bulletColor,
                     this.weapon.radius,
                     this.weapon.bulletSpeed,
-                    this.weapon.dmg,
-                    bullets.length
+                    this.weapon.dmg
                 ));
 
             this.gunTime = 0;
@@ -118,7 +117,16 @@ class Player {
         ctx.rotate(this.angle + Math.PI / 2);
         ctx.translate(-this.x - this.width / 2, -this.y - this.height / 2);
 
-        ctx.drawImage(document.getElementById("player" + (this.state > 0 ? this.dir : 0) + "_" + this.state), this.x, this.y, this.width, this.height);
+        if (this.gunShot) {
+            if (angleCalc(mouseX, mouseY, this.x - this.width / 2, this.y - this.height / 2) > Math.PI / 2 &&
+                angleCalc(mouseX, mouseY, this.x - this.width / 2, this.y - this.height / 2) < Math.PI / 2 * 3) {
+                ctx.drawImage(document.getElementById("player1_2"), this.x, this.y, this.width, this.height);
+            } else {
+                ctx.drawImage(document.getElementById("player0_2"), this.x, this.y, this.width, this.height);
+            }
+        } else {
+            ctx.drawImage(document.getElementById("player" + (this.state > 0 ? this.dir : 0) + "_" + this.state), this.x, this.y, this.width, this.height);
+        }
 
         ctx.restore();
 
@@ -131,12 +139,14 @@ class Player {
         context.translate(-this.x - this.width / 2, -this.y - this.height / 2);
 
         let images = this.weapon.images;
-        
-        if (gunAngle >= Math.PI / 2 && gunAngle <= Math.PI * 1.5) {
-            ctx.drawImage(this.gunShot ? images.L_firing : images.L_normal, this.x + this.width / 2, this.y + this.height / 2 - 25, this.weapon.width, this.weapon.height);
-        } else {
-            ctx.drawImage(this.gunShot ? images.R_firing : images.R_normal, this.x + this.width / 2, this.y + this.height / 2 - 25, this.weapon.width, this.weapon.height);
-        }   
+
+        if (this.state != 0 || this.gunShot) {
+            if (gunAngle >= Math.PI / 2 && gunAngle <= Math.PI * 1.5) {
+                ctx.drawImage(this.gunShot ? images.L_firing : images.L_normal, this.x + this.width / 2, this.y + this.height / 2 - 25, this.weapon.width, this.weapon.height);
+            } else {
+                ctx.drawImage(this.gunShot ? images.R_firing : images.R_normal, this.x + this.width / 2, this.y + this.height / 2 - 25, this.weapon.width, this.weapon.height);
+            }
+        }
 
         //ctx.rotate(-gunAngle);
         ctx.restore();

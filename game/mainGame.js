@@ -9,10 +9,9 @@ let enemyTimer = 800, minEnemyTimer = 300;
 let cap = Math.PI / 20;
 let speed = Math.PI / 720;
 
-buildings.push(new buildingsClasses[0](-planet.angle + Math.PI + player.angle - player.defA, buildingsTypes[0].width, buildingsTypes[0].height));
+buildings.push(new Building(-planet.angle + Math.PI + player.angle - player.defA, 0));
 
 function Update() {
-    boss.update();
     updates++;
 
     window.onresize = resizePage();
@@ -42,9 +41,17 @@ function Update() {
     }
 
     if (!player) return;
+    boss.update();
 
-    if (player.hp <= 0 || buildings.length == 0) dead = true;
-    
+    if (player.hp <= 0 || buildings.length == 0) {
+        dead = true;
+
+        buildings.forEach(building => {
+            if (building.audio)
+                building.audio.pause();
+        });
+    }
+
     player.update();
 
     if ((isKeyPressed[39] || isKeyPressed[68]) && (isKeyPressed[37] || isKeyPressed[65])) player.state = 0;
@@ -113,6 +120,19 @@ function Draw() {
             ctx.translate(canvas.width + planet.diameter / 2, 0 + planet.diameter / 2);
         }
     }
+
+    buildings.forEach(building => {
+        if (building.turet) {
+            ctx.beginPath();
+            ctx.arc(building.x + building.width / 2, building.y + building.height / 2, building.turet.range, 0, 2 * Math.PI);
+            ctx.lineWidth = 5;
+            ctx.strokeStyle = '#f006';
+            ctx.fillStyle = '#f001';
+            ctx.fill();
+            ctx.stroke();
+            ctx.closePath();
+        }
+    });
 
     planet.draw();
 

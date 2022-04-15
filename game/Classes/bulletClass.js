@@ -1,5 +1,5 @@
 class Bullet {
-    constructor(x_, y_, dX_, dY_, color_, r_, speed_, damage_, index_) {
+    constructor(x_, y_, dX_, dY_, color_, r_, speed_, damage_) {
         this.x = x_;
         this.y = y_;
         this.dX = dX_;
@@ -11,7 +11,6 @@ class Bullet {
         this.updates = 0;
         this.angle = 0;
         this.damage = damage_;
-        this.index = index_;
         this.fuel = 1000;
 
         this.collided = false;
@@ -38,6 +37,7 @@ class Bullet {
             this.frame++;
             if (this.frame > 2) this.frame = 0;
         }
+
         this.angle = angleCalc(this.x, this.y, player.x, player.y);
 
         for (let i = 0; i < enemies.length; i++) {
@@ -45,8 +45,8 @@ class Bullet {
                 areColliding(this.x - this.r, this.y - this.r, this.r * 2, this.r * 2,
                     enemies[i].x - enemies[i].width / 2, enemies[i].y - enemies[i].height / 2,
                     enemies[i].width, enemies[i].height) &&
-                this.color != "enemyBullet" &&
-                this.color != "bigBrainBullet") {
+                    this.color != "enemyBullet" &&
+                    this.color != "bigBrainBullet") {
 
                 enemies[i].hp -= this.damage;
                 this.collided = true;
@@ -68,7 +68,7 @@ class Bullet {
                         building.x, building.y, building.width, building.height) &&
                         (this.color == "enemyBullet" || this.color == "bigBrainBullet")) {
 
-                        building.hp -= this.damage;
+                        if (!building.buildingType.indestructible) building.hp -= this.damage;
                         this.collided = true;
                     }
                 });
