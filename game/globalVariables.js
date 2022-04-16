@@ -150,7 +150,7 @@ let buildingsTypes = [
                     if (target && target.dead) this.gunShot = false;
                     this.getTarget();
                 }
-                /*else */this.shoot();
+                else this.shoot();
 
                 if (this.gunTime > 10) this.gunShot = false;
                 this.gunTime++;
