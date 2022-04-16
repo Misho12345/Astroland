@@ -131,6 +131,12 @@ let buildingsTypes = [
             getTarget() {
                 let min_idx = -1;
 
+                if (boss.spawned) {
+                    this.target_idx = -2;
+                    this.target = boss;
+                    return;
+                }
+
                 for (let i = 0; i < enemies.length; i++) {
                     let _distance = distance(enemies[i].x, enemies[i].y, this.x, this.y);
 
@@ -143,8 +149,9 @@ let buildingsTypes = [
 
             update() {
                 let target = enemies[this.target_idx];
+                if (this.target_idx == -2) target = this.target;
 
-                if (this.target_idx == -1 || !target || target.dead ||
+                if ((this.target_idx == -2 && !boss.spawned) || this.target_idx == -1 || !target || target.dead ||
                     distance(target.x + target.width / 2, target.y + target.height / 2, this.x + this.height / 2, this.y + this.width / 2) > this.range) {
 
                     if (target && target.dead) this.gunShot = false;
@@ -157,12 +164,19 @@ let buildingsTypes = [
             },
 
             draw(x, y) {
-                let target = enemies[this.target_idx];
+                let target
+
+                if (this.target_idx == -2) {
+                    target = this.target;
+                    target.x -= this.width / 2;
+                    target.y -= this.height / 2;
+                }
+                else target = enemies[this.target_idx];
 
                 if (this.x != x) this.x = x;
                 if (this.y != y) this.y = y;
 
-                if (target && !target.dead) {
+                if ((this.target_idx == -2 && !this.target.spawned) || (target && !target.dead)) {
                     this.angle = angleCalc(
                         this.x + this.width / 2,
                         this.y + this.height / 2,
