@@ -126,8 +126,8 @@ function Draw() {
             ctx.beginPath();
             ctx.arc(building.x + building.width / 2, building.y + building.height / 2, building.turet.range, 0, 2 * Math.PI);
             ctx.lineWidth = 5;
-            ctx.strokeStyle = '#f006';
-            ctx.fillStyle = '#f001';
+            ctx.strokeStyle = '#0ff6';
+            ctx.fillStyle = '#0ff1';
             ctx.fill();
             ctx.stroke();
             ctx.closePath();

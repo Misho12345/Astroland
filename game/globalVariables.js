@@ -85,6 +85,7 @@ let buildingsTypes = [
         height: 416,
 
         turet: {
+            parent_angle: undefined,
             width: 384,
             height: 384,
             dmg: 3,
@@ -112,10 +113,10 @@ let buildingsTypes = [
 
                     for (let i = 0; i < this.bulletCount; i++)
                         bullets.push(new Bullet(
-                            this.x + this.width / 2 + Math.cos(this.angle + planet.angle + Math.PI / 2) * this.width / 2,
-                            this.y + this.height / 2 + Math.sin(this.angle + planet.angle + Math.PI / 2) * this.height / 2,
-                            this.angle + planet.angle + Math.PI / 2,
-                            this.angle + planet.angle + Math.PI / 2,
+                            this.x + this.width / 2 + Math.cos(this.angle) * this.width / 2,
+                            this.y + this.height / 2 + Math.sin(this.angle) * this.height / 2,
+                            this.angle + this.parent_angle,
+                            this.angle + this.parent_angle,
                             this.bulletColor,
                             this.radius,
                             this.bulletSpeed,
@@ -125,9 +126,6 @@ let buildingsTypes = [
                     this.gunTime = 0;
                     this.gunShot = true;
                 }
-                this.gunTime++;
-
-                if (this.gunTime > 30) this.gunShot = false;
             },
 
             getTarget() {
@@ -146,11 +144,16 @@ let buildingsTypes = [
             update() {
                 let target = enemies[this.target_idx];
 
-                if (this.target_idx == -1 || !target || target.dead || distance(target.x, target.y, this.x, this.y) > this.range) {
+                if (this.target_idx == -1 || !target || target.dead ||
+                    distance(target.x + target.width / 2, target.y + target.height / 2, this.x + this.height / 2, this.y + this.width / 2) > this.range) {
+
+                    if (target && target.dead) this.gunShot = false;
                     this.getTarget();
-                    this.gunShot = false;
                 }
-                else this.shoot();
+                /*else */this.shoot();
+
+                if (this.gunTime > 10) this.gunShot = false;
+                this.gunTime++;
             },
 
             draw(x, y) {

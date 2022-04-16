@@ -1,6 +1,7 @@
 class Bullet {
     constructor(x_, y_, dX_, dY_, color_, r_, speed_, damage_) {
         this.x = x_;
+        this.defX = x_;
         this.y = y_;
         this.dX = dX_;
         this.dY = dY_;
@@ -14,6 +15,19 @@ class Bullet {
         this.fuel = 1000;
 
         this.collided = false;
+
+        this.hit = new Audio("./game/Audio/bullet_hit.mp3");
+
+        let volume = 0.15 - (distance(
+            this.x + this.r,
+            this.y + this.r,
+            player.x + player.width / 2,
+            player.y + player.height / 2)) / (planet.diameter / 3);
+
+        if (volume > 1) volume = 1;
+        else if (volume < 0) volume = 0;
+
+        this.hit.volume = volume;
     }
 
     update() {
@@ -21,6 +35,9 @@ class Bullet {
 
         if (distance(this.x, this.y, planet.x + planet.diameter / 2, planet.y + planet.diameter / 2) < planet.diameter / 2) {
             this.collided = true;
+            this.hit.play();
+
+            return;
         }
 
         if (this.color == "bigBrainBullet") {
@@ -49,6 +66,7 @@ class Bullet {
                     this.color != "bigBrainBullet") {
 
                 enemies[i].hp -= this.damage;
+                this.hit.play();
                 this.collided = true;
                 
                 return;
@@ -58,6 +76,7 @@ class Bullet {
                 (this.color == "enemyBullet" || this.color == "bigBrainBullet")) {
 
                 player.hp -= this.damage;
+                this.hit.play();
                 this.collided = true;
 
                 return;
@@ -69,11 +88,12 @@ class Bullet {
                         (this.color == "enemyBullet" || this.color == "bigBrainBullet")) {
 
                         if (!building.buildingType.indestructible) building.hp -= this.damage;
+                        this.hit.play();
                         this.collided = true;
+
+                        return;
                     }
                 });
-
-                if (this.collided) return;
             }
         }
     }

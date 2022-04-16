@@ -32,8 +32,7 @@ class Enemy {
             (angleCalc(this.x, this.y, player.x + player.width / 2, player.y + player.height / 2)),
             this.bulletColor,
             this.bulletR,
-            this.bulletSpeed,
-            1
+            this.bulletSpeed
         ));
     }
 
@@ -45,6 +44,7 @@ class Enemy {
         if (!player) return;
 
         if (this.hp <= 0 && !this.dead) {
+            new Audio("./game/Audio/enemy_death.mp3").play();
             this.deathTimer = 39;
             if (player) player.coins += this.coinsPer;
             this.dead = true;

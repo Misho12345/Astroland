@@ -50,8 +50,9 @@ window.addEventListener("keydown", e => {
     if (e.keyCode == 83 && !dead && !rocket && !paused) {
         shop = !shop;
         if (shop) {
-            items.scrollTop = 0;
             changeShopItems(0);
+            items.scrollTop = 0;
+
             buildings.forEach(building => {
                 if (building.audio)
                     building.audio.pause();

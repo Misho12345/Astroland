@@ -94,20 +94,7 @@ class Player {
         }
     }
 
-    drawHP() {
-        for (let i = 0; i < this.hp; i++) {
-            if (i % 2 == 0) ctxUI.drawImage(heart1, i * 20, 0, 20, 30);
-            else ctxUI.drawImage(heart2, i * 20, 0, 20, 30);
-        }
-        for (let i = this.hp; i < this.maxHp; i++) {
-            if (i % 2 == 0) ctxUI.drawImage(dead1, i * 20, 0, 20, 30);
-            else ctxUI.drawImage(dead2, i * 20, 0, 20, 30);
-        }
-    }
-
     draw() {
-        this.drawHP();
-
         this.x = Math.cos(this.angle) * this.h + canvas.width / 2 - this.width / 2;
         this.y = Math.sin(this.angle) * this.h + canvas.height / 2 - this.height / 2;
 
@@ -152,6 +139,15 @@ class Player {
         ctx.restore();
 
         //ctxUI.fillRect(mouseX, mouseY, 50, 50);
+
+        for (let i = 0; i < this.hp; i++) {
+            if (i % 2 == 0) ctxUI.drawImage(heart1, 20 + i * 20, 20, 20, 30);
+            else ctxUI.drawImage(heart2, 20 + i * 20, 20, 20, 30);
+        }
+        for (let i = this.hp; i < this.maxHp; i++) {
+            if (i % 2 == 0) ctxUI.drawImage(dead1, 20 + i * 20, 20, 20, 30);
+            else ctxUI.drawImage(dead2, 20 + i * 20, 20, 20, 30);
+        }
     }
 
     showCoins() {

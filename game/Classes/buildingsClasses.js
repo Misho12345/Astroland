@@ -51,6 +51,7 @@ class Building {
         ctx.drawImage(document.getElementById(id), this.x, this.y, this.width, this.height);
 
         if (this.turet) {
+            this.turet.parent_angle = this.angle + Math.PI / 2;
             if (!shop && !paused) this.turet.update();
             this.turet.draw(this.x, this.y);
         }
@@ -71,6 +72,7 @@ class Building {
             else if (this.audio_volume < 0) this.audio_volume = 0;
 
             this.audio.volume = this.audio_volume;
+            console.log(this.x)
         }
     }
 }

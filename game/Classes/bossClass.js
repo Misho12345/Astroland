@@ -212,12 +212,12 @@ class Boss {
     drawBossBar() {
         //this.x - this.width / 3, this.y - this.height / 3, this.width / 1.5, 30
         ctx.fillStyle = "#555c";
-        ctx.fillRect(this.x - this.width / 3 - 5, this.y - this.height / 3 - 5, this.width / 1.5 + 10, 50);
+        ctx.fillRect(this.x - this.width / 3 - 5, this.y - this.height / 1.75 - 5, this.width / 1.5 + 10, 50);
 
         ctx.fillStyle = "red";
-        ctx.fillRect(this.x - this.width / 3, this.y - this.height / 3, this.width / 1.5, 40);
+        ctx.fillRect(this.x - this.width / 3, this.y - this.height / 1.75, this.width / 1.5, 40);
 
         ctx.fillStyle = "yellow";
-        ctx.fillRect(this.x - this.width / 3, this.y - this.height / 3, this.width / 1.5 * (this.hp / this.defHP), 40);
+        ctx.fillRect(this.x - this.width / 3, this.y - this.height / 1.75, this.width / 1.5 * (this.hp / this.defHP), 40);
     }
 }
