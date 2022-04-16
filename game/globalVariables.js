@@ -115,8 +115,8 @@ let buildingsTypes = [
                         bullets.push(new Bullet(
                             this.x + this.width / 2 + Math.cos(this.angle) * this.width / 2,
                             this.y + this.height / 2 + Math.sin(this.angle) * this.height / 2,
-                            this.angle + this.parent_angle,
-                            this.angle + this.parent_angle,
+                            this.angle,
+                            this.angle,
                             this.bulletColor,
                             this.radius,
                             this.bulletSpeed,
