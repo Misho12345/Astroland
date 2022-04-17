@@ -58,7 +58,7 @@ class Building {
 
         ctx.restore();
 
-        if (this.audio) {
+        if (this.audio && player) {
             if (this.audio.currentTime == 0)
                 this.audio.play();
 

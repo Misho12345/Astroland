@@ -49,6 +49,7 @@ class Enemy {
             this.deathTimer = 39;
             if (player) player.coins += this.coinsPer;
             this.dead = true;
+
             player.mobKills++;
         }
 

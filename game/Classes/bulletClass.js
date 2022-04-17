@@ -27,11 +27,17 @@ class Bullet {
         if (volume > 1) volume = 1;
         else if (volume < 0) volume = 0;
 
-        this.hit.volume = volume;
+        this.hit.volume = Math.floor(volume);
     }
 
     update() {
         if (this.collided) return;
+
+        if (areColliding(boss.x - boss.width / 3, boss.y - boss.height / 3, boss.width / 3 * 2, boss.height / 3 * 2,
+            this.x - this.r, this.y - this.r, this.r * 2, this.r * 2) && this.color != 'enemyBullet' && this.color != "bigBrainBullet") {
+            boss.hp -= this.damage;
+            this.collided = true;
+        }
 
         if (distance(this.x, this.y, planet.x + planet.diameter / 2, planet.y + planet.diameter / 2) < planet.diameter / 2) {
             this.collided = true;
@@ -62,19 +68,19 @@ class Bullet {
                 areColliding(this.x - this.r, this.y - this.r, this.r * 2, this.r * 2,
                     enemies[i].x - enemies[i].width / 2, enemies[i].y - enemies[i].height / 2,
                     enemies[i].width, enemies[i].height) &&
-                    this.color != "enemyBullet" &&
-                    this.color != "bigBrainBullet") {
+                this.color != "enemyBullet" &&
+                this.color != "bigBrainBullet") {
 
                 enemies[i].hp -= this.damage;
                 this.hit.play();
                 this.collided = true;
-                
+
                 return;
             }
             else if (areColliding(this.x - this.r, this.y - this.r, this.r * 2, this.r * 2,
                 player.x, player.y, player.width, player.height) &&
                 (this.color == "enemyBullet" || this.color == "bigBrainBullet")) {
-
+                console.log(this.damage);
                 player.hp -= this.damage;
                 this.hit.play();
                 this.collided = true;

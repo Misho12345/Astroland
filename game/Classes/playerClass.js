@@ -21,7 +21,7 @@ class Player {
         this.gunShot = false;
         this.gunPossibleToShot = false;
 
-        this.coins = 10000;
+        this.coins = 0;
         this.coinsState = 0;
         this.cooldownC = 10;
 

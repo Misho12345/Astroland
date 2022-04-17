@@ -306,7 +306,7 @@ let weapons = [
 let utilities = [
     {
         name: "HP",
-        price: 5    ,
+        price: 5,
         url: "url(./pics/heart.png)",
         property: "+2 <abbr title='Health points (a heart)'>HP</abbr>",
         tip: "you can buy it only when you're not at full health",

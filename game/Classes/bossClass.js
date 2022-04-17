@@ -27,6 +27,16 @@ class Boss {
         }
         if (this.spawned) {
 
+            if (this.hp <= 0) {
+                this.spawned = false;
+                this.h = 10000;
+                player.coins += this.defHP;
+            }
+
+            if (this.hp > this.defHP / 2) {
+                this.movePhase();
+            }
+
             this.angle = planet.angle - this.defA;
             this.updates++;
             if (this.updates % 45 == 0) {
@@ -61,7 +71,19 @@ class Boss {
     lazerShot() {
         this.lazerPhaseTimer++;
         this.h += 1;
-        console.log(angleCalc(this.x - this.width / 2, this.y, player.x, player.y));
+        if (Math.abs(player.angle - this.angle) < (player.width / planet.diameter) * 2) {
+            if (this.updates % 50 == 0) {
+                player.hp -= 1;
+            }
+        }
+        buildings.forEach(building => {
+            console.log(Math.abs(building.angle - this.angle - Math.PI * 2));
+            if (Math.abs(building.angle - this.angle - Math.PI * 2) < (building.width / planet.diameter)) {
+
+                building.hp -= 0.04;
+            }
+        });
+        //console.log(angleCalc(this.x - this.width / 2, this.y, player.x, player.y));
         if (this.h > planet.diameter / 2 + player.height / 4 + 800) {
             this.h = planet.diameter / 2 + player.height / 4 + 800;
         }
@@ -84,20 +106,15 @@ class Boss {
         }
     }
     movePhase() {
-        if (this.hp > this.defHP / 2) {
-            if (angleCalc(this.x - player.width / 2, this.y, player.x, player.y) > Math.PI / 2 &&
-                angleCalc(this.x - player.width / 2, this.y, player.x, player.y) < Math.PI / 2 * 3) {
-                this.defA += 0.002;
-                this.x = Math.cos(this.angle) * this.h + canvas.width / 2;
-                this.y = Math.sin(this.angle) * this.h + canvas.height / 2;
+        console.log("mishu i stoqn sa svine");
+        if (distance(this.x, this.y, player.x, player.y) < 800) {
+            if (this.hp > this.defHP / 2) {
                 if (angleCalc(this.x - player.width / 2, this.y, player.x, player.y) > Math.PI / 2 &&
-                    angleCalc(this.x - player.width / 2, this.y, player.x, player.y) < Math.PI / 2 * 3) { } else { this.defA -= 0.002; }
-            } else {
-                this.defA -= 0.002;
-                this.x = Math.cos(this.angle) * this.h + canvas.width / 2;
-                this.y = Math.sin(this.angle) * this.h + canvas.height / 2;
-                if (angleCalc(this.x - player.width / 2, this.y, player.x, player.y) > Math.PI / 2 &&
-                    angleCalc(this.x - player.width / 2, this.y, player.x, player.y) < Math.PI / 2 * 3) { this.defA += 0.002; }
+                    angleCalc(this.x - player.width / 2, this.y, player.x, player.y) < Math.PI / 2 * 3) {
+                    this.defA -= 0.0035;
+                } else {
+                    this.defA += 0.0035;
+                }
             }
         }
     }
@@ -206,7 +223,7 @@ class Boss {
         //context.fillRect(this.x - this.width / 20 * 8, this.y + this.height / 4, 20, 20);
         let x = this.x + this.width / 30 * 11.5
         let y = this.y + this.height / 4 + Math.cos(this.angle) * this.height / 2;
-        context.fillRect(x, y, 20, 20);
+        //context.fillRect(x, y, 20, 20);
 
     }
     drawBossBar() {
