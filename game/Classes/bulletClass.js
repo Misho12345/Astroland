@@ -18,16 +18,16 @@ class Bullet {
 
         this.hit = new Audio("./game/Audio/bullet_hit.mp3");
 
-        let volume = 0.15 - (distance(
+        this.volume = 0.15 - (distance(
             this.x + this.r,
             this.y + this.r,
             player.x + player.width / 2,
             player.y + player.height / 2)) / (planet.diameter / 3);
 
-        if (volume > 1) volume = 1;
-        else if (volume < 0 || !volume) volume = 0;
+        if (this.volume > 1) this.volume = 1;
+        else if (this.volume < 0 || !this.volume) this.volume = 0;
 
-        this.hit.volume = volume;
+        this.hit.volume = this.volume;
     }
 
     update() {

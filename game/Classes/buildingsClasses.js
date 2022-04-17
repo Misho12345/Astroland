@@ -7,10 +7,8 @@ class Building {
         this.maxHp = this.buildingType.hp;
         this.hp = this.maxHp;
 
-        if (this.buildingType.audio_src) {
+        if (this.buildingType.audio_src)
             this.audio = new Audio(this.buildingType.audio_src);
-            this.audio.addEventListener("ended", () => this.audio.currentTime = 0)
-        }
 
         this.turet = this.buildingType.turet;
 
@@ -59,20 +57,21 @@ class Building {
         ctx.restore();
 
         if (this.audio && player) {
-            if (this.audio.currentTime == 0)
+            if (this.audio.currentTime == 0 || (this.audio.paused && !paused && !shop) || this.audio.ended) {
+                this.audio.currentTime = 0;
                 this.audio.play();
+            }
 
             this.audio_volume = 1 - (distance(
                 this.x + this.width / 2,
                 this.y + this.height / 2,
                 player.x + player.width / 2,
-                player.y + player.height / 2)) / (planet.diameter / 3);
+                player.y + player.height / 2)) / (planet.diameter / 2);
 
-            if (this.audio_volume > 1) this.audio_volume = 1;
-            else if (this.audio_volume < 0) this.audio_volume = 0;
+            if (this.audio_volume == undefined) this.audio_volume = 0;
+            else this.audio_volume = Math.min(Math.max(0, this.audio_volume), 1);
 
             this.audio.volume = this.audio_volume;
-            console.log(this.x)
         }
     }
 }
