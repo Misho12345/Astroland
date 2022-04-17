@@ -18,14 +18,18 @@ class Bullet {
 
         this.hit = new Audio("./game/Audio/bullet_hit.mp3");
 
-        this.volume = 0.15 - (distance(
-            this.x + this.r,
-            this.y + this.r,
-            player.x + player.width / 2,
-            player.y + player.height / 2)) / (planet.diameter / 3);
+        if (player) {
+            this.volume = 0.15 - (distance(
+                this.x + this.r,
+                this.y + this.r,
+                player.x + player.width / 2,
+                player.y + player.height / 2)) / (planet.diameter / 3);
 
-        if (this.volume > 1) this.volume = 1;
-        else if (this.volume < 0 || !this.volume) this.volume = 0;
+            if (this.volume > 1) this.volume = 1;
+            else if (this.volume < 0 || !this.volume) this.volume = 0;
+        }
+
+        else this.volume = 0;
 
         this.hit.volume = this.volume;
     }
@@ -94,6 +98,7 @@ class Bullet {
                         (this.color == "enemyBullet" || this.color == "bigBrainBullet")) {
 
                         if (!building.buildingType.indestructible) building.hp -= this.damage;
+                        
                         this.hit.play();
                         this.collided = true;
 

@@ -152,7 +152,7 @@ class Player {
 
     showCoins() {
         let coins = Math.floor(this.coins)
-        let pos = canvas.width - coins.toString().length * 42.5 - 60;
+        let pos = canvas.width - coins.toString().length * 45.7 - 60;
 
         ctxUI.drawImage(document.getElementById("coin" + this.coinsState % 12), pos - 90, 50);
 

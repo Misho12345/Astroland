@@ -112,13 +112,16 @@ function Update() {
 function Draw() {
     ctx.drawImage(document.getElementById("background"), 0, 0, canvas.width, canvas.height);
 
-    if (!isKeyPressed[77]) ctx.translate(0, planet.diameter - canvas.width + 250);
-    else {
-        context.scale(0.2, 0.2);
-        if (boss.spawned) {
-            ctx.translate(canvas.width + planet.diameter / 2, 0 + planet.diameter);
+    if (!shop && !paused) {
+        if (!isKeyPressed[77]) {
+            ctx.translate(0, planet.diameter - canvas.width + 250);
         } else {
-            ctx.translate(canvas.width + planet.diameter / 2, 0 + planet.diameter / 2);
+            context.scale(0.2, 0.2);
+            if (boss.spawned) {
+                ctx.translate(canvas.width + planet.diameter / 2, 0 + planet.diameter);
+            } else {
+                ctx.translate(canvas.width + planet.diameter / 2, 0 + planet.diameter / 2);
+            }
         }
     }
 

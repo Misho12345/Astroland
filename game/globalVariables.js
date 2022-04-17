@@ -9,6 +9,8 @@ const context = canvas.getContext("2d");
 const ctxUI = canvasUI.getContext("2d");
 const contextUI = canvasUI.getContext("2d");
 
+let zoomed = false;
+
 let bullets = [], enemyClasses = [], enemies = [];
 let buildings = [];
 
