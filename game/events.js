@@ -78,5 +78,5 @@ window.addEventListener("mousedown", () => isMousePressed = 1);
 window.addEventListener("mouseup", () => isMousePressed = 0);
 
 video.addEventListener('ended', () => {
-    if (rocket) location.href = './mainPage.html';
+    if (rocket) location.href = './index.html';
 });
