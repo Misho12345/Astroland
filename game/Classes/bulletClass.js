@@ -25,9 +25,9 @@ class Bullet {
             player.y + player.height / 2)) / (planet.diameter / 3);
 
         if (volume > 1) volume = 1;
-        else if (volume < 0) volume = 0;
+        else if (volume < 0 || !volume) volume = 0;
 
-        this.hit.volume = Math.floor(volume);
+        this.hit.volume = volume;
     }
 
     update() {
