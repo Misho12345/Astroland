@@ -1,0 +1,181 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Astroland</title>
+    <link rel="stylesheet" href="./StyleSheet.css" />
+    <link rel="stylesheet" href="./ShopStyleSheet.css" />
+</head>
+
+<body onload="init()">
+    <video muted poster="./images/background.png" id="endScreen">
+        <source src="./escape.mp4" type="video/mp4">
+    </video>
+
+    <div class="noselect">
+        <canvas id="canvas" style="position: fixed"></canvas>
+        <canvas id="canvasUI" style="position: fixed"></canvas>
+
+        <div id="shop-menu" style="display: none">
+            <div id="shop-contents">
+                <h1 class="menu-title">Shop</h1>
+
+                <div id="shop">
+                    <div id="shop-buttons">
+                        <div id="buildings-button" class="shop-button shop-button-selected" onclick="changeShopItems(0)">Buildings</div>
+                        <div id="weapons-button" class="shop-button shop-button-not-selected" onclick="changeShopItems(1)">Weapons</div>
+                        <div id="utilities-button" class="shop-button shop-button-not-selected" onclick="changeShopItems(2)">Utilities</div>
+                    </div>
+
+                    <div id="items"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="pause-menu" style="display: none">
+            <div id="pause-menu-contents">
+                <h1 class="menu-title">Paused</h1>
+                <div class="menu-button" onclick="paused = false;">Back To Game</div>
+                <div class="menu-button" onclick="location.href='../index.html'">Back To Main Page</div>
+            </div>
+        </div>
+
+        <div id="game-over-menu" style="display: none">
+            <div id="game-over-contents">
+                <h1 class="menu-title">Game Over</h1>
+                <div class="menu-button" onclick="location.href='../index.html'">Back To Main Page</div>
+            </div>
+        </div>
+    </div>
+
+    <div style="display: none">
+        <img src="./images/player/player00.png" id="player0_0" />
+
+        <img src="./images/player/player01.png" id="player0_1" />
+        <img src="./images/player/player02.png" id="player0_2" />
+        <img src="./images/player/player03.png" id="player0_3" />
+
+        <img src="./images/player/player11.png" id="player1_1" />
+        <img src="./images/player/player12.png" id="player1_2" />
+        <img src="./images/player/player13.png" id="player1_3" />
+
+        <img src="./images/coin/coin0.png" id="coin0" />
+        <img src="./images/coin/coin1.png" id="coin1" />
+        <img src="./images/coin/coin2.png" id="coin2" />
+        <img src="./images/coin/coin3.png" id="coin3" />
+        <img src="./images/coin/coin4.png" id="coin4" />
+        <img src="./images/coin/coin5.png" id="coin5" />
+        <img src="./images/coin/coin6.png" id="coin6" />
+        <img src="./images/coin/coin7.png" id="coin7" />
+        <img src="./images/coin/coin8.png" id="coin8" />
+        <img src="./images/coin/coin9.png" id="coin9" />
+        <img src="./images/coin/coin10.png" id="coin10" />
+        <img src="./images/coin/coin11.png" id="coin11" />
+
+        <img src="./images/planet.png" id="planet" />
+        <img src="./images/background.png" id="background" />
+
+        <img src="./images/green_blob/green_blob1.png" id="green_blob1" />
+        <img src="./images/green_blob/green_blob2.png" id="green_blob2" />
+        <img src="./images/green_blob/green_blob3.png" id="green_blob3" />
+        <img src="./images/green_blob/green_blob4.png" id="green_blob4" />
+
+        <img src="./images/enemyBullet.png" id="enemyBullet" />
+
+        <img src="./images/uziBullet.png" id="uziBullet" />
+
+        <img src="./images/bigBrainEnemy/bigBrainEnemy1.png" id="bigBrainEnemy1" />
+        <img src="./images/bigBrainEnemy/bigBrainEnemy2.png" id="bigBrainEnemy2" />
+        <img src="./images/bigBrainEnemy/bigBrainEnemy3.png" id="bigBrainEnemy3" />
+        <img src="./images/bigBrainEnemy/bigBrainEnemy4.png" id="bigBrainEnemy4" />
+
+        <img src="./images/bigEnemy/bigEnemy1.png" id="bigEnemy1" />
+        <img src="./images/bigEnemy/bigEnemy2.png" id="bigEnemy2" />
+        <img src="./images/bigEnemy/bigEnemy3.png" id="bigEnemy3" />
+
+        <img src="./images/bigBrainEnemy/rocket1.png" id="rocket1" />
+        <img src="./images/bigBrainEnemy/rocket2.png" id="rocket2" />
+        <img src="./images/bigBrainEnemy/rocket3.png" id="rocket3" />
+
+        <img src="./images/hearts/dead1.png" id="dead1" />
+        <img src="./images/hearts/dead2.png" id="dead2" />
+        <img src="./images/hearts/heart1.png" id="heart1" />
+        <img src="./images/hearts/heart2.png" id="heart2" />
+
+        <img src="./images/pistol/pistol1.png" id="pistol1" />
+        <img src="./images/pistol/pistol1L.png" id="pistol1L" />
+        <img src="./images/pistol/pistol2.png" id="pistol2" />
+        <img src="./images/pistol/pistol2L.png" id="pistol2L" />
+
+        <img src="./images/rifle/rifle1.png" id="rifle1" />
+        <img src="./images/rifle/rifle1L.png" id="rifle1L" />
+        <img src="./images/rifle/rifle2.png" id="rifle2" />
+        <img src="./images/rifle/rifle2L.png" id="rifle2L" />
+
+        <img src="./images/buildings/station/station.png" id="station0" />
+
+        <img src="./images/buildings/drill-lv1/drill-lv10.png" id="drill-lv10" />
+        <img src="./images/buildings/drill-lv1/drill-lv11.png" id="drill-lv11" />
+        <img src="./images/buildings/drill-lv1/drill-lv12.png" id="drill-lv12" />
+
+        <img src="./images/buildings/drill-lv2/drill-lv20.png" id="drill-lv20" />
+        <img src="./images/buildings/drill-lv2/drill-lv21.png" id="drill-lv21" />
+        <img src="./images/buildings/drill-lv2/drill-lv22.png" id="drill-lv22" />
+
+        <img src="./images/buildings/drill-lv3/drill-lv30.png" id="drill-lv30" />
+        <img src="./images/buildings/drill-lv3/drill-lv31.png" id="drill-lv31" />
+        <img src="./images/buildings/drill-lv3/drill-lv32.png" id="drill-lv32" />
+
+        <img src="./images/buildings/turet/turet-stand.png" id="turet0" />
+        <img src="./images/buildings/turet/turet-head.png" id="turet_head0" />
+        <img src="./images/buildings/turet/turet-head1.png" id="turet_head1" />
+
+        <img src="./images/buildings/rocket/rocket0.png" id="rocketship0" />
+        <img src="./images/buildings/rocket/rocket1.png" id="rocketship1" />
+        <img src="./images/buildings/rocket/rocket2.png" id="rocketship2" />
+
+        <img src="./images/shotgun/shotgun1.png" id="shotgun1" />
+        <img src="./images/shotgun/shotgun1L.png" id="shotgun1L" />
+        <img src="./images/shotgun/shotgun2.png" id="shotgun2" />
+        <img src="./images/shotgun/shotgun2L.png" id="shotgun2L" />
+
+        <img src="./images/uzi/uzi1.png" id="uzi1" />
+        <img src="./images/uzi/uzi1L.png" id="uzi1L" />
+        <img src="./images/uzi/uzi2.png" id="uzi2" />
+        <img src="./images/uzi/uzi2L.png" id="uzi2L" />
+
+        <img src="./images/enemy death/enemyDeath1.png" id="enemyDeath1" />
+        <img src="./images/enemy death/enemyDeath2.png" id="enemyDeath2" />
+        <img src="./images/enemy death/enemyDeath3.png" id="enemyDeath3" />
+        <img src="./images/enemy death/enemyDeath4.png" id="enemyDeath4" />
+
+        <img src="./images/Boss/Bossp1f1.png" id="Bossp1f1" />
+        <img src="./images/Boss/Bossp1f2.png" id="Bossp1f2" />
+        <img src="./images/Boss/Bossp1f3.png" id="Bossp1f3" />
+        <img src="./images/Boss/Bossp1f4.png" id="Bossp1f4" />
+        <img src="./images/Boss/Bossp1f5.png" id="Bossp1f5" />
+        <img src="./images/Boss/Bossp1f6.png" id="Bossp1f6" />
+
+        <img src="./images/Lazer/lazerBody.png" id="lazerBodyImage" />
+        <img src="./images/Lazer/lazerdest1.png" id="lazerDust1" />
+        <img src="./images/Lazer/lazerdest2.png" id="lazerDust2" />
+        <img src="./images/Lazer/lazerdest3.png" id="lazerDust3" />
+        <img src="./images/Lazer/lazerdest4.png" id="lazerDust4" />
+    </div>
+
+    <script src="./scripts/globalVariables.js"></script>
+    <script src="./scripts/functions.js"></script>
+
+    <script src="./scripts/Classes/playerClass.js"></script>
+    <script src="./scripts/Classes/buildingsClasses.js"></script>
+    <script src="./scripts/Classes/enemyClasses.js"></script>
+    <script src="./scripts/Classes/bulletClass.js"></script>
+    <script src="./scripts/Classes/planetClass.js"></script>
+    <script src="./scripts/Classes/bossClass.js"></script>
+
+    <script src="./scripts/events.js"></script>
+    
+    <script src="./scripts/mainGame.js"></script>
+    <script src="./scripts/shopEvents.js"></script>
+</body>
+</html>

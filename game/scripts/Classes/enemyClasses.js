@@ -45,7 +45,7 @@ class Enemy {
         if (!player) return;
 
         if (this.hp <= 0 && !this.dead) {
-            new Audio("./game/Audio/enemy_death.mp3").play();
+            new Audio("./Audio/enemy_death.mp3").play();
             this.deathTimer = 39;
             if (player) player.coins += this.coinsPer;
             this.dead = true;

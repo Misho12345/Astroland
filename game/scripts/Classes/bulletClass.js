@@ -16,7 +16,7 @@ class Bullet {
 
         this.collided = false;
 
-        this.hit = new Audio("./game/Audio/bullet_hit.mp3");
+        this.hit = new Audio("./Audio/bullet_hit.mp3");
 
         if (player) {
             this.volume = 0.15 - (distance(

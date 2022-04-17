@@ -106,7 +106,6 @@ class Boss {
         }
     }
     movePhase() {
-        console.log("mishu i stoqn sa svine");
         if (distance(this.x, this.y, player.x, player.y) < 800) {
             if (this.hp > this.defHP / 2) {
                 if (angleCalc(this.x - player.width / 2, this.y, player.x, player.y) > Math.PI / 2 &&
@@ -209,7 +208,7 @@ class Boss {
                 let lazerTHICCness = 175;
                 let lazerLenght = this.h - planet.diameter / 2 + 10;
                 context.drawImage(lazerBodyImage, this.x - lazerTHICCness / 2, this.y, lazerTHICCness, lazerLenght);
-                context.drawImage(lazerDustImages[this.lazerFrame], this.x - lazerTHICCness / 2 - 30, this.y + lazerLenght - 100, lazerTHICCness + 60, 100)
+                context.drawImage(lazerDustImages[this.lazerFrame], this.x - lazerTHICCness / 2 - 75, this.y + lazerLenght - 200, lazerTHICCness + 150, 250)
             }
 
             context.fillStyle = "yellow";

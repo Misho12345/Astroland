@@ -29,9 +29,17 @@ function changeShopItems(mode) {
                         </div>\
                         <div class='item-properties'>\
                             " + (buildingsTypes[i].hp ? "<div class='item-property'><abbr title='Health points'>HP</abbr>: <span class='item-property-value'>" + buildingsTypes[i].hp + "</span></div>" : "") + "\
-                            " + (buildingsTypes[i].cps ? "<div class='item-property'><abbr title='Coins per second'>CPS</abbr>: <span class='item-property-value'>" + buildingsTypes[i].cps + "</span></div>" : "") + "\
-                            " + (buildingsTypes[i].hp || buildingsTypes[i].cps  ? "<br><br>" : "") + "\
-                            <div class='item-tip' >" + buildingsTypes[i].tip + "</div>\
+                            " + (buildingsTypes[i].cps ? "<div class='item-property'><abbr title='Coins per second'>CPS</abbr>: <span class='item-property-value'>" + buildingsTypes[i].cps + "</span></div>" : "") +
+
+                            (buildingsTypes[i].turet ? "\
+                            <div class='item-property'>damage: <span class='item-property-value'>" + buildingsTypes[i].turet.dmg + "</span> </div>\
+                            <div class='item-property'><abbr title='Revolutions per minute (firing speed)'>RPM</abbr>: <span class='item-property-value'>" + Math.round(100 / buildingsTypes[i].turet.fireSpeed * 6000) / 100 + "</span></div>\
+                            <div class='item-property'><abbr title='Damage per second'>DPS</abbr>: <span class='item-property-value'>" + buildingsTypes[i].turet.dps + "</span></div>\
+                            <div class='item-property'>accuracy: <span class='item-property-value'>" + (100 - 5 * buildingsTypes[i].turet.inaccuracy) + "</span></div>\
+                            " + (buildingsTypes[i].turet.bulletCount > 1 ? "<div class='item-property'>bullets: <span class='item-property-value'>" + buildingsTypes[i].turet.bulletCount + "</span></div>" : ""): "") +
+
+                            (buildingsTypes[i].hp || buildingsTypes[i].cps  ? " <br>" : "") +
+                            "<div class='item-tip' >" + buildingsTypes[i].tip + "</div>\
                         </div>\
                         <div class='right-part'>\
                             <div class='item-price'>" + buildingsTypes[i].price + "</div>\

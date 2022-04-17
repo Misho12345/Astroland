@@ -22,7 +22,6 @@ function Update() {
         if (!enemies[i]) enemies.splice(i, 1);
 
         if (enemies[i].deathTimer <= 0 && enemies[i].deathTimer != -2) {
-            //player.coins += enemies[i].coinsPer;    
             enemies.splice(i, 1);
             i--;
         }
@@ -125,7 +124,8 @@ function Draw() {
         }
     }
 
-    buildings.forEach(building => {
+    if (!shop && !paused)
+        buildings.forEach(building => {
         if (building.turet) {
             ctx.beginPath();
             ctx.arc(building.x + building.width / 2, building.y + building.height / 2, building.turet.range, 0, 2 * Math.PI);

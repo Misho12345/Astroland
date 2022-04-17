@@ -104,12 +104,12 @@ class Player {
         ctx.rotate(this.angle + Math.PI / 2);
         ctx.translate(-this.x - this.width / 2, -this.y - this.height / 2);
 
-        if (this.gunShot) {
+        if (this.gunShot && this.state == 0) {
             if (angleCalc(mouseX, mouseY, this.x - this.width / 2, this.y - this.height / 2) > Math.PI / 2 &&
                 angleCalc(mouseX, mouseY, this.x - this.width / 2, this.y - this.height / 2) < Math.PI / 2 * 3) {
-                ctx.drawImage(document.getElementById("player1_2"), this.x, this.y, this.width, this.height);
+                ctx.drawImage(document.getElementById("player1_1"), this.x, this.y, this.width, this.height);
             } else {
-                ctx.drawImage(document.getElementById("player0_2"), this.x, this.y, this.width, this.height);
+                ctx.drawImage(document.getElementById("player0_1"), this.x, this.y, this.width, this.height);
             }
         } else {
             ctx.drawImage(document.getElementById("player" + (this.state > 0 ? this.dir : 0) + "_" + this.state), this.x, this.y, this.width, this.height);

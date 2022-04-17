@@ -35,7 +35,7 @@ let buildingsTypes = [
     {
         name: "station",
         price: 50,
-        url: "url(./pics/station.png)",
+        url: "url(../pics/station.png)",
         hp: 50,
         tip: "use as a shield",
         width: 512,
@@ -44,50 +44,49 @@ let buildingsTypes = [
     {
         name: "drill-lv1",
         price: 150,
-        url: "url(./pics/drill-lv10.png)",
+        url: "url(../pics/drill-lv10.png)",
         hp: 20,
         cps: 1,
         tip: "gives you more and more coins",
         animation: true,
         width: 256,
         height: 256,
-        audio_src: "./game/Audio/drill.mp3"
+        audio_src: "./Audio/drill.mp3"
     },
     {
         name: "drill-lv2",
         price: 300,
-        url: "url(./pics/drill-lv20.png)",
+        url: "url(../pics/drill-lv20.png)",
         hp: 25,
         cps: 3,
         tip: "gives you more and more coins",
         animation: true,
         width: 256,
         height: 256,
-        audio_src: "./game/Audio/drill.mp3"
+        audio_src: "./Audio/drill.mp3"
     },
     {
         name: "drill-lv3",
         price: 500,
-        url: "url(./pics/drill-lv30.png)",
+        url: "url(../pics/drill-lv30.png)",
         hp: 30,
         cps: 5,
         tip: "gives you more and more coins",
         animation: true,
         width: 256,
         height: 256,
-        audio_src: "./game/Audio/drill.mp3"
+        audio_src: "./Audio/drill.mp3"
     },
     {
         name: "turet",
         price: 1000,
-        url: "url(./pics/turet.png)",
+        url: "url(../pics/turet.png)",
         hp: 50,
         tip: "use to protect other buildings like drills",
         width: 384,
         height: 416,
 
         turet: {
-            parent_angle: undefined,
             width: 384,
             height: 384,
             dmg: 3,
@@ -98,7 +97,8 @@ let buildingsTypes = [
             bulletColor: "yellow",
             radius: 10,
             range: 750,
-            audio_src: "./game/Audio/pistol.mp3",
+            inaccuracy: 0,
+            audio_src: "./Audio/pistol.mp3",
             audio_volume: 1,
 
             gunTime: 0,
@@ -178,7 +178,7 @@ let buildingsTypes = [
                 if (this.x != x) this.x = x;
                 if (this.y != y) this.y = y;
 
-                if ((this.target_idx == -2 && !this.target.spawned) || (target && !target.dead)) {
+                if ((this.target_idx == -2 && this.target.spawned) || (target && !target.dead)) {
                     this.angle = angleCalc(
                         this.x + this.width / 2,
                         this.y + this.height / 2,
@@ -201,7 +201,7 @@ let buildingsTypes = [
     {
         name: "rocket",
         price: 5000,
-        url: "url(./pics/rocket.png)",
+        url: "url(../pics/rocket.png)",
         animation: true,
         indestructible: true,
         tip: "escape from the planet and win the game",
@@ -214,7 +214,7 @@ let weapons = [
     {
         name: "pistol",
         price: 0,
-        url: "url(./pics/pistol1.png)",
+        url: "url(../pics/pistol1.png)",
         dmg: 3,
         fireSpeed: 75,
         dps: 4,
@@ -231,13 +231,13 @@ let weapons = [
             L_firing: document.getElementById("pistol2L"),
             R_firing: document.getElementById("pistol2")
         },
-        audio_src: "./game/Audio/pistol.mp3",
+        audio_src: "./Audio/pistol.mp3",
         audio_volume: 1
     },
     {
         name: "shotgun",
         price: 50,
-        url: "url(./pics/shotgun1.png)",
+        url: "url(../pics/shotgun1.png)",
         dmg: 1,
         fireSpeed: 100,
         dps: "1 - 8",
@@ -254,13 +254,13 @@ let weapons = [
             L_firing: document.getElementById("shotgun2L"),
             R_firing: document.getElementById("shotgun2")
         },
-        audio_src: "./game/Audio/shotgun.mp3",
+        audio_src: "./Audio/shotgun.mp3",
         audio_volume: 0.3
     },
     {
         name: "uzi",
         price: 150,
-        url: "url(./pics/uzi1.png)",
+        url: "url(../pics/uzi1.png)",
         dmg: 1,
         fireSpeed: 8,
         dps: 12.5,
@@ -277,13 +277,13 @@ let weapons = [
             L_firing: document.getElementById("uzi2L"),
             R_firing: document.getElementById("uzi2")
         },
-        audio_src: "./game/Audio/uzi.mp3",
+        audio_src: "./Audio/uzi.mp3",
         audio_volume: 0.2
     },
     {
         name: "rifle",
         price: 250,
-        url: "url(./pics/rifle1.png)",
+        url: "url(../pics/rifle1.png)",
         dmg: 7.5,
         fireSpeed: 20,
         dps: 37.5,
@@ -300,7 +300,7 @@ let weapons = [
             L_firing: document.getElementById("rifle2L"),
             R_firing: document.getElementById("rifle2")
         },
-        audio_src: "./game/Audio/rifle.mp3",
+        audio_src: "./Audio/rifle.mp3",
         audio_volume: 0.2
     }
 ];
@@ -309,7 +309,7 @@ let utilities = [
     {
         name: "HP",
         price: 5,
-        url: "url(./pics/heart.png)",
+        url: "url(../pics/heart.png)",
         property: "+2 <abbr title='Health points (a heart)'>HP</abbr>",
         tip: "you can buy it only when you're not at full health",
         func: function () {
@@ -359,9 +359,6 @@ let rocketImages = [
 let bossImages = [];
 for (let i = 0; i < 2; i++)
     bossImages[i] = [];
-
-for (let i = 0; i < 6; i++)
-    bossImages[0].push(document.getElementById("Bossp1f" + i));
 
 bossImages[0] = [
     document.getElementById("Bossp1f1"),
