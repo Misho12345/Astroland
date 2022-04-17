@@ -152,22 +152,25 @@ class Player {
 
     showCoins() {
         let coins = Math.floor(this.coins)
-        let pos = canvas.width - coins.toString().length * 45.7 - 60;
+        let pos = canvas.width - 25;
 
-        ctxUI.drawImage(document.getElementById("coin" + this.coinsState % 12), pos - 90, 50);
+        ctxUI.fillStyle = "yellow";
+        ctxUI.strokeStyle = "orange";
+
+        ctxUI.lineWidth = 3;
+        ctxUI.textAlign = "right";
+        ctxUI.font = "90px Common Pixel, sans-serif";
+
+        let space = ctxUI.measureText(coins.toString()).width;
+
+        ctxUI.drawImage(document.getElementById("coin" + this.coinsState % 12), pos - space - 100, 50);
 
         if (this.cooldownC < 1) {
             this.cooldownC = 10;
             this.coinsState++;
         } else this.cooldownC--;
 
-        ctxUI.fillStyle = "yellow";
-        ctxUI.strokeStyle = "orange";
-
-        ctxUI.lineWidth = 3;
-        ctxUI.font = "90px Comic Sans MS";
-
-        ctxUI.fillText(coins, pos, 122.5);
-        ctxUI.strokeText(coins, pos, 122.5)
+        ctxUI.fillText(coins, pos, 117.5);
+        ctxUI.strokeText(coins, pos, 117.5);
     }
 }
